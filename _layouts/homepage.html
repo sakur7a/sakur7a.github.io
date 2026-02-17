@@ -60,40 +60,23 @@
         <br>
         <br>
         <div class="social-icons">
-        {% if site.google_scholar %}
-        <a style="margin: 0 5px 0 0" href="{{ site.google_scholar }}">
-          <i class="ai ai-google-scholar" style="font-size:1.2rem"></i>
-          <span>Google Scholar</span>
-        </a>  
-        {% endif %}
-
-        {% if site.cv_link %}
-        <a style="margin: 0 5px 0 0" href="{{ site.cv_link }}">
-          <i class="ai ai-cv" style="font-size:1.3rem;"></i>
-          <span>CV</span>
-        </a>
-        {% endif %}
-
-        {% if site.github_link %}
-        <a style="margin: 0 5px 0 0" href="{{ site.github_link }}">
-          <i class="fab fa-github"></i>
-          <span>GitHub</span>
-        </a>
-        {% endif %}
-
-        {% if site.linkedin %}
-        <a style="margin: 0 5px 0 0" href="{{ site.linkedin }}">
-          <i class="fab fa-linkedin"></i>
-          <span>LinkedIn</span>
-        </a>
-        {% endif %}
-
-        {% if site.twitter %}
-        <a style="margin: 0 0 0 0" href="{{ site.twitter }}">
-          <i class="fab fa-x-twitter"></i>
-          <span>X (Twitter)</span>
-        </a>
-        {% endif %}
+          <ul class="social-links">
+            {% if site.google_scholar %}
+            <li><a class="social-link" href="{{ site.google_scholar }}"><i class="ai ai-google-scholar"></i><span>Google Scholar</span></a></li>
+            {% endif %}
+            {% if site.cv_link %}
+            <li><a class="social-link" href="{{ site.cv_link }}"><i class="ai ai-cv"></i><span>CV</span></a></li>
+            {% endif %}
+            {% if site.github_link %}
+            <li><a class="social-link" href="{{ site.github_link }}"><i class="fab fa-github"></i><span>GitHub</span></a></li>
+            {% endif %}
+            {% if site.linkedin %}
+            <li><a class="social-link" href="{{ site.linkedin }}"><i class="fab fa-linkedin"></i><span>LinkedIn</span></a></li>
+            {% endif %}
+            {% if site.twitter %}
+            <li><a class="social-link" href="{{ site.twitter }}"><i class="fab fa-x-twitter"></i><span>X (Twitter)</span></a></li>
+            {% endif %}
+          </ul>
         </div>
         <br>
 
