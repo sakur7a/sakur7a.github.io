@@ -1,8 +1,8 @@
 # Basic Information 
-title: Your Name
+title: Jinzheng Wang
 position: Ph.D. Student
 affiliation: Your Affiliation
-email: yourname (at) example.edu
+email: sakur7a@outlook.com
 
 # Search Engine Optimization (SEO)
 # The following information is used to improve the website traffic from search engines, e.g., Google.
@@ -14,7 +14,7 @@ canonical: https://minimal-light-theme.yliu.me/
 # If you don't need one of them, you may delete the corresponding line.
 google_scholar: https://scholar.google.com/
 cv_link: assets/files/curriculum_vitae.pdf
-github_link: https://github.com/
+github_link: https://github.com/sakur7a
 linkedin: https://www.linkedin.com/
 twitter: https://twitter.com/
 
@@ -30,7 +30,7 @@ enable_footnote: true
 
 # Auto Dark Mode
 # You may use the option to disable the automatic dark theme
-auto_dark_mode: true
+auto_dark_mode: false
 
 # Font
 # You can use this option to choose between Serif or Sans Serif fonts.
