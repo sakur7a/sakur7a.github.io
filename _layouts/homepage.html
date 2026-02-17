@@ -67,13 +67,6 @@
         </a>
         {% endif %}
 
-        {% if site.cv_link %}
-        <a href="{{ site.cv_link }}">
-          <i class="ai ai-cv" style="font-size:1.3rem;"></i>
-          <span class="social-label">CV</span>
-        </a>
-        {% endif %}
-
         {% if site.github_link %}
         <a href="{{ site.github_link }}">
           <i class="fab fa-github"></i>
@@ -81,32 +74,23 @@
         </a>
         {% endif %}
 
-        {% if site.linkedin %}
-        <a href="{{ site.linkedin }}">
-          <i class="fab fa-linkedin"></i>
-          <span class="social-label">LinkedIn</span>
-        </a>
-        {% endif %}
-
-        {% if site.twitter %}
-        <a href="{{ site.twitter }}">
-          <i class="fab fa-x-twitter"></i>
-          <span class="social-label">Twitter</span>
-        </a>
-        {% endif %}
-
         <a href="{{ "/" | relative_url }}" title="Home">
-          <i class="fas fa-home"></i>
+          <i class="fa-solid fa-house"></i>
           <span class="social-label">Home</span>
         </a>
 
+        <a href="{{ "/gamer/" | relative_url }}" title="Gamer">
+          <i class="fa-solid fa-gamepad"></i>
+          <span class="social-label">Gamer</span>
+        </a>
+
         <a href="{{ "/blog/" | relative_url }}" title="Blog">
-          <i class="fas fa-blog"></i>
+          <i class="fa-solid fa-blog"></i>
           <span class="social-label">Blog</span>
         </a>
 
         <a href="{{ "/feed.xml" | relative_url }}" title="RSS Feed">
-          <i class="fas fa-rss"></i>
+          <i class="fa-solid fa-rss"></i>
           <span class="social-label">RSS Feed</span>
         </a>
         </div>
