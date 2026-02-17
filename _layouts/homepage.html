@@ -60,23 +60,55 @@
         <br>
         <br>
         <div class="social-icons">
-          <ul class="social-links">
-            {% if site.google_scholar %}
-            <li><a class="social-link" href="{{ site.google_scholar }}"><i class="ai ai-google-scholar"></i><span>Google Scholar</span></a></li>
-            {% endif %}
-            {% if site.cv_link %}
-            <li><a class="social-link" href="{{ site.cv_link }}"><i class="ai ai-cv"></i><span>CV</span></a></li>
-            {% endif %}
-            {% if site.github_link %}
-            <li><a class="social-link" href="{{ site.github_link }}"><i class="fab fa-github"></i><span>GitHub</span></a></li>
-            {% endif %}
-            {% if site.linkedin %}
-            <li><a class="social-link" href="{{ site.linkedin }}"><i class="fab fa-linkedin"></i><span>LinkedIn</span></a></li>
-            {% endif %}
-            {% if site.twitter %}
-            <li><a class="social-link" href="{{ site.twitter }}"><i class="fab fa-x-twitter"></i><span>X (Twitter)</span></a></li>
-            {% endif %}
-          </ul>
+        {% if site.google_scholar %}
+        <a href="{{ site.google_scholar }}">
+          <i class="ai ai-google-scholar" style="font-size:1.2rem"></i>
+          <span class="social-label">Google Scholar</span>
+        </a>
+        {% endif %}
+
+        {% if site.cv_link %}
+        <a href="{{ site.cv_link }}">
+          <i class="ai ai-cv" style="font-size:1.3rem;"></i>
+          <span class="social-label">CV</span>
+        </a>
+        {% endif %}
+
+        {% if site.github_link %}
+        <a href="{{ site.github_link }}">
+          <i class="fab fa-github"></i>
+          <span class="social-label">GitHub</span>
+        </a>
+        {% endif %}
+
+        {% if site.linkedin %}
+        <a href="{{ site.linkedin }}">
+          <i class="fab fa-linkedin"></i>
+          <span class="social-label">LinkedIn</span>
+        </a>
+        {% endif %}
+
+        {% if site.twitter %}
+        <a href="{{ site.twitter }}">
+          <i class="fab fa-x-twitter"></i>
+          <span class="social-label">Twitter</span>
+        </a>
+        {% endif %}
+
+        <a href="{{ "/" | relative_url }}" title="Home">
+          <i class="fas fa-home"></i>
+          <span class="social-label">Home</span>
+        </a>
+
+        <a href="{{ "/blog/" | relative_url }}" title="Blog">
+          <i class="fas fa-blog"></i>
+          <span class="social-label">Blog</span>
+        </a>
+
+        <a href="{{ "/feed.xml" | relative_url }}" title="RSS Feed">
+          <i class="fas fa-rss"></i>
+          <span class="social-label">RSS Feed</span>
+        </a>
         </div>
         <br>
 
