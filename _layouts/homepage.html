@@ -67,20 +67,26 @@
         </a>
         {% endif %}
 
-        <a href="{{ "/" | relative_url }}" title="Home">
+        {% if site.home_link %}
+        <a href="{{ site.home_link }}" title="Home">
           <i class="fa-solid fa-house"></i>
           <span class="social-label">Home</span>
         </a>
+        {% endif %}
 
-        <a href="{{ "/blog/" | relative_url }}" title="Blog">
+        {% if site.blog_link %}
+        <a href="{{ site.blog_link }}" title="Blog">
           <i class="fa-solid fa-blog"></i>
           <span class="social-label">Blog</span>
         </a>
+        {% endif %}
 
-        <a href="{{ "/feed.xml" | relative_url }}" title="RSS Feed">
+        {% if site.rss_link %}
+        <a href="{{ site.rss_link }}" title="RSS Feed">
           <i class="fa-solid fa-rss"></i>
           <span class="social-label">RSS Feed</span>
         </a>
+        {% endif %}
         </div>
         <br>
 

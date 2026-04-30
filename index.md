@@ -18,6 +18,15 @@ I am a Ph.D. student at ...
 - **[Sept. 2019]** Our paper about few-shot learning is accepted to NeurIPS 2019.
 - **[Mar. 2019]** Our paper about few-shot learning is accepted to CVPR 2019.
 
-{% include_relative _includes/publications.md %}
+## Publications
 
-{% include_relative _includes/services.md %}
+正在努力中，敬请期待！
+
+## Anime
+
+最近在看的番：
+- 葬送的芙莉莲
+- 迷宫饭
+- 我推的孩子
+
+<!-- {% include_relative _includes/services.md %} -->
