@@ -1,0 +1,56 @@
+.dark-mode {
+  background-color: #20212b;
+  color: #dadbdf;
+}
+
+.dark-mode autocolor {
+  color: #dadbdf;
+}
+
+.dark-mode lightonly {
+  visibility: hidden;
+}
+
+.dark-mode darkonly {
+  visibility: visible;
+}
+
+.dark-mode papertitle {
+  color: #eeeff0;
+}
+
+.dark-mode .social-icons a {
+  color: #3eb7f0 !important;
+}
+
+.dark-mode .social-icons a .social-label {
+  color: #3eb7f0;
+}
+
+.dark-mode h1,
+.dark-mode h3,
+.dark-mode h4,
+.dark-mode h5,
+.dark-mode h6 {
+  color: rgb(62, 183, 240);
+}
+
+.dark-mode h2 {
+  color: rgb(62, 183, 240);
+}
+
+.dark-mode a {
+  color: rgb(62, 183, 240);
+}
+
+.dark-mode strong {
+  color: #eeeff0;
+}
+
+.dark-mode th {
+  color: rgb(62, 183, 240);
+}
+
+.dark-mode dt {
+  color: rgb(62, 183, 240);
+}
