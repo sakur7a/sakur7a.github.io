@@ -54,3 +54,12 @@
 .dark-mode dt {
   color: rgb(62, 183, 240);
 }
+
+/* Toggle bar */
+.toggle-bar a {
+  color: #043361;
+}
+
+.dark-mode .toggle-bar a {
+  color: #3eb7f0 !important;
+}
