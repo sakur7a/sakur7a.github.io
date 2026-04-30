@@ -10,15 +10,32 @@
     applyLang(lang);
   }
 
+  function isInHeader(el) {
+    return !!el.closest('header');
+  }
+
   function applyLang(lang) {
     var enEls = document.querySelectorAll('.lang-en');
     var zhEls = document.querySelectorAll('.lang-zh');
+
     for (var i = 0; i < enEls.length; i++) {
-      enEls[i].style.display = lang === 'en' ? '' : 'none';
+      if (isInHeader(enEls[i])) {
+        enEls[i].style.visibility = lang === 'en' ? 'visible' : 'hidden';
+        enEls[i].style.position = lang === 'en' ? '' : 'absolute';
+      } else {
+        enEls[i].style.display = lang === 'en' ? '' : 'none';
+      }
     }
+
     for (var i = 0; i < zhEls.length; i++) {
-      zhEls[i].style.display = lang === 'zh' ? '' : 'none';
+      if (isInHeader(zhEls[i])) {
+        zhEls[i].style.visibility = lang === 'zh' ? 'visible' : 'hidden';
+        zhEls[i].style.position = lang === 'zh' ? '' : 'absolute';
+      } else {
+        zhEls[i].style.display = lang === 'zh' ? '' : 'none';
+      }
     }
+
     updateLabel(lang);
   }
 
