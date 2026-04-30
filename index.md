@@ -5,19 +5,19 @@ layout: homepage
 <h2 class="lang-en">About Me</h2>
 <h2 class="lang-zh" style="display:none">关于我</h2>
 
-<span class="lang-en">I am a Ph.D. student at ...</span>
-<span class="lang-zh" style="display:none">我是……的一名博士研究生。</span>
+<span class="lang-en">I am currently a sophomore undergraduate student at Shenzhen University, with a research interest in generative models, and I appreciate concise and elegant conclusions.</span>
+<span class="lang-zh" style="display:none">我目前是深圳大学大二本科生，研究兴趣是生成模型，我喜欢简洁优美的结论。</span>
 
 <h2 class="lang-en">Research Interests</h2>
 <h2 class="lang-zh" style="display:none">研究方向</h2>
 
 <ul class="lang-en">
-<li><strong>Computer Vision:</strong> image recognition, image generation, video captioning</li>
-<li><strong>Machine Learning:</strong> meta-learning, incremental learning, transfer learning</li>
+<li><strong>Computer Vision:</strong> image generation</li>
+<li><strong>NLP:</strong> large Model Inference, multi-agent</li>
 </ul>
 <ul class="lang-zh" style="display:none">
-<li><strong>计算机视觉：</strong>图像识别、图像生成、视频描述</li>
-<li><strong>机器学习：</strong>元学习、增量学习、迁移学习</li>
+<li><strong>计算机视觉：</strong>图像生成</li>
+<li><strong>自然语言处理：大模型推理, 多智能体</strong></li>
 </ul>
 
 <!--
