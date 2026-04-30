@@ -20,6 +20,7 @@ layout: homepage
 <li><strong>机器学习：</strong>元学习、增量学习、迁移学习</li>
 </ul>
 
+<!--
 <h2 class="lang-en">News</h2>
 <h2 class="lang-zh" style="display:none">新闻</h2>
 
@@ -35,12 +36,13 @@ layout: homepage
 <li><strong>[2019年9月]</strong> 我们关于小样本学习的论文被 NeurIPS 2019 接收。</li>
 <li><strong>[2019年3月]</strong> 我们关于小样本学习的论文被 CVPR 2019 接收。</li>
 </ul>
+-->
 
 <h2 class="lang-en">Publications</h2>
 <h2 class="lang-zh" style="display:none">论文发表</h2>
 
-<span class="lang-en">Working hard on it, stay tuned!</span>
-<span class="lang-zh" style="display:none">正在努力中，敬请期待！</span>
+<span class="lang-en">Working hard on it, wish me luck.</span>
+<span class="lang-zh" style="display:none">正在努力中，祝我好运。</span>
 
 <h2 class="lang-en">Anime</h2>
 <h2 class="lang-zh" style="display:none">动漫</h2>
