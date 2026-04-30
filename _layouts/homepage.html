@@ -45,21 +45,38 @@
         <a class="image avatar"><img src="{{ site.avatar }}" alt="avatar" /></a>
         {% endif %}
 
-        <h1>{{ site.title }}</h1>
+        <h1>
+          <span class="lang-en">{{ site.title }}</span>
+          <span class="lang-zh" style="display:none">王锦政</span>
+        </h1>
 
         {% if site.position %}
-        <position style="font-size:1.10rem;">{{ site.position }}</position>
+        <position style="font-size:1.10rem;">
+          <span class="lang-en">{{ site.position }}</span>
+          <span class="lang-zh" style="display:none">本科在读</span>
+        </position>
         <br>
         {% endif %}
         {% if site.affiliation %}
-        <a href="{{ site.affiliation_link }}" rel="noopener"><autocolor>{{ site.affiliation }}</autocolor></a>
+        <a href="{{ site.affiliation_link }}" rel="noopener"><autocolor>
+          <span class="lang-en">{{ site.affiliation }}</span>
+          <span class="lang-zh" style="display:none">深圳大学，计算机与软件学院</span>
+        </autocolor></a>
         <br>
         {% endif %}
         {% if site.email %}
         <email>{{ site.email }}</email>
         {% endif %}
 
-        <br>
+        <div class="toggle-bar" style="margin-top:12px;display:flex;justify-content:center;gap:16px;">
+          <a class="lang-toggle-btn" href="javascript:void(0)" title="Toggle language" style="font-size:0.9rem;color:#043361;text-decoration:none;cursor:pointer;transition:transform 0.2s ease;">
+            <i class="fa-solid fa-language"></i> <span class="toggle-label">中文</span>
+          </a>
+          <a class="dark-toggle-btn" href="javascript:void(0)" title="Toggle dark mode" style="font-size:0.9rem;color:#043361;text-decoration:none;cursor:pointer;transition:transform 0.2s ease;">
+            <i class="fa-solid fa-moon"></i>
+          </a>
+        </div>
+
         <br>
         <div class="social-icons">
         {% if site.github_link %}
