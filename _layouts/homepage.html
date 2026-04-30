@@ -45,23 +45,23 @@
         <a class="image avatar"><img src="{{ site.avatar }}" alt="avatar" /></a>
         {% endif %}
 
-        <h1 style="position:relative;">
+        <h1>
           <span class="lang-en">{{ site.title }}</span>
-          <span class="lang-zh" style="position:absolute;visibility:hidden;">王锦政</span>
+          <span class="lang-zh" style="display:none">王锦政</span>
         </h1>
 
-        <div style="min-height:80px;">
+        <div style="min-height:100px;">
         {% if site.position %}
-        <position style="font-size:1.10rem;position:relative;">
+        <position style="font-size:1.10rem;">
           <span class="lang-en">{{ site.position }}</span>
-          <span class="lang-zh" style="position:absolute;visibility:hidden;">本科在读</span>
+          <span class="lang-zh" style="display:none">本科在读</span>
         </position>
         <br>
         {% endif %}
         {% if site.affiliation %}
-        <a href="{{ site.affiliation_link }}" rel="noopener"><autocolor style="position:relative;">
+        <a href="{{ site.affiliation_link }}" rel="noopener"><autocolor>
           <span class="lang-en">{{ site.affiliation }}</span>
-          <span class="lang-zh" style="position:absolute;visibility:hidden;">深圳大学，计算机与软件学院</span>
+          <span class="lang-zh" style="display:none">深圳大学，计算机与软件学院</span>
         </autocolor></a>
         <br>
         {% endif %}
