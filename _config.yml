@@ -24,8 +24,8 @@ rss_link: /feed.xml
 # Images (e.g., your profile picture and your website's favicon) 
 # "favicon" and "favicon_dark" are used for the light and dark modes, respectively. 
 avatar: ./assets/img/avatar.jpg
-favicon: ./assets/img/girl.png
-favicon_dark: ./assets/img/girl.png
+favicon: ./assets/img/style.png
+favicon_dark: ./assets/img/style.png
 
 # Footnote
 # You may use the option to disable the footnote, "Powered by Jekyll and Minimal Light theme."
