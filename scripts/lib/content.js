@@ -120,10 +120,10 @@ export async function transformDraft(root, draft, options = {}) {
   const existingDir = existing ? inside(root, existing.assetPath, `${ASSETS}/images/posts/`) : null;
   const data = { ...input.data, title, date, slug, categories: input.data.categories || existing?.data.categories || ['随笔'], source_file: sourceName, visibility: 'public', permalink: `/Blog/${day}/${slug}.html` };
   if (!data.summary) data.summary = input.body.replace(/!\[\[[^\]]*\]\]|!\[[^\]]*\]\([^)]*\)/g, '').split(/\r?\n/).find(line => line.trim())?.replace(/^[#>* ]+/, '').slice(0, 80) || title;
-  if (!data.cover && existing?.cover) data.cover = existing.cover;
+  if (existing?.cover) data.cover = existing.cover;
   if (data.cover?.startsWith('/assets/')) data.cover = '/Blog' + data.cover;
   if (data.image?.startsWith('/assets/')) data.image = '/Blog' + data.image;
-  data.cover_position ||= existing?.coverPosition || '50% 50%';
+  data.cover_position = options.coverPosition || existing?.coverPosition || data.cover_position || '50% 50%';
   if (existingDir && existingDir !== assetDir && fs.existsSync(existingDir)) {
     fs.cpSync(existingDir, assetDir, { recursive: true });
     if (data.cover) data.cover = data.cover.replace(`/images/posts/${path.basename(existingDir)}/`, `/images/posts/${basename}/`);

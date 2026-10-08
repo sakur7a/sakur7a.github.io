@@ -57,6 +57,8 @@ This repository starts from one reviewed snapshot of the unified Astro project. 
 
 The canonical repository is `sakur7a/sakur7a.github.io`. Its `main` workflow validates, builds and deploys both `/` and `/Blog/`; pull requests only validate. Deployment is restricted to this canonical repository, so temporary validation repositories and renamed backups do not deploy. The old Blog Pages publishing and deployment workflow are disabled after the unified deployment passes its production checks.
 
+Production cutover completed on 2026-10-08. The unified homepage and blog retain their original URLs. The retained Blog and legacy homepage repositories have Pages and their deployment workflows disabled. Desktop/mobile production checks verified all 12 article addresses, images, RSS, search, formulas and shared theme state. Republishing preserves the currently published cover and crop, including when a Vault original contains older cover metadata; explicitly selecting a new cover or crop replaces it.
+
 The desktop publisher is installed in the existing Vault and targets `D:\MyHomepage\sakur7a.github.io`. For plugin updates, run `npm run plugin:sync` and reload it in Obsidian. The original plugin is backed up at `D:/ProjectBackups/20261008-obsidian-unified/`; repository bundles, reviewed snapshots and cutover records are retained under `D:/ProjectBackups/20261008-clean-site/`.
 
 For rollback, rename the unified repository aside, return the legacy homepage repository to `sakur7a.github.io`, restore its Pages workflow, and re-enable the old Blog Pages/workflow. Restore the previous vault plugin and its `D:\MyBlog` setting. Both retained repositories and the Vault remain available; the archived mobile publisher and private site are not part of this migration.

@@ -232,3 +232,18 @@ test('all migrated posts retain explicit original sources', () => {
     assert.ok(post.sourcePath, post.postPath);
   }
 });
+
+test('republishing a stale vault original keeps the currently published cover and crop', async t => {
+  const root = temporary(t);
+  const draft = path.join(root, 'original.md');
+  writeDocument(draft, { title: 'Original', slug: 'original', date: '2026-10-08 12:00:00 +0800', cover: 'https://example.com/old.webp', cover_position: '10% 20%' }, 'body');
+  const first = await transformDraft(root, draft);
+  const published = readDocument(path.join(root, first.postPath));
+  writeDocument(path.join(root, first.postPath), { ...published.data, cover: 'https://example.com/current.webp', cover_position: '54% 22%' }, published.body);
+  await transformDraft(root, draft);
+  const republished = readDocument(path.join(root, first.postPath));
+  assert.equal(republished.data.cover, 'https://example.com/current.webp');
+  assert.equal(republished.data.cover_position, '54% 22%');
+  await transformDraft(root, draft, { coverPosition: '30% 40%' });
+  assert.equal(readDocument(path.join(root, first.postPath)).data.cover_position, '30% 40%');
+});
