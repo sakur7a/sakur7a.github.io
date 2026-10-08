@@ -20,15 +20,18 @@ test('homepage navigation reaches sections and the mobile menu closes correctly'
     await menu.click();
   }
 
-  await navigation.getByRole('link', { name: 'Publications', exact: true }).click();
-  await expect(page).toHaveURL(/\/#publications$/);
-  await expect(page.getByRole('heading', { name: 'Publications', exact: true })).toBeInViewport();
-  if (isMobile) {
-    await expect(menu).toHaveAttribute('aria-expanded', 'false');
-    await expect(navigation).not.toBeVisible();
-    await menu.click();
+  for (const section of ['Education', 'Publications']) {
+    const hash = `#${section.toLowerCase()}`;
+    await navigation.getByRole('link', { name: section, exact: true }).click();
+    await expect(page).toHaveURL(new RegExp(`/${hash}$`));
+    await expect(page.getByRole('heading', { name: section, exact: true })).toBeInViewport();
+    if (isMobile) {
+      await expect(menu).toHaveAttribute('aria-expanded', 'false');
+      await expect(navigation).not.toBeVisible();
+      await menu.click();
+    }
+    await expect(navigation.getByRole('link', { name: section, exact: true })).toHaveAttribute('aria-current', 'location');
   }
-  await expect(navigation.getByRole('link', { name: 'Publications', exact: true })).toHaveAttribute('aria-current', 'location');
   await navigation.getByRole('link', { name: 'About', exact: true }).click();
   await expect(page).toHaveURL(/\/#about$/);
   await expect(page.getByRole('heading', { name: 'About', exact: true })).toBeInViewport();

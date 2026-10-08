@@ -1,0 +1,25 @@
+---
+import { education } from '../config/site';
+---
+
+<section class="education-section" id="education" aria-labelledby="education-heading">
+  <h2 id="education-heading">Education</h2>
+  <ul class="education-list">
+    {education.map((entry) => (
+      <li class="education-entry">
+        <a class="education-logo" href={entry.universityUrl} aria-label={entry.university}>
+          <img src={entry.logo} alt={`${entry.university} logo`} width="277" height="80" />
+        </a>
+        <div class="education-details">
+          <h3><a href={entry.universityUrl}>{entry.university}</a></h3>
+          <p class="education-school"><a href={entry.schoolUrl}>{entry.school}</a></p>
+          <p class="education-degree">{entry.degree}</p>
+        </div>
+        <div class="education-meta">
+          {entry.period && <p class="education-period">{entry.period}</p>}
+          <p class="education-location">{entry.location}</p>
+        </div>
+      </li>
+    ))}
+  </ul>
+</section>

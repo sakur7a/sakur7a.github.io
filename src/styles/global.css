@@ -211,10 +211,33 @@ html.dark-mode .position { color: var(--link); }
 .content section > p:last-child { margin-bottom: 0; }
 .publication-note { padding: 23px 24px; border: 1px solid var(--divider); border-radius: 9px; background: var(--panel-subtle); }
 .publication-note p { margin: 0; color: var(--muted); }
-.anime-section > p { margin-bottom: 12px; }
-.anime-list { margin: 0; padding-left: 20px; }
-.anime-list li { padding-left: 4px; margin-bottom: 8px; }
-.anime-list li::marker { color: var(--link); }
+.education-list { margin: 0; padding: 0; list-style: none; border-top: 1px solid var(--divider); }
+.education-entry {
+  display: grid;
+  grid-template-columns: 128px minmax(0, 1fr) 156px;
+  align-items: center;
+  gap: 24px;
+  padding: 26px 0;
+  border-bottom: 1px solid var(--divider);
+}
+.education-logo { display: flex; align-items: center; justify-content: center; }
+.education-logo img { display: block; width: 100%; height: auto; object-fit: contain; }
+html.dark-mode .education-logo { padding: 8px; border-radius: 4px; background: #fff; }
+.education-details { min-width: 0; }
+.education-details h3 { margin: 0 0 6px; font: 600 18px/1.5 var(--sans); }
+.education-details p { margin: 0; font-size: 14px; line-height: 1.7; }
+.education-details .education-school { margin-bottom: 4px; }
+.education-degree, .education-meta { color: var(--muted); }
+.education-meta { text-align: right; font-size: 13px; line-height: 1.7; }
+.education-meta p { margin: 0; }
+.education-meta .education-period { margin-bottom: 4px; }
+@media (min-width: 901px) and (max-width: 1200px) {
+  .education-entry { grid-template-columns: 112px minmax(0, 1fr); gap: 6px 22px; }
+  .education-logo { grid-row: span 2; }
+  .education-meta { grid-column: 2; text-align: left; }
+  .education-meta p { display: inline; }
+  .education-meta p + p::before { content: ' · '; }
+}
 
 @media (max-width: 1100px) and (min-width: 901px) {
   .wrapper { grid-template-columns: 280px minmax(0, 1fr); gap: 40px; padding-inline: 32px; }
@@ -245,6 +268,11 @@ html.dark-mode .position { color: var(--link); }
   .research-interests { max-width: 600px; margin-inline: auto; padding: 22px 24px; }
   .research-interests li strong { display: inline; margin-right: 8px; }
   .content section + section { margin-top: 34px; }
+  .education-entry { grid-template-columns: 136px minmax(0, 1fr); gap: 8px 24px; }
+  .education-logo { grid-row: span 2; }
+  .education-meta { grid-column: 2; text-align: left; }
+  .education-meta p { display: inline; }
+  .education-meta p + p::before { content: ' · '; }
 }
 @media (max-width: 480px) {
   :root { --header-height: 72px; }
@@ -260,6 +288,9 @@ html.dark-mode .position { color: var(--link); }
   .research-interests li strong { display: block; }
   h2 { font-size: 26px; margin-bottom: 18px; }
   .publication-note { padding: 20px; }
+  .education-entry { grid-template-columns: minmax(0, 1fr); gap: 14px; padding: 24px 0; }
+  .education-logo { grid-row: auto; justify-content: flex-start; width: 160px; }
+  .education-meta { grid-column: 1; }
 }
 @media (max-width: 360px) {
   .header-inner { padding-inline: 16px; }

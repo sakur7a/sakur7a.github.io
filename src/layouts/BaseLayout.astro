@@ -80,10 +80,13 @@ const {
 
         const updateNavigation = () => {
           header.classList.toggle('is-scrolled', window.scrollY > 8);
-          const publications = document.getElementById('publications');
+          const links = Array.from(navigation.querySelectorAll('a'));
           const atBottom = window.scrollY + window.innerHeight >= root.scrollHeight - 2;
-          const current = publications.getBoundingClientRect().top <= 120 || (atBottom && location.hash === '#publications') ? '#publications' : '#about';
-          navigation.querySelectorAll('a').forEach((link) => {
+          const visibleSections = links.filter((link) => document.querySelector(link.getAttribute('href')).getBoundingClientRect().top <= 120);
+          const current = atBottom && links.some((link) => link.getAttribute('href') === location.hash)
+            ? location.hash
+            : (visibleSections.at(-1) || links[0]).getAttribute('href');
+          links.forEach((link) => {
             const active = link.getAttribute('href') === current;
             link.classList.toggle('is-active', active);
             if (active) link.setAttribute('aria-current', 'location');

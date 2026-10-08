@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import ProfileSidebar from '../components/ProfileSidebar.astro';
+import Education from '../components/Education.astro';
 ---
 
 <BaseLayout>
@@ -11,20 +12,12 @@ import ProfileSidebar from '../components/ProfileSidebar.astro';
     <p>I am currently a sophomore undergraduate student at <strong>Shenzhen University</strong>, with a research interest in <strong>generative models</strong>, and I appreciate concise and elegant conclusions.</p>
   </section>
 
+  <Education />
+
   <section class="publications-section" id="publications" aria-labelledby="publications-heading">
     <h2 id="publications-heading">Publications</h2>
     <div class="publication-note">
       <p>Working hard on it, wish me luck.</p>
     </div>
-  </section>
-
-  <section class="anime-section" id="anime" aria-labelledby="anime-heading">
-    <h2 id="anime-heading">Anime</h2>
-    <p>Currently watching:</p>
-    <ul class="anime-list">
-      <li>Frieren: Beyond Journey's End</li>
-      <li>Dungeon Meshi</li>
-      <li>Oshi no Ko</li>
-    </ul>
   </section>
 </BaseLayout>
