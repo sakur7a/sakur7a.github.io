@@ -1,0 +1,9 @@
+{
+  "id": "sakura-blog-publisher",
+  "name": "Sakura Blog Publisher",
+  "version": "0.7.2",
+  "minAppVersion": "1.5.0",
+  "description": "Publish and manage Markdown content in the unified Sakura Astro site.",
+  "author": "Sakura",
+  "isDesktopOnly": true
+}

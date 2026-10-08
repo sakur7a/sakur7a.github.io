@@ -1,0 +1,9 @@
+---
+import { render } from 'astro:content';
+import BlogLayout from '../../layouts/BlogLayout.astro';
+import { getPosts, isoDate } from '../../lib/blog';
+const moments = await Promise.all((await getPosts()).filter(entry => entry.data.categories.includes('moments')).map(async entry => ({ entry, ...(await render(entry)) })));
+---
+<BlogLayout title="Moments" image="/Blog/assets/images/site/wallhaven-d8ey2m-1782476599251.png" position="51% 43%">
+  <article class="hentry"><div class="entry-content"><h1 class="post-title">Moments</h1><div class="moments-list">{moments.length ? moments.map(({ entry, Content }) => <article class="moment-card"><div class="moment-body"><Content /></div><time class="moment-date" datetime={isoDate(entry.data.date)}>{new Intl.DateTimeFormat('zh-CN', { timeZone: 'Asia/Shanghai', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', hour12: false }).format(new Date(entry.data.date))}</time></article>) : <p class="moments-empty">还没有任何 moment。</p>}</div></div></article>
+</BlogLayout>

@@ -1,0 +1,23 @@
+---
+import { site } from '../config/site';
+import Icon from './HomepageIcon.astro';
+---
+
+<header class="site-header">
+  <div class="header-inner">
+    <a class="site-name" href="/">{site.title}</a>
+    <nav class="site-navigation" id="site-navigation" aria-label="Main navigation">
+      <a class="is-active" href="#about" aria-current="location">About</a>
+      <a href="#publications">Publications</a>
+    </nav>
+    <div class="header-controls">
+      <button class="dark-toggle-btn icon-button" type="button" aria-label="Switch to dark mode" title="Switch to dark mode">
+        <Icon name="moon" class="theme-icon-moon" />
+        <Icon name="sun" class="theme-icon-sun" />
+      </button>
+      <button class="menu-toggle-btn icon-button" type="button" aria-label="Open navigation" aria-controls="site-navigation" aria-expanded="false">
+        <Icon name="menu" />
+      </button>
+    </div>
+  </div>
+</header>

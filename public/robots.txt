@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://sakur7a.github.io/sitemap.xml

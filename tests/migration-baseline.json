@@ -1,0 +1,1280 @@
+[
+  {
+    "file": "2026-05-07-ml.md",
+    "url": "/Blog/2026-05-07/ml.html",
+    "headings": [
+      {
+        "level": 1,
+        "id": "一pca类算法",
+        "text": "一、PCA类算法"
+      },
+      {
+        "level": 2,
+        "id": "11-pca-的核心目的",
+        "text": "1.1 PCA 的核心目的"
+      },
+      {
+        "level": 2,
+        "id": "12-pca-推导主线",
+        "text": "1.2 PCA 推导主线"
+      },
+      {
+        "level": 3,
+        "id": "1-求均值",
+        "text": "1. 求均值"
+      },
+      {
+        "level": 3,
+        "id": "2-中心化",
+        "text": "2. 中心化"
+      },
+      {
+        "level": 3,
+        "id": "3-构造散度矩阵--协方差矩阵",
+        "text": "3. 构造散度矩阵 / 协方差矩阵"
+      },
+      {
+        "level": 3,
+        "id": "4-投影到一个方向",
+        "text": "4. 投影到一个方向"
+      },
+      {
+        "level": 3,
+        "id": "5-投影后的总方差",
+        "text": "5. 投影后的总方差"
+      },
+      {
+        "level": 3,
+        "id": "6-用拉格朗日乘子求解",
+        "text": "6. 用拉格朗日乘子求解"
+      },
+      {
+        "level": 3,
+        "id": "7-pca-的核心结论",
+        "text": "7. PCA 的核心结论"
+      },
+      {
+        "level": 2,
+        "id": "13-多个主成分的形式",
+        "text": "1.3 多个主成分的形式"
+      },
+      {
+        "level": 2,
+        "id": "14-pca-的另一种理解最小重构误差",
+        "text": "1.4 PCA 的另一种理解：最小重构误差"
+      },
+      {
+        "level": 2,
+        "id": "15-pca-怎么用于人脸识别eigenfaces",
+        "text": "1.5 PCA 怎么用于人脸识别：Eigenfaces"
+      },
+      {
+        "level": 3,
+        "id": "1-图像向量化",
+        "text": "1. 图像向量化"
+      },
+      {
+        "level": 3,
+        "id": "2-求平均脸",
+        "text": "2. 求平均脸"
+      },
+      {
+        "level": 3,
+        "id": "3-减去平均脸",
+        "text": "3. 减去平均脸"
+      },
+      {
+        "level": 3,
+        "id": "4-组成训练矩阵",
+        "text": "4. 组成训练矩阵"
+      },
+      {
+        "level": 3,
+        "id": "5-正常-pca-要求协方差矩阵",
+        "text": "5. 正常 PCA 要求协方差矩阵"
+      },
+      {
+        "level": 2,
+        "id": "16-eigenfaces-的小矩阵技巧",
+        "text": "1.6 Eigenfaces 的小矩阵技巧"
+      },
+      {
+        "level": 3,
+        "id": "关键推导",
+        "text": "关键推导"
+      },
+      {
+        "level": 2,
+        "id": "17-人脸如何用-eigenfaces-表示",
+        "text": "1.7 人脸如何用 Eigenfaces 表示？"
+      },
+      {
+        "level": 2,
+        "id": "18-人脸重构公式",
+        "text": "1.8 人脸重构公式"
+      },
+      {
+        "level": 2,
+        "id": "19-人脸识别流程",
+        "text": "1.9 人脸识别流程"
+      },
+      {
+        "level": 2,
+        "id": "110-延伸",
+        "text": "1.10 延伸"
+      },
+      {
+        "level": 3,
+        "id": "1101-2dpca",
+        "text": "1.10.1 2DPCA"
+      },
+      {
+        "level": 3,
+        "id": "1102-glram",
+        "text": "1.10.2 GLRAM"
+      },
+      {
+        "level": 3,
+        "id": "1103--fda",
+        "text": "1.10.3  FDA"
+      },
+      {
+        "level": 3,
+        "id": "1104--kfda",
+        "text": "1.10.4  KFDA"
+      },
+      {
+        "level": 1,
+        "id": "二线性降维",
+        "text": "二、线性降维"
+      },
+      {
+        "level": 2,
+        "id": "21-总体知识结构",
+        "text": "2.1 总体知识结构"
+      },
+      {
+        "level": 2,
+        "id": "22-统一符号",
+        "text": "2.2 统一符号"
+      },
+      {
+        "level": 2,
+        "id": "23pca--eigenfaces",
+        "text": "2.3PCA / Eigenfaces"
+      },
+      {
+        "level": 3,
+        "id": "231-pca-的直观目标",
+        "text": "2.3.1 PCA 的直观目标"
+      },
+      {
+        "level": 3,
+        "id": "232-pca-公式推导",
+        "text": "2.3.2 PCA 公式推导"
+      },
+      {
+        "level": 4,
+        "id": "33-pca-的局限",
+        "text": "3.3 PCA 的局限"
+      },
+      {
+        "level": 2,
+        "id": "24-lda--fisherfaces",
+        "text": "2.4 LDA / Fisherfaces"
+      },
+      {
+        "level": 3,
+        "id": "241-lda-的目标",
+        "text": "2.4.1 LDA 的目标"
+      },
+      {
+        "level": 3,
+        "id": "242-lda-单方向推导",
+        "text": "2.4.2 LDA 单方向推导"
+      },
+      {
+        "level": 3,
+        "id": "243-多维-lda",
+        "text": "2.4.3 多维 LDA"
+      },
+      {
+        "level": 3,
+        "id": "244-fisherfacespca--lda",
+        "text": "2.4.4 Fisherfaces：PCA + LDA"
+      },
+      {
+        "level": 2,
+        "id": "25-lambertian-线性子空间模型",
+        "text": "2.5 Lambertian 线性子空间模型"
+      },
+      {
+        "level": 2,
+        "id": "26-mmcmaximum-margin-criterion",
+        "text": "2.6 MMC：Maximum Margin Criterion"
+      },
+      {
+        "level": 3,
+        "id": "261-mmc-的基本思想",
+        "text": "2.6.1 MMC 的基本思想"
+      },
+      {
+        "level": 4,
+        "id": "62-mmc-的-margin-推导",
+        "text": "6.2 MMC 的 margin 推导"
+      },
+      {
+        "level": 3,
+        "id": "263-mmc-的特征值推导",
+        "text": "2.6.3 MMC 的特征值推导"
+      },
+      {
+        "level": 3,
+        "id": "264-mmc-与-lda-的关系",
+        "text": "2.6.4 MMC 与 LDA 的关系"
+      },
+      {
+        "level": 2,
+        "id": "27-nldanull-space-lda",
+        "text": "2.7 NLDA：Null Space LDA"
+      },
+      {
+        "level": 3,
+        "id": "271-为什么需要-nlda",
+        "text": "2.7.1 为什么需要 NLDA"
+      },
+      {
+        "level": 3,
+        "id": "272-nlda-推导流程",
+        "text": "2.7.2 NLDA 推导流程"
+      },
+      {
+        "level": 2,
+        "id": "28-oldaorthogonal-lda",
+        "text": "2.8. OLDA：Orthogonal LDA"
+      },
+      {
+        "level": 3,
+        "id": "281-olda-的目标",
+        "text": "2.8.1 OLDA 的目标"
+      },
+      {
+        "level": 3,
+        "id": "282-olda-推导流程",
+        "text": "2.8.2 OLDA 推导流程"
+      },
+      {
+        "level": 3,
+        "id": "283-nlda-与-olda-的等价条件",
+        "text": "2.8.3 NLDA 与 OLDA 的等价条件"
+      },
+      {
+        "level": 2,
+        "id": "29-lpp-与-mfa从全局结构到局部结构",
+        "text": "2.9 LPP 与 MFA：从全局结构到局部结构"
+      },
+      {
+        "level": 4,
+        "id": "91-pcalda-的不足",
+        "text": "9.1 PCA/LDA 的不足"
+      },
+      {
+        "level": 3,
+        "id": "292-图嵌入统一框架",
+        "text": "2.9.2 图嵌入统一框架"
+      },
+      {
+        "level": 3,
+        "id": "293-lpp",
+        "text": "2.9.3 LPP"
+      },
+      {
+        "level": 3,
+        "id": "294-mfa",
+        "text": "2.9.4 MFA"
+      },
+      {
+        "level": 2,
+        "id": "210ri-l_21-鲁棒降维",
+        "text": "2.10RI $(L_{2,1})$ 鲁棒降维"
+      },
+      {
+        "level": 3,
+        "id": "2101-为什么引入-l_21-范数",
+        "text": "2.10.1 为什么引入 $L_{2,1}$ 范数"
+      },
+      {
+        "level": 3,
+        "id": "2102-l_21-到加权二次型的推导",
+        "text": "2.10.2 $L_{2,1}$ 到加权二次型的推导"
+      },
+      {
+        "level": 3,
+        "id": "2103-ri-pca",
+        "text": "2.10.3 RI-PCA"
+      },
+      {
+        "level": 3,
+        "id": "2104-ri-lda",
+        "text": "2.10.4 RI-LDA"
+      },
+      {
+        "level": 3,
+        "id": "2105-ri-lpp-与-ri-mfa",
+        "text": "2.10.5 RI-LPP 与 RI-MFA"
+      },
+      {
+        "level": 2,
+        "id": "211-一个统一视角",
+        "text": "2.11 一个统一视角"
+      },
+      {
+        "level": 2,
+        "id": "212-建议掌握的推导重点",
+        "text": "2.12 建议掌握的推导重点"
+      },
+      {
+        "level": 3,
+        "id": "1-pca-推导",
+        "text": "1. PCA 推导"
+      },
+      {
+        "level": 3,
+        "id": "2-lda-推导",
+        "text": "2. LDA 推导"
+      },
+      {
+        "level": 3,
+        "id": "3-fisherfaces-小样本处理",
+        "text": "3. Fisherfaces 小样本处理"
+      },
+      {
+        "level": 3,
+        "id": "4-mmc-推导",
+        "text": "4. MMC 推导"
+      },
+      {
+        "level": 3,
+        "id": "5-nlda-推导",
+        "text": "5. NLDA 推导"
+      },
+      {
+        "level": 3,
+        "id": "6-olda-推导",
+        "text": "6. OLDA 推导"
+      },
+      {
+        "level": 3,
+        "id": "7-ri-l_21-推导",
+        "text": "7. RI $L_{2,1}$ 推导"
+      },
+      {
+        "level": 3,
+        "id": "213-一句话总结",
+        "text": "2.13 一句话总结"
+      },
+      {
+        "level": 1,
+        "id": "三回归",
+        "text": "三、回归"
+      },
+      {
+        "level": 2,
+        "id": "0-总体框架",
+        "text": "0. 总体框架"
+      },
+      {
+        "level": 2,
+        "id": "31-线性回归分类-lrc从最小二乘到最近子空间",
+        "text": "3.1 线性回归分类 LRC：从最小二乘到最近子空间"
+      },
+      {
+        "level": 3,
+        "id": "311-基本假设",
+        "text": "3.1.1 基本假设"
+      },
+      {
+        "level": 3,
+        "id": "312-最小二乘推导",
+        "text": "3.1.2 最小二乘推导"
+      },
+      {
+        "level": 3,
+        "id": "313-投影矩阵与重构误差",
+        "text": "3.1.3 投影矩阵与重构误差"
+      },
+      {
+        "level": 3,
+        "id": "314-模块化-lrc-与遮挡处理",
+        "text": "3.1.4 模块化 LRC 与遮挡处理"
+      },
+      {
+        "level": 2,
+        "id": "32-ell_21-范数为什么能做特征选择",
+        "text": "3.2 $\\ell_{2,1}$-范数：为什么能做特征选择？"
+      },
+      {
+        "level": 3,
+        "id": "321-定义",
+        "text": "3.2.1 定义"
+      },
+      {
+        "level": 2,
+        "id": "33-rfs联合-ell_21-最小化的鲁棒特征选择",
+        "text": "3.3 RFS：联合 $\\ell_{2,1}$ 最小化的鲁棒特征选择"
+      },
+      {
+        "level": 3,
+        "id": "331-从普通最小二乘开始",
+        "text": "3.3.1 从普通最小二乘开始"
+      },
+      {
+        "level": 3,
+        "id": "332-鲁棒损失残差不平方",
+        "text": "3.3.2 鲁棒损失：残差不平方"
+      },
+      {
+        "level": 3,
+        "id": "333-加入行稀疏正则",
+        "text": "3.3.3 加入行稀疏正则"
+      },
+      {
+        "level": 4,
+        "id": "334-约束形式推导",
+        "text": "3.3.4 约束形式推导"
+      },
+      {
+        "level": 3,
+        "id": "335-迭代重加权解法推导",
+        "text": "3.3.5 迭代重加权解法推导"
+      },
+      {
+        "level": 2,
+        "id": "34-udfs无监督场景下的判别特征选择",
+        "text": "3.4 UDFS：无监督场景下的判别特征选择"
+      },
+      {
+        "level": 3,
+        "id": "341-局部判别思想",
+        "text": "3.4.1 局部判别思想"
+      },
+      {
+        "level": 3,
+        "id": "342-局部判别分数推导",
+        "text": "3.4.2 局部判别分数推导"
+      },
+      {
+        "level": 3,
+        "id": "343-udfs-目标函数推导",
+        "text": "3.4.3 UDFS 目标函数推导"
+      },
+      {
+        "level": 3,
+        "id": "344-udfs-的优化",
+        "text": "3.4.4 UDFS 的优化"
+      },
+      {
+        "level": 2,
+        "id": "35-谱回归-srussl把谱嵌入转化为回归",
+        "text": "3.5 谱回归 SR/USSL：把谱嵌入转化为回归"
+      },
+      {
+        "level": 3,
+        "id": "351-图嵌入目标",
+        "text": "3.5.1 图嵌入目标"
+      },
+      {
+        "level": 3,
+        "id": "352-线性外推从-y-到投影方向-a",
+        "text": "3.5.2 线性外推：从 $y$ 到投影方向 $a$"
+      },
+      {
+        "level": 3,
+        "id": "353-谱回归核心定理",
+        "text": "3.5.3 谱回归核心定理"
+      },
+      {
+        "level": 3,
+        "id": "354-加入稀疏正则",
+        "text": "3.5.4 加入稀疏正则"
+      },
+      {
+        "level": 2,
+        "id": "36-四篇论文之间的关系",
+        "text": "3.6 四篇论文之间的关系"
+      },
+      {
+        "level": 2,
+        "id": "37-核心公式汇总",
+        "text": "3.7 核心公式汇总"
+      },
+      {
+        "level": 5,
+        "id": "lrc",
+        "text": "LRC"
+      },
+      {
+        "level": 5,
+        "id": "ell_21-范数",
+        "text": "$\\ell_{2,1}$-范数"
+      },
+      {
+        "level": 5,
+        "id": "rfs",
+        "text": "RFS"
+      },
+      {
+        "level": 5,
+        "id": "udfs",
+        "text": "UDFS"
+      },
+      {
+        "level": 5,
+        "id": "spectral-regression",
+        "text": "Spectral Regression"
+      },
+      {
+        "level": 2,
+        "id": "38-一句话总结",
+        "text": "3.8 一句话总结"
+      },
+      {
+        "level": 2,
+        "id": "post-toc-title",
+        "text": "文章目录"
+      }
+    ],
+    "images": [],
+    "formulas": [
+      "\n\\boxed{\\text{找几个方向，让数据投影过去以后，保留最多变化信息}}\n",
+      "\nx_1,x_2,\\dots,x_n\n",
+      "\nx_i\\in\\mathbb{R}^{d\\times 1}\n",
+      "\n\\mu=\\frac{1}{n}\\sum_{i=1}^{n}x_i\n",
+      "\n\\tilde{x}_i=x_i-\\mu\n",
+      "\n\\boxed{\\text{第 }i\\text{ 个样本相对于平均样本的差异}}\n",
+      "\n\\tilde{X}=\n[\\tilde{x}_1,\\tilde{x}_2,\\dots,\\tilde{x}_n]\n\\in\\mathbb{R}^{d\\times n}\n",
+      "\nS=\\sum_{i=1}^{n}\\tilde{x}_i\\tilde{x}_i^T\n",
+      "\nS=\\tilde{X}\\tilde{X}^T\n",
+      "\nS\\in\\mathbb{R}^{d\\times d}\n",
+      "\n\\boxed{\\text{数据在各个维度上怎么一起变化}}\n",
+      "\nS=\\sum_i(x_i-\\mu)(x_i-\\mu)^T\n",
+      "\nu\\in\\mathbb{R}^{d\\times 1}\n",
+      "\nu^Tu=1\n",
+      "\nz_i=u^T\\tilde{x}_i\n",
+      "\n(1\\times d)(d\\times 1)=1\\times 1\n",
+      "\n\\boxed{\\tilde{x}_i\\text{ 在方向 }u\\text{ 上的坐标}}\n",
+      "\n\\sum_{i=1}^{n}z_i^2\n",
+      "\n\\sum_{i=1}^{n}(u^T\\tilde{x}_i)^2\n",
+      "\n(u^T\\tilde{x}_i)^2 = u^T\\tilde{x}_i\\tilde{x}_i^Tu\n",
+      "\n\\sum_{i=1}^{n}(u^T\\tilde{x}_i)^2\n=\n\\sum_{i=1}^{n}u^T\\tilde{x}_i\\tilde{x}_i^Tu\n",
+      "\nu^T\n\\left(\n\\sum_{i=1}^{n}\\tilde{x}_i\\tilde{x}_i^T\n\\right)\nu\n",
+      "\n\\sum_{i=1}^{n}z_i^2 = u^TSu\n",
+      "\n\\boxed{\\max_u u^TSu}\n",
+      "\n\\boxed{u^Tu=1}\n",
+      "\n\\max_u u^TSu\n\\quad\n\\text{s.t.}\n\\quad\nu^Tu=1\n",
+      "\n\\mathcal{L}(u,\\lambda)\n=\nu^TSu-\\lambda(u^Tu-1)\n",
+      "\n\\frac{\\partial \\mathcal{L}}{\\partial u}\n=\n2Su-2\\lambda u\n",
+      "\n2Su-2\\lambda u=0\n",
+      "\nSu=\\lambda u\n",
+      "\n\\boxed{Su=\\lambda u}\n",
+      "\nu^TSu\n=\nu^T(\\lambda u)\n=\n\\lambda u^Tu\n=\n\\lambda\n",
+      "\n\\boxed{\\text{特征值 } \\lambda \\text{ 就是该方向上保留的方差大小}}\n",
+      "\n\\boxed{S\\text{ 最大特征值对应的特征向量}}\n",
+      "\nu_1,u_2,\\dots,u_k\n",
+      "\nU=[u_1,u_2,\\dots,u_k]\n\\in\\mathbb{R}^{d\\times k}\n",
+      "\nU^TU=I\n",
+      "\nY=U^T\\tilde{X}\n",
+      "\n(k\\times d)(d\\times n)=k\\times n\n",
+      "\n\\boxed{d\\text{ 维数据 } \\rightarrow k\\text{ 维数据}}\n",
+      "\n\\operatorname{tr}(U^TSU)\n",
+      "\n\\boxed{\\max_U \\operatorname{tr}(U^TSU),\\quad U^TU=I}\n",
+      "\n\\boxed{U=[q_1,q_2,\\dots,q_k]}\n",
+      "\ny_i=U^T\\tilde{x}_i\n",
+      "\n\\hat{x}_i=Uy_i = UU^T\\tilde{x}_i\n",
+      "\n\\tilde{x}_i \\approx UU^T\\tilde{x}_i\n",
+      "\n\\boxed{\\text{Eigenfaces = PCA 用在人脸图像上}}\n",
+      "\nh\\times w\n",
+      "\nN=h w\n",
+      "\n\\Gamma_i\\in\\mathbb{R}^{N\\times 1}\n",
+      "\nN=10000\n",
+      "\n\\Gamma_i\\in\\mathbb{R}^{10000\\times 1}\n",
+      "\n\\Gamma_1,\\Gamma_2,\\dots,\\Gamma_M\n",
+      "\n\\Psi=\\frac{1}{M}\\sum_{i=1}^{M}\\Gamma_i\n",
+      "\n\\Phi_i=\\Gamma_i-\\Psi\n",
+      "\n\\boxed{\\text{第 }i\\text{ 张脸相对于平均脸的差异}}\n",
+      "\nA=[\\Phi_1,\\Phi_2,\\dots,\\Phi_M]\n",
+      "\nA\\in\\mathbb{R}^{N\\times M}\n",
+      "\nN\\gg M\n",
+      "\nN=10000,\\quad M=100\n",
+      "\nC=AA^T\n",
+      "\nAA^T = (N\\times M)(M\\times N) = N\\times N\n",
+      "\nC\\in\\mathbb{R}^{10000\\times 10000}\n",
+      "\nAA^Tu=\\lambda u\n",
+      "\nu\\in\\mathbb{R}^{N\\times 1}\n",
+      "\nA^TA\n",
+      "\nA^TA = (M\\times N)(N\\times M) = M\\times M\n",
+      "\nA^TA v=\\lambda v\n",
+      "\nv\\in\\mathbb{R}^{M\\times 1}\n",
+      "\nA(A^TA v)=A(\\lambda v)\n",
+      "\nAA^T(Av)\n",
+      "\n\\lambda(Av)\n",
+      "\nAA^T(Av)=\\lambda(Av)\n",
+      "\n\\boxed{u=Av}\n",
+      "\n\\boxed{A^TAv=\\lambda v \\Rightarrow AA^T(Av)=\\lambda(Av)}\n",
+      "\nu_1,u_2,\\dots,u_K\n",
+      "\nU=[u_1,u_2,\\dots,u_K]\n\\in\\mathbb{R}^{N\\times K}\n",
+      "\n\\Phi=\\Gamma-\\Psi\n",
+      "\n\\Omega=U^T\\Phi\n",
+      "\n(K\\times N)(N\\times 1)=K\\times 1\n",
+      "\n\\Omega=\n\\begin{bmatrix}\n\\omega_1\\\\\n\\omega_2\\\\\n\\vdots\\\\\n\\omega_K\n\\end{bmatrix}\n",
+      "\n\\Omega=U^T\\Phi\n",
+      "\n\\Phi\\approx U\\Omega\n",
+      "\n\\boxed{\\Gamma\\approx \\Psi+U\\Omega}\n",
+      "\n\\boxed{\\Gamma\\approx \\Psi+ \\sum_{k=1}^{K}\\omega_k u_k}\n",
+      "\n\\boxed{\\text{一张人脸 } \\approx \\text{平均脸} + \\text{若干特征脸的加权组合}}\n",
+      "\nu_k=Av_k\n",
+      "\n\\Omega_i=U^T\\Phi_i\n",
+      "\n\\Phi_{\\text{test}}=\\Gamma_{\\text{test}}-\\Psi\n",
+      "\n\\Omega_{\\text{test}}=U^T\\Phi_{\\text{test}}\n",
+      "\n\\|\\Omega_{\\text{test}}-\\Omega_i\\|\n",
+      "\n\\boxed{\\text{在低维特征脸空间中找最像的脸}}\n",
+      "\n\\boxed{\\text{PCA 拉直图像；2DPCA 不拉直图像}}\n",
+      "\nA\\in\\mathbb{R}^{m\\times n},\\quad X\\in\\mathbb{R}^{n\\times 1}\n",
+      "\nY=AX\\in\\mathbb{R}^{m\\times 1}\n",
+      "\nG_t=\\frac{1}{M}\\sum_j(A_j-\\bar{A})^T(A_j-\\bar{A})\n",
+      "\nJ(X)=X^TG_tX\n",
+      "\nG_tX=\\lambda X\n",
+      "\n\\boxed{\\text{2DPCA 只右乘；GLRAM 左右都乘}}\n",
+      "\nA_i\\approx LM_iR^T\n",
+      "\nM_i=L^TA_iR\n",
+      "\n\\min\\sum_i\\|A_i-LM_iR^T\\|_F^2\n",
+      "\n\\max\\sum_i\\|L^TA_iR\\|_F^2\n",
+      "\n\\boxed{\\text{PCA 看方差；FDA 看类别}}\n",
+      "\nS_B=\\text{类间散度}\n",
+      "\nS_W=\\text{类内散度}\n",
+      "\n\\max_u\n\\frac{u^TS_Bu}{u^TS_Wu}\n",
+      "\nS_Bu=\\lambda S_Wu\n",
+      "\n\\boxed{\\text{KFDA = 在高维核空间里做 FDA}}\n",
+      "\nu\\rightarrow \\Phi(X)\\theta\n",
+      "\n\\frac{u^TS_Bu}{u^TS_Wu}\n\\rightarrow\n\\frac{\\theta^TM\\theta}{\\theta^TN\\theta}\n",
+      "\nM\\theta=\\lambda N\\theta\n",
+      "\nx\\in \\mathbb{R}^m \\quad \\xrightarrow[]{y=U^T x}\\quad y\\in \\mathbb{R}^d,\\quad d\\ll m\n",
+      "\nX=\\{x_1,x_2,\\dots,x_N\\},\\quad x_i\\in\\mathbb{R}^m\n",
+      "\n\\mu=\\frac{1}{N}\\sum_{k=1}^{N}x_k\n",
+      "\n\\mu_i=\\frac{1}{N_i}\\sum_{x_k\\in X_i}x_k\n",
+      "\ny_k=U^T x_k,\\quad U\\in \\mathbb{R}^{m\\times d}\n",
+      "\nS_T=\\sum_{k=1}^{N}(x_k-\\mu)(x_k-\\mu)^T\n",
+      "\nU^T S_T U\n",
+      "\nU_{\\text{PCA}} = \\arg\\max_U |U^T S_T U|\n",
+      "\n\\max_{u} u^T S_T u \\quad \\text{s.t.}\\quad u^T u=1\n",
+      "\n\\mathcal{L}(u,\\lambda) = u^T S_T u-\\lambda(u^Tu-1)\n",
+      "\n\\frac{\\partial \\mathcal{L}}{\\partial u} = 2S_Tu-2\\lambda u=0\n",
+      "\nS_Tu=\\lambda u\n",
+      "\nS_T=S_B+S_W\n",
+      "\n\\text{类间距离大，类内距离小}\n",
+      "\nS_B=\\sum_{i=1}^{c}N_i(\\mu_i-\\mu)(\\mu_i-\\mu)^T\n",
+      "\nS_W=\\sum_{i=1}^{c}\\sum_{x_k\\in X_i}(x_k-\\mu_i)(x_k-\\mu_i)^T\n",
+      "\nJ(U)=\\frac{|U^T S_B U|}{|U^T S_W U|}\n",
+      "\nJ(u)=\\frac{u^T S_B u}{u^T S_W u}\n",
+      "\nJ(u)=\\frac{u^T S_B u}{u^T S_W u}\n",
+      "\n\\max_u u^T S_B u \\quad \\text{s.t.}\\quad u^T S_W u=1\n",
+      "\n\\mathcal{L}(u,\\lambda) = u^T S_B u-\\lambda(u^T S_W u-1)\n",
+      "\n2S_Bu-2\\lambda S_Wu=0\n",
+      "\nS_Bu=\\lambda S_Wu\n",
+      "\nS_W^{-1}S_Bu=\\lambda u\n",
+      "\nU_{\\text{LDA}} = \\arg\\max_U \\frac{|U^T S_B U|}{|U^T S_W U|}\n",
+      "\nS_B u_i=\\lambda_i S_W u_i\n",
+      "\n\\operatorname{rank}(S_B)\\le c-1\n",
+      "\nm \\gg N\n",
+      "\n\\operatorname{rank}(S_W)\\le N-c\n",
+      "\nU_{\\text{opt}}^T = U_{\\text{LDA}}^T U_{\\text{PCA}}^T\n",
+      "\nU_{\\text{PCA}} = \\arg\\max_U |U^T S_T U|\n",
+      "\nU_{\\text{LDA}} = \\arg\\max_U \\frac{|U^T U_{\\text{PCA}}^T S_B U_{\\text{PCA}} U|}{|U^T U_{\\text{PCA}}^T S_W U_{\\text{PCA}} U|}\n",
+      "\nE(p)=a(p)n(p)^T s\n",
+      "\nI = B s\n",
+      "\nS_W^{-1}S_B\n",
+      "\nS_B-S_W\n",
+      "\nd_{ij} = |m_i-m_j|^2-s_i-s_j\n",
+      "\nJ = \\sum_{i}\\sum_{j}p_i p_j d_{ij}\n",
+      "\nJ = \\sum_i\\sum_j p_i p_j |m_i-m_j|^2 - \\sum_i\\sum_j p_i p_j(s_i+s_j)\n",
+      "\n\\sum_i\\sum_j p_i p_j |m_i-m_j|^2 \\propto \\operatorname{tr}(S_B)\n",
+      "\n\\sum_i\\sum_j p_i p_j(s_i+s_j) \\propto \\operatorname{tr}(S_W)\n",
+      "\nJ = \\operatorname{tr}(S_B)-\\operatorname{tr}(S_W) = \\operatorname{tr}(S_B-S_W)\n",
+      "\nJ(U) = \\operatorname{tr}\\left(U^T(S_B-S_W)U\\right)\n",
+      "\nU^T U=I\n",
+      "\n\\max_u u^T(S_B-S_W)u \\quad \\text{s.t.}\\quad u^Tu=1\n",
+      "\n\\mathcal{L}(u,\\lambda) = u^T(S_B-S_W)u-\\lambda(u^Tu-1)\n",
+      "\n2(S_B-S_W)u-2\\lambda u=0\n",
+      "\n(S_B-S_W)u=\\lambda u\n",
+      "\n\\lambda>0\n",
+      "\nJ_{\\text{LDA}}(U) = \\frac{|U^T S_B U|}{|U^T S_W U|}\n",
+      "\nJ_{\\text{MMC}}(U) = \\operatorname{tr}\\left(U^T(S_B-S_W)U\\right)\n",
+      "\nu^T S_W u=0\n",
+      "\nu^T S_B u>0\n",
+      "\nG = \\arg\\max_{G^T S_W G=0} \\operatorname{tr}(G^T S_B G)\n",
+      "\nS_T=S_B+S_W\n",
+      "\nH_T=U\\Sigma V^T\n",
+      "\nS_T=H_T H_T^T=U\\Sigma\\Sigma^T U^T\n",
+      "\n\\widetilde{S}_B=U_1^T S_B U_1\n",
+      "\n\\widetilde{S}_W=U_1^T S_W U_1\n",
+      "\nW\\in \\operatorname{Null}(\\widetilde{S}_W)\n",
+      "\nW^T \\widetilde{S}_W W=0\n",
+      "\n\\max_M \\operatorname{tr}(M^T W^T\\widetilde{S}_B W M)\n",
+      "\nG=U_1 W M\n",
+      "\nG^T G=I\n",
+      "\nG = \\arg\\max_{G^TG=I} \\operatorname{tr}\\left((G^T S_T G)^+G^T S_B G\\right)\n",
+      "\nH_T=U\\Sigma V^T\n",
+      "\nB=\\Sigma_T^{-1}U_1^T H_B\n",
+      "\nB=P\\widetilde{\\Sigma}Q^T\n",
+      "\nX_q=U_1\\Sigma_T^{-1}P_q\n",
+      "\nX_q=QR\n",
+      "\nG=Q\n",
+      "\nC1:\\quad \\operatorname{rank}(S_T) = \\operatorname{rank}(S_B) + \\operatorname{rank}(S_W)\n",
+      "\n\\text{NLDA} \\equiv \\text{OLDA}\n",
+      "\nW\n",
+      "\nD_{ii}=\\sum_j W_{ij}\n",
+      "\nL=D-W\n",
+      "\n\\min_U \\operatorname{tr}(U^T X L_w X^T U)\n",
+      "\n\\operatorname{tr}(U^T X L_b X^T U)=\\text{const}\n",
+      "\nXL_wX^T U = \\lambda XL_bX^T U\n",
+      "\n\\min_U \\sum_{i,j}|U^Tx_i-U^Tx_j|^2 W_{ij}\n",
+      "\n\\sum_{i,j}|U^T(x_i-x_j)|^2W_{ij} = 2\\operatorname{tr}(U^T X L X^T U)\n",
+      "\nU^T X D X^T U=I\n",
+      "\nXLX^TU=\\lambda XDX^TU\n",
+      "\n\\min_U \\frac{\\operatorname{tr}(U^T X L_c X^T U)}{\\operatorname{tr}(U^T X L_p X^T U)}\n",
+      "\nXL_cX^TU=\\lambda XL_pX^TU\n",
+      "\n\\|A\\|_F = \\sqrt{\\sum_i\\sum_j a_{ij}^2}\n",
+      "\n\\|A\\|_{2,1} = \\sum_i \\|A_i\\|_2\n",
+      "\n\\|AR\\|_{2,1}=\\|A\\|_{2,1}\n",
+      "\n\\|X^T U\\|_{2,1} = \\sum_i \\|x_i^T U\\|_2\n",
+      "\n\\|x_i^T U\\|_2 \\approx \\frac{\\|x_i^TU\\|_2^2}{2\\|x_i^T U^{(t)}\\|_2}+\\text{const}\n",
+      "\nD_{ii}^{(t)} = \\frac{1}{2\\|x_i^TU^{(t)}\\|_2}\n",
+      "\n\\sum_i \\|x_i^T U\\|_2 \\approx \\operatorname{tr}(U^T X D^{(t)} X^T U)\n",
+      "\n\\sum_{i=1}^{N} \\|(x_i-\\bar{x})^T U\\|_2 = \\|X_{Rt}^T U\\|_{2,1}\n",
+      "\nX_{Rt}=[x_1-\\bar{x},\\dots,x_N-\\bar{x}]\n",
+      "\nD_{Rt,ii} = \\frac{1}{2\\|(x_i-\\bar{x})^T U\\|_2}\n",
+      "\nS_{Rt}=X_{Rt}D_{Rt}X_{Rt}^T\n",
+      "\n\\min_U \\operatorname{tr}(U^TS_{Rt}U) \\quad \\text{s.t.}\\quad U^TU=I\n",
+      "\nX_{Rt}D_{Rt}X_{Rt}^TU=\\lambda U\n",
+      "\nS_{Rb}=X_{Rb}D_{Rb}X_{Rb}^T\n",
+      "\nX_{Rb}=[N_1(\\bar{x}_1-\\bar{x}),\\dots,N_c(\\bar{x}_c-\\bar{x})]\n",
+      "\nD_{Rb,ii} = \\frac{1}{2\\|N_i(\\bar{x}_i-\\bar{x})^TU\\|_2}\n",
+      "\nS_{Rw}=X_{Rw}D_{Rw}X_{Rw}^T\n",
+      "\n\\min_{U^TU=I} \\frac{\\operatorname{tr}(U^T S_{Rw}U)}{\\operatorname{tr}(U^T S_{Rb}U)}\n",
+      "\nS_{Rb}^{-1}S_{Rw}U=\\lambda U\n",
+      "\n\\sum_{i,j}\\|U^T(x_i-x_j)\\|_2^2 W_{ij}\n",
+      "\n\\sum_{i,j}\\|U^T(x_i-x_j)\\|_2 W_{ij}\n",
+      "\n\\operatorname{tr}(U^T X_R G_{Rl}D_{Rl}G_{Rl}X_R^T U)\n",
+      "\n\\min_{U^TU=I} \\frac{\\operatorname{tr}(U^T S_{Rl}U)}{\\operatorname{tr}(U^T S_{Rd}U)}\n",
+      "\nS_{Rd}^{-1}S_{Rl}U=\\lambda U\n",
+      "\n\\min_{U^TU=I} \\frac{\\operatorname{tr}(U^T S_{Rc}U)}{\\operatorname{tr}(U^T S_{Rp}U)}\n",
+      "\nS_{Rp}^{-1}S_{Rc}U=\\lambda U\n",
+      "\n\\min_U \\frac{\\text{不希望保留的变化}}{\\text{希望保留的变化}}\n",
+      "\n\\max_U \\frac{\\text{希望保留的变化}}{\\text{不希望保留的变化}}\n",
+      "\n\\max u^TS_Tu,\\ u^Tu=1 \\Rightarrow S_Tu=\\lambda u\n",
+      "\n\\max \\frac{u^TS_Bu}{u^TS_Wu} \\Rightarrow S_Bu=\\lambda S_Wu\n",
+      "\nU_{\\text{opt}}^T=U_{\\text{LDA}}^TU_{\\text{PCA}}^T\n",
+      "\n\\text{margin} = \\text{类间距离} - \\text{类内扩散} \\Rightarrow J(U)=\\operatorname{tr}(U^T(S_B-S_W)U)\n",
+      "\n\\max_{G^TS_WG=0}\\operatorname{tr}(G^TS_BG)\n",
+      "\n\\max_{G^TG=I}\\operatorname{tr}((G^TS_TG)^+G^TS_BG)\n",
+      "\n\\|X^TU\\|_{2,1} = \\sum_i\\|x_i^TU\\|_2 \\approx \\operatorname{tr}(U^TXDX^TU)\n",
+      "\nw_i^{(m)} \\in \\mathbb{R}^{q},\\quad m=1,\\dots,p_i\n",
+      "\nX_i = [w_i^{(1)}, w_i^{(2)}, \\dots, w_i^{(p_i)}] \\in \\mathbb{R}^{q \\times p_i}\n",
+      "\ny \\approx X_i \\alpha_i\n",
+      "\n\\hat{\\alpha}_i = \\arg\\min_{\\alpha_i} \\|y - X_i\\alpha_i\\|_2^2\n",
+      "\nJ(\\alpha_i) = (y - X_i\\alpha_i)^T(y - X_i\\alpha_i) = y^T y - 2\\alpha_i^T X_i^T y + \\alpha_i^T X_i^T X_i \\alpha_i\n",
+      "\n\\frac{\\partial J}{\\partial \\alpha_i} = -2X_i^T y + 2X_i^T X_i \\alpha_i\n",
+      "\nX_i^T X_i \\alpha_i = X_i^T y\n",
+      "\n\\hat{\\alpha}_i = (X_i^T X_i)^{-1}X_i^T y\n",
+      "\n\\hat{y}_i = X_i \\hat{\\alpha}_i\n",
+      "\n\\hat{y}_i = X_i(X_i^T X_i)^{-1}X_i^T y\n",
+      "\nH_i = X_i(X_i^T X_i)^{-1}X_i^T\n",
+      "\n\\hat{y}_i = H_i y\n",
+      "\nd_i(y) = \\|y - \\hat{y}_i\\|_2\n",
+      "\n\\hat{c} = \\arg\\min_i d_i(y)\n",
+      "\nU_i^{(n)} = \\big[w_i^{(1)}(n), w_i^{(2)}(n), \\dots, w_i^{(p_i)}(n)\\big]\n",
+      "\n\\hat{\\alpha}_i^{(n)} = \\big((U_i^{(n)})^T U_i^{(n)}\\big)^{-1}(U_i^{(n)})^T y^{(n)}\n",
+      "\n\\hat{y}_i^{(n)} = U_i^{(n)}\\hat{\\alpha}_i^{(n)},\\quad d_i(y^{(n)}) = \\|y^{(n)} - \\hat{y}_i^{(n)}\\|_2\n",
+      "\nj^{(n)} = \\arg\\min_i d_i(y^{(n)})\n",
+      "\n\\|M\\|_{2,1} = \\sum_{i=1}^{n} \\|m_i\\|_2 = \\sum_{i=1}^{n} \\sqrt{\\sum_{j=1}^{m} M_{ij}^2}\n",
+      "\n\\|W\\|_{2,1} = \\sum_{j=1}^{d} \\|w_j\\|_2\n",
+      "\nX = [x_1, x_2, \\dots, x_n] \\in \\mathbb{R}^{d \\times n},\\quad Y = [y_1, y_2, \\dots, y_n]^T \\in \\mathbb{R}^{n \\times c}\n",
+      "\n\\hat{Y} = X^T W\n",
+      "\n\\min_W \\|X^T W - Y\\|_F^2 = \\sum_{i=1}^{n} \\|W^T x_i - y_i\\|_2^2\n",
+      "\n\\sum_{i=1}^{n} \\|W^T x_i - y_i\\|_2 = \\|X^T W - Y\\|_{2,1}\n",
+      "\n\\min_W J(W) = \\|X^T W - Y\\|_{2,1} + \\gamma \\|W\\|_{2,1}\n",
+      "\nE = \\frac{Y - X^T W}{\\gamma} \\;\\Rightarrow\\; X^T W + \\gamma E = Y\n",
+      "\n\\min_{W,E} \\|W\\|_{2,1} + \\|E\\|_{2,1} \\quad \\text{s.t.} \\quad X^T W + \\gamma E = Y\n",
+      "\nU = \\begin{bmatrix} W \\\\ E \\end{bmatrix},\\quad A = [X^T,\\ \\gamma I]\n",
+      "\n\\min_U \\|U\\|_{2,1} \\quad \\text{s.t.} \\quad AU = Y\n",
+      "\n\\mathcal{L}(U) = \\|U\\|_{2,1} + \\operatorname{Tr}\\big[\\Lambda^T(AU - Y)\\big]\n",
+      "\n\\frac{\\partial \\|U\\|_{2,1}}{\\partial U} = 2DU\n",
+      "\nD_{ii} = \\frac{1}{2\\|u_i\\|_2}\n",
+      "\n2DU - A^T\\Lambda = 0 \\;\\Rightarrow\\; U = \\frac{1}{2}D^{-1}A^T\\Lambda\n",
+      "\n\\Lambda = 2(AD^{-1}A^T)^{-1}Y\n",
+      "\nU = D^{-1}A^T(AD^{-1}A^T)^{-1}Y\n",
+      "\nU_{t+1} = D_t^{-1}A^T(AD_t^{-1}A^T)^{-1}Y,\\quad (D_{t+1})_{ii} = \\frac{1}{2\\|(u_{t+1})_i\\|_2}\n",
+      "\nX_i = [x_i, x_{i1}, \\dots, x_{ik}]\n",
+      "\nH_{k+1} = I - \\frac{1}{k+1}\\mathbf{1}\\mathbf{1}^T\n",
+      "\n\\tilde{X}_i = X_i H_{k+1}\n",
+      "\nS_t^{(i)} = \\tilde{X}_i \\tilde{X}_i^T,\\quad S_b^{(i)} = \\tilde{X}_i G_{(i)}G_{(i)}^T \\tilde{X}_i^T\n",
+      "\nG = X^T W,\\quad G_{(i)} = S_i^T X^T W\n",
+      "\nDS_i = \\operatorname{Tr}\\Big[(S_t^{(i)} + \\lambda I)^{-1}S_b^{(i)}\\Big]\n",
+      "\nDS_i = \\operatorname{Tr}\\Big[ W^T X S_i \\tilde{X}_i^T (\\tilde{X}_i\\tilde{X}_i^T+\\lambda I)^{-1} \\tilde{X}_i S_i^T X^T W \\Big]\n",
+      "\n\\min_{W^T W=I} \\sum_{i=1}^{n} \\operatorname{Tr}\\big(W^T X S_i H_{k+1}S_i^T X^T W\\big) - DS_i + \\gamma \\|W\\|_{2,1}\n",
+      "\n\\min_{W^T W=I} \\operatorname{Tr}(W^T M W) + \\gamma \\|W\\|_{2,1}\n",
+      "\nM = X\\left[ \\sum_{i=1}^{n} S_iH_{k+1} (\\tilde{X}_i^T\\tilde{X}_i+\\lambda I)^{-1} H_{k+1}S_i^T \\right]X^T\n",
+      "\n\\|W\\|_{2,1} \\approx \\operatorname{Tr}(W^T D W),\\quad D_{jj} = \\frac{1}{2\\|w_j\\|_2}\n",
+      "\n\\min_{W^T W=I} \\operatorname{Tr}\\big[W^T(M+\\gamma D)W\\big]\n",
+      "\nP_t = M + \\gamma D_t,\\quad W_t = \\text{eig}_{\\min\\,c}(P_t),\\quad (D_{t+1})_{jj} = \\frac{1}{2\\|(w_t)_j\\|_2}\n",
+      "\n\\min_y \\sum_{i,j}(y_i-y_j)^2 W_{ij} = \\min_y 2y^T L y\n",
+      "\n\\min_y y^T L y \\quad \\text{s.t.} \\quad y^T D y = 1\n",
+      "\nWy = \\lambda Dy\n",
+      "\ny = X^T a\n",
+      "\nX W X^T a = \\lambda X D X^T a\n",
+      "\na = \\arg\\min_a \\sum_{i=1}^{m}(a^T x_i - y_i)^2\n",
+      "\na = \\arg\\min_a \\sum_{i=1}^{m}(a^T x_i - y_i)^2\n",
+      "\na = \\arg\\min_a \\sum_{i=1}^{m}(a^T x_i - y_i)^2 + \\alpha \\sum_{j=1}^{n}a_j^2\n",
+      "\na = \\arg\\min_a \\sum_{i=1}^{m}(a^T x_i - y_i)^2 + \\beta \\sum_{j=1}^{n}|a_j|\n",
+      "\na = \\arg\\min_a \\sum_{i=1}^{m}(a^T x_i - y_i)^2 + \\alpha \\|a\\|_2^2 + \\beta \\|a\\|_1\n",
+      "\n\\text{子空间/图结构} \\Rightarrow \\text{回归形式} \\Rightarrow \\text{正则化} \\Rightarrow \\text{分类/特征选择}\n",
+      "\n\\hat{\\alpha}_i = (X_i^T X_i)^{-1}X_i^T y,\\quad \\hat{y}_i = X_i\\hat{\\alpha}_i,\\quad d_i(y)=\\|y-\\hat{y}_i\\|_2,\\quad \\hat{c}=\\arg\\min_i d_i(y)\n",
+      "\n\\|W\\|_{2,1} = \\sum_{j=1}^{d}\\|w_j\\|_2\n",
+      "\n\\min_W \\|X^T W - Y\\|_{2,1} + \\gamma\\|W\\|_{2,1},\\quad \\min_U \\|U\\|_{2,1}\\;\\text{s.t.}\\;AU=Y\n",
+      "\nU_{t+1} = D_t^{-1}A^T(AD_t^{-1}A^T)^{-1}Y,\\quad (D_{t+1})_{ii} = \\frac{1}{2\\|u_{t+1,i}\\|_2}\n",
+      "\nDS_i = \\operatorname{Tr}\\big[(S_t^{(i)}+\\lambda I)^{-1}S_b^{(i)}\\big],\\quad G = X^T W\n",
+      "\n\\min_{W^T W=I} \\operatorname{Tr}(W^TMW) + \\gamma\\|W\\|_{2,1}\n",
+      "\nWy=\\lambda Dy,\\quad y=X^T a,\\quad XWX^T a = \\lambda XDX^T a\n",
+      "\na=\\arg\\min_a\\sum_i(a^T x_i-y_i)^2\n"
+    ],
+    "tables": 3,
+    "legacyTables": 4,
+    "compatibilityNote": "Jekyll incorrectly parsed the inline norm ||m_i-m_j|| as an additional table. Astro preserves it as math."
+  },
+  {
+    "file": "2026-05-14-lasagna.md",
+    "url": "/Blog/2026-05-14/lasagna.html",
+    "headings": [
+      {
+        "level": 1,
+        "id": "一信息",
+        "text": "一、信息"
+      },
+      {
+        "level": 1,
+        "id": "二方法",
+        "text": "二、方法"
+      },
+      {
+        "level": 2,
+        "id": "21-数据",
+        "text": "2.1 数据"
+      },
+      {
+        "level": 2,
+        "id": "22-pipeline",
+        "text": "2.2 pipeline"
+      },
+      {
+        "level": 2,
+        "id": "post-toc-title",
+        "text": "文章目录"
+      }
+    ],
+    "images": [
+      "/Blog/assets/images/posts/2026-05-14-lasagna/Pasted%20image%2020260514221417.webp",
+      "/Blog/assets/images/posts/2026-05-14-lasagna/Pasted%20image%2020260514211922.webp",
+      "/Blog/assets/images/posts/2026-05-14-lasagna/Pasted%20image%2020260514211900.webp",
+      "/Blog/assets/images/posts/2026-05-14-lasagna/Pasted%20image%2020260514222026.png"
+    ],
+    "formulas": [
+      "\n\\mathbf{m}_{f,i} = \\mathrm{Norm} \\left( \\mathbf{e}^{\\mathrm{time}}(t) + \\mathbf{e}^{\\mathrm{type}}_{f,i} + \\mathbf{e}^{\\mathrm{io}}_{f,i} \\right)\n"
+    ],
+    "tables": 0
+  },
+  {
+    "file": "2026-05-19-creatiparser.md",
+    "url": "/Blog/2026-05-19/creatiparser.html",
+    "headings": [
+      {
+        "level": 1,
+        "id": "一信息",
+        "text": "一、信息"
+      },
+      {
+        "level": 1,
+        "id": "二方法",
+        "text": "二、方法"
+      },
+      {
+        "level": 2,
+        "id": "21-任务定义",
+        "text": "2.1 任务定义"
+      },
+      {
+        "level": 2,
+        "id": "22-pipeline",
+        "text": "2.2 pipeline"
+      },
+      {
+        "level": 3,
+        "id": "221-文字部分",
+        "text": "2.2.1 文字部分"
+      },
+      {
+        "level": 4,
+        "id": "2211-grpo-refinement",
+        "text": "2.2.1.1 GRPO refinement"
+      },
+      {
+        "level": 3,
+        "id": "222-diffusion",
+        "text": "2.2.2 diffusion"
+      },
+      {
+        "level": 4,
+        "id": "2221-ltalayer-token-attention",
+        "text": "2.2.2.1 LTA(Layer Token Attention)"
+      },
+      {
+        "level": 2,
+        "id": "23-数据集和评估",
+        "text": "2.3 数据集和评估"
+      },
+      {
+        "level": 3,
+        "id": "231-数据集设置",
+        "text": "2.3.1 数据集设置"
+      },
+      {
+        "level": 3,
+        "id": "232-评估指标",
+        "text": "2.3.2 评估指标"
+      },
+      {
+        "level": 3,
+        "id": "233-对比方法",
+        "text": "2.3.3 对比方法"
+      },
+      {
+        "level": 2,
+        "id": "post-toc-title",
+        "text": "文章目录"
+      }
+    ],
+    "images": [
+      "/Blog/assets/images/posts/2026-05-19-creatiparser/Pasted%20image%2020260518225912.webp",
+      "/Blog/assets/images/posts/2026-05-19-creatiparser/Pasted%20image%2020260518234110.webp",
+      "/Blog/assets/images/posts/2026-05-19-creatiparser/Pasted%20image%2020260518225954.webp",
+      "/Blog/assets/images/posts/2026-05-19-creatiparser/Pasted%20image%2020260518233418.png",
+      "/Blog/assets/images/posts/2026-05-19-creatiparser/Pasted%20image%2020260518234127.png",
+      "/Blog/assets/images/posts/2026-05-19-creatiparser/Pasted%20image%2020260518234141.webp"
+    ],
+    "formulas": [
+      "\nL = \\{L_{text}, L_{sticker}, L_{background}\\}\n",
+      "\n\\text{Raster Design Image } I \\rightarrow \\begin{cases} \\text{VLM Text Parser} \\rightarrow \\text{Text Rendering Protocol} \\rightarrow L_{\\text{text}} \\\\ \\text{Multi-branch Diffusion} \\rightarrow L_{\\text{background}},\\, L_{\\text{sticker}} \\end{cases} \\rightarrow \\bigl(L_{\\text{text}},\\, L_{\\text{sticker}},\\, L_{\\text{background}}\\bigr)\n",
+      "\nP_{text} = \\{c, {\\ell_i}_{i=1}^{N}\\}\n",
+      "\nL_{text}^{(k)} = \\text{Render}(P^{(k)})\n",
+      "\nR_{pix} = \\exp\\left(-\\frac{|M_{text}\\odot I - L_{text}|_1}{|M_{text}|_1+\\epsilon}\\right)\n",
+      "\nR_{loc} = \\text{IoU}(M_{text},M^*_{text})\n",
+      "\nR_{sem} = \\text{Sim}_{edit}(T_{protocol},T^*)\n",
+      "\n\\text{Sim}_{edit}(a,b) = 1 - \\frac{\\text{Lev}(a,b)}{\\max(|a|,|b|)}\n",
+      "\nR_{text} = \\lambda_{pix}R_{pix} + \\lambda_{loc}R_{loc} + \\lambda_{sem}R_{sem}\n",
+      "\nA^{(k)} = \\frac{r^{(k)} - \\mu_r}{\\sigma_r + \\epsilon}\n",
+      "\n\\mathcal{L}_G = -\\mathbb{E}\\sum_{k=1}^{K} \\min\\left( \\rho^{(k)}A^{(k)}, \\ \\text{clip}(\\rho^{(k)},1-\\epsilon_c,1+\\epsilon_c)A^{(k)} \\right)\n",
+      "\n\\rho^{(k)} = \\frac{\\pi_\\theta(P^{(k)}|I)}{\\pi_{\\theta_{old}}(P^{(k)}|I)}\n",
+      "\n\\mathcal{L}_{total} = \\mathcal{L}_G + \\beta \\cdot D_{KL}(\\pi_\\theta \\parallel \\pi_{ref})\n",
+      "\nT^{(c)},T^{(b)},T^{(s)} \\in \\mathbb{R}^{N\\times d}\n",
+      "\nS_n = \\left[T_n^{(c)}; \\; T_n^{(b)}; \\; T_n^{(s)}\\right] \\in \\mathbb{R}^{3\\times d}\n"
+    ],
+    "tables": 4
+  },
+  {
+    "file": "2026-06-12-2026-6-12.md",
+    "url": "/Blog/2026-06-12/2026-6-12.html",
+    "headings": [
+      {
+        "level": 2,
+        "id": "post-toc-title",
+        "text": "文章目录"
+      }
+    ],
+    "images": [
+      "/Blog/assets/images/posts/2026-06-12-2026-6-12/Pasted%20image%2020260612150001.webp"
+    ],
+    "formulas": [],
+    "tables": 0
+  },
+  {
+    "file": "2026-06-22-2026-6-22.md",
+    "url": "/Blog/2026-06-22/2026-6-22.html",
+    "headings": [
+      {
+        "level": 2,
+        "id": "post-toc-title",
+        "text": "文章目录"
+      }
+    ],
+    "images": [],
+    "formulas": [],
+    "tables": 0
+  },
+  {
+    "file": "2026-06-22-2026-6-23.md",
+    "url": "/Blog/2026-06-22/2026-6-23.html",
+    "headings": [
+      {
+        "level": 2,
+        "id": "post-toc-title",
+        "text": "文章目录"
+      }
+    ],
+    "images": [],
+    "formulas": [],
+    "tables": 0
+  },
+  {
+    "file": "2026-06-26-2026-6-26.md",
+    "url": "/Blog/2026-06-26/2026-6-26.html",
+    "headings": [
+      {
+        "level": 2,
+        "id": "post-toc-title",
+        "text": "文章目录"
+      }
+    ],
+    "images": [
+      "/Blog/assets/images/posts/2026-06-26-2026-6-26/Pasted%20image%2020260626115541.webp"
+    ],
+    "formulas": [],
+    "tables": 0
+  },
+  {
+    "file": "2026-06-29-data-lab.md",
+    "url": "/Blog/2026-06-29/data-lab.html",
+    "headings": [
+      {
+        "level": 1,
+        "id": "1-bitxor",
+        "text": "1. bitXor"
+      },
+      {
+        "level": 1,
+        "id": "2-tmin",
+        "text": "2. tmin"
+      },
+      {
+        "level": 1,
+        "id": "3-istmax",
+        "text": "3. isTmax"
+      },
+      {
+        "level": 1,
+        "id": "4-alloddbits",
+        "text": "4. allOddBits"
+      },
+      {
+        "level": 1,
+        "id": "5-negate",
+        "text": "5. negate"
+      },
+      {
+        "level": 1,
+        "id": "6-isasciidigit",
+        "text": "6. isAsciiDigit"
+      },
+      {
+        "level": 1,
+        "id": "7-conditional",
+        "text": "7. conditional"
+      },
+      {
+        "level": 1,
+        "id": "8-islessorequal",
+        "text": "8. isLessOrEqual"
+      },
+      {
+        "level": 1,
+        "id": "9-logicalneg",
+        "text": "9. logicalNeg"
+      },
+      {
+        "level": 1,
+        "id": "10-howmanybits",
+        "text": "10. howManyBits"
+      },
+      {
+        "level": 1,
+        "id": "11-float_twice",
+        "text": "11. float_twice"
+      },
+      {
+        "level": 1,
+        "id": "12-float_i2f",
+        "text": "12. float_i2f"
+      },
+      {
+        "level": 1,
+        "id": "13-float_f2i",
+        "text": "13. float_f2i"
+      },
+      {
+        "level": 2,
+        "id": "post-toc-title",
+        "text": "文章目录"
+      }
+    ],
+    "images": [
+      "/Blog/assets/images/posts/2026-06-29-data-lab/Pasted%20image%2020260629215519.webp"
+    ],
+    "formulas": [
+      "\n\\begin{aligned}\nx \\oplus y\n&= (x \\land \\neg y) \\lor (\\neg x \\land y) \\\\[4pt]\n&= \\neg\\Bigl(\\neg(x \\land \\neg y) \\land \\neg(\\neg x \\land y)\\Bigr)\n\\end{aligned}\n",
+      "\n-x = \\mathord{\\sim}x + 1\n",
+      "\nx + (\\mathord{\\sim}x + 1) \\equiv 0 \\pmod{2^n}\n",
+      "\nx + \\mathord{\\sim}x = \\underbrace{111\\dots111}_{n\\text{位}}\n",
+      "\n\\underbrace{111\\dots111}_{n\\text{位}} = 2^{n-1} + 2^{n-2} + \\dots + 2^1 + 2^0\n",
+      "\n2^{n-1} + 2^{n-2} + \\dots + 2^1 + 2^0 = 2^n - 1\n",
+      "\nx + \\mathord{\\sim}x = 2^n - 1\n",
+      "\nx + \\mathord{\\sim}x + 1 = 2^n\n",
+      "\nx + (\\mathord{\\sim}x + 1) = 2^n\n",
+      "\n2^n \\equiv 0 \\pmod{2^n}\n",
+      "\nx + (\\mathord{\\sim}x + 1) \\equiv 0 \\pmod{2^n}\n",
+      "\n-x = \\mathord{\\sim}x + 1\n",
+      "\n$(1.frac)_2 = \\frac{2^{23} + frac}{2^{23}}\n",
+      "\n|f| = (2^{23} + frac) \\times 2^{E - 23}\n"
+    ],
+    "tables": 1
+  },
+  {
+    "file": "2026-06-30-2026630.md",
+    "url": "/Blog/2026-06-30/2026630.html",
+    "headings": [
+      {
+        "level": 2,
+        "id": "post-toc-title",
+        "text": "文章目录"
+      }
+    ],
+    "images": [],
+    "formulas": [],
+    "tables": 0
+  },
+  {
+    "file": "2026-07-15-decomposition.md",
+    "url": "/Blog/2026-07-15/decomposition.html",
+    "headings": [
+      {
+        "level": 1,
+        "id": "一背景",
+        "text": "一、背景"
+      },
+      {
+        "level": 1,
+        "id": "二发展",
+        "text": "二、发展"
+      },
+      {
+        "level": 2,
+        "id": "21-text2layer",
+        "text": "2.1 Text2Layer"
+      },
+      {
+        "level": 2,
+        "id": "22-image2layer",
+        "text": "2.2 Image2Layer"
+      },
+      {
+        "level": 1,
+        "id": "三从-qwen-image-layered-出发问题与思考",
+        "text": "三、从 Qwen-Image-Layered 出发，问题与思考"
+      },
+      {
+        "level": 2,
+        "id": "31-qwen-image-layered-的方法",
+        "text": "3.1 Qwen-Image-Layered 的方法"
+      },
+      {
+        "level": 3,
+        "id": "311-rgba-vae",
+        "text": "3.1.1 RGBA-VAE"
+      },
+      {
+        "level": 3,
+        "id": "312-vld-mmditvariable-layers-decomposition-mmdit",
+        "text": "3.1.2 VLD-MMDiT（Variable Layers Decomposition MMDiT）"
+      },
+      {
+        "level": 3,
+        "id": "313-训练",
+        "text": "3.1.3 训练"
+      },
+      {
+        "level": 2,
+        "id": "32-问题与思考",
+        "text": "3.2 问题与思考"
+      },
+      {
+        "level": 3,
+        "id": "321-合理图层的问题",
+        "text": "3.2.1 合理图层的问题"
+      },
+      {
+        "level": 3,
+        "id": "322-如何分层",
+        "text": "3.2.2 如何分层"
+      },
+      {
+        "level": 3,
+        "id": "323-图层分解任务中文本条件的作用",
+        "text": "3.2.3 图层分解任务中文本条件的作用"
+      },
+      {
+        "level": 2,
+        "id": "post-toc-title",
+        "text": "文章目录"
+      }
+    ],
+    "images": [
+      "/Blog/assets/images/posts/2026-07-15-decomposition/Pasted%20image%2020260714230023.webp",
+      "/Blog/assets/images/posts/2026-07-15-decomposition/Pasted%20image%2020260715001007.webp",
+      "/Blog/assets/images/posts/2026-07-15-decomposition/Pasted%20image%2020260715003410.webp",
+      "/Blog/assets/images/posts/2026-07-15-decomposition/Pasted%20image%2020260715150228.webp",
+      "/Blog/assets/images/posts/2026-07-15-decomposition/Pasted%20image%2020260715004801.webp",
+      "/Blog/assets/images/posts/2026-07-15-decomposition/Pasted%20image%2020260715005149.webp",
+      "/Blog/assets/images/posts/2026-07-15-decomposition/Pasted%20image%2020260731025219.webp",
+      "/Blog/assets/images/posts/2026-07-15-decomposition/%E6%BC%94%E7%A4%BA%E6%96%87%E7%A8%BF1%201.webp"
+    ],
+    "formulas": [],
+    "tables": 0
+  },
+  {
+    "file": "2026-07-16-freely.md",
+    "url": "/Blog/2026-07-16/freely.html",
+    "headings": [
+      {
+        "level": 2,
+        "id": "post-toc-title",
+        "text": "文章目录"
+      }
+    ],
+    "images": [
+      "/Blog/assets/images/posts/2026-07-16-freely/791350730a0e9bb6beac365f247886df.webp"
+    ],
+    "formulas": [],
+    "tables": 0
+  },
+  {
+    "file": "2026-10-06-ai.md",
+    "url": "/Blog/2026-10-06/ai.html",
+    "headings": [
+      {
+        "level": 2,
+        "id": "post-toc-title",
+        "text": "文章目录"
+      }
+    ],
+    "images": [],
+    "formulas": [],
+    "tables": 0
+  }
+]

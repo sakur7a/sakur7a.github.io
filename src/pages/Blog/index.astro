@@ -1,0 +1,10 @@
+---
+import BlogLayout from '../../layouts/BlogLayout.astro';
+import { getPosts, dateLabel } from '../../lib/blog';
+const posts = (await getPosts()).filter(post => !post.data.categories.includes('moments'));
+---
+<BlogLayout title="Be yourself and keep writing." image="/Blog/assets/images/site/home-hero.png" position="50% 10%" bodyId="post-index" homeActive>
+  <section class="post-list" aria-label="最新文章">
+    {posts.map(post => <a href={post.data.permalink} rel="bookmark" title={post.data.title} class="header-href"><article class="hentry"><h2 class="entry-title">{post.data.title}</h2><div class="entry-content"><span>【{dateLabel(post.data.date)}】</span>{post.data.summary}</div></article></a>)}
+  </section>
+</BlogLayout>

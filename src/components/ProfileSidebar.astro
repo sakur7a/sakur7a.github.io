@@ -1,0 +1,38 @@
+---
+import { site } from '../config/site';
+import Icon from './HomepageIcon.astro';
+---
+
+<aside class="profile" aria-label="Profile">
+  <img class="avatar" src="/assets/img/avatar.jpg" alt="Jinzheng Wang's avatar" width="512" height="512" fetchpriority="high" />
+  <h1>{site.title}</h1>
+  <p class="position">{site.position}</p>
+  <p class="affiliation">{site.affiliation}</p>
+
+  <nav class="social-icons" aria-label="Profile links">
+    <a href={site.github} target="_blank" rel="noopener" aria-label="GitHub">
+      <Icon name="github" />
+      <span class="social-tooltip" aria-hidden="true">GitHub</span>
+    </a>
+    <a href="/" aria-current="page" aria-label="Home">
+      <Icon name="home" />
+      <span class="social-tooltip" aria-hidden="true">Home</span>
+    </a>
+    <a href={site.blog} aria-label="Blog">
+      <Icon name="blog" />
+      <span class="social-tooltip" aria-hidden="true">Blog</span>
+    </a>
+    <a href={`mailto:${site.email}`} aria-label="Email">
+      <Icon name="email" />
+      <span class="social-tooltip" aria-hidden="true">{site.email}</span>
+    </a>
+  </nav>
+
+  <section class="research-interests" aria-labelledby="research-heading">
+    <h2 id="research-heading">Research Interests</h2>
+    <ul>
+      <li><strong>Computer Vision</strong><span>Image generation</span></li>
+      <li><strong>NLP</strong><span>Large model inference, multi-agent</span></li>
+    </ul>
+  </section>
+</aside>

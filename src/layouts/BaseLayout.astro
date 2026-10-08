@@ -1,0 +1,101 @@
+---
+import { site } from '../config/site';
+import HomepageHeader from '../components/HomepageHeader.astro';
+import '../styles/global.css';
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const {
+  title = `${site.title} | Shenzhen University`,
+  description = site.description,
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <meta name="author" content={site.title} />
+    <link rel="canonical" href={site.siteUrl + Astro.url.pathname} />
+    <link rel="icon" href="/assets/img/style.png" type="image/png" />
+    <title>{title}</title>
+    <link rel="stylesheet" href="/assets/css/jinkai.css" />
+    <script is:inline src="/assets/js/theme.js"></script>
+  </head>
+
+  <body>
+    <a class="skip-link" href="#main-content">Skip to content</a>
+    <HomepageHeader />
+    <div class="wrapper">
+      <slot name="sidebar" />
+      <main class="content" id="main-content" tabindex="-1">
+        <slot />
+      </main>
+    </div>
+
+    <script is:inline>
+      (() => {
+        const root = document.documentElement;
+        const darkButton = document.querySelector('.dark-toggle-btn');
+        const menuButton = document.querySelector('.menu-toggle-btn');
+        const navigation = document.querySelector('.site-navigation');
+        const header = document.querySelector('.site-header');
+
+        const setMenuOpen = (open) => {
+          menuButton.setAttribute('aria-expanded', String(open));
+          menuButton.setAttribute('aria-label', open ? 'Close navigation' : 'Open navigation');
+          navigation.classList.toggle('is-open', open);
+        };
+
+        const updateThemeUi = () => {
+          const dark = root.classList.contains('dark-mode');
+          const title = dark ? 'Switch to light mode' : 'Switch to dark mode';
+          darkButton.setAttribute('aria-label', title);
+          darkButton.setAttribute('title', title);
+        };
+
+        darkButton.addEventListener('click', () => {
+          window.sakuraSetTheme(root.classList.contains('dark-mode') ? 'light' : 'dark');
+          updateThemeUi();
+        });
+        menuButton.addEventListener('click', () => setMenuOpen(menuButton.getAttribute('aria-expanded') !== 'true'));
+        navigation.addEventListener('click', (event) => {
+          if (event.target.closest('a')) setMenuOpen(false);
+        });
+        document.addEventListener('click', (event) => {
+          if (!header.contains(event.target)) setMenuOpen(false);
+        });
+        document.addEventListener('keydown', (event) => {
+          if (event.key === 'Escape' && menuButton.getAttribute('aria-expanded') === 'true') {
+            setMenuOpen(false);
+            menuButton.focus();
+          }
+        });
+        window.matchMedia('(min-width: 901px)').addEventListener('change', () => setMenuOpen(false));
+
+        const updateNavigation = () => {
+          header.classList.toggle('is-scrolled', window.scrollY > 8);
+          const publications = document.getElementById('publications');
+          const atBottom = window.scrollY + window.innerHeight >= root.scrollHeight - 2;
+          const current = publications.getBoundingClientRect().top <= 120 || (atBottom && location.hash === '#publications') ? '#publications' : '#about';
+          navigation.querySelectorAll('a').forEach((link) => {
+            const active = link.getAttribute('href') === current;
+            link.classList.toggle('is-active', active);
+            if (active) link.setAttribute('aria-current', 'location');
+            else link.removeAttribute('aria-current');
+          });
+        };
+        window.addEventListener('scroll', updateNavigation, { passive: true });
+        window.addEventListener('hashchange', updateNavigation);
+
+        updateThemeUi();
+        updateNavigation();
+      })();
+    </script>
+  </body>
+</html>
