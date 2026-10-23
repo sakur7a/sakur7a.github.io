@@ -1,0 +1,6 @@
+Outfit, Latin subset, weight 500. Self-hosted for homepage and blog dates.
+Upstream: https://github.com/Outfitio/Outfit-Fonts
+Distribution: https://fonts.googleapis.com/css2?family=Outfit:wght@500&display=swap
+File: https://fonts.gstatic.com/s/outfit/v15/QGYyz_MVcBeNP4NjuGObqx1XmO1I4QK1O4a0Ew.woff2
+License: SIL Open Font License 1.1 (see OFL.txt).
+Retrieved: 2026-10-24. Font file is unmodified.

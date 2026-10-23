@@ -1,5 +1,6 @@
 ---
 import { blog } from '../lib/blog';
+import '../styles/dates.css';
 const { title = blog.description, summary = blog.description, image, position = '50% 50%', bodyId = 'page', homeActive = false, date } = Astro.props;
 const canonical = new URL(Astro.url.pathname === '/Blog' ? '/Blog/' : Astro.url.pathname, blog.site).href;
 const menu = [['Archive', '/Blog/archive.html'], ['Moments', '/Blog/moments.html'], ['About', '/Blog/about.html'], ['GitHub', 'https://github.com/sakur7a']];
@@ -22,6 +23,7 @@ const menu = [['Archive', '/Blog/archive.html'], ['Moments', '/Blog/moments.html
     <script is:inline src="/assets/js/theme.js"></script>
     <link rel="stylesheet" href="/assets/css/jinkai.css" />
     <link rel="stylesheet" href="/Blog/assets/css/style.css" />
+    <link rel="preload" href="/assets/fonts/outfit/outfit-latin-500.woff2" as="font" type="font/woff2" crossorigin />
   </head>
   <body id={bodyId}>
     <div class="header-menu" id="J_header">
@@ -35,7 +37,7 @@ const menu = [['Archive', '/Blog/archive.html'], ['Moments', '/Blog/moments.html
     <div class:list={['entry-header', { 'has-image': image }]} style={image ? `background-image: url('${image}'); background-position: ${position};` : undefined}><p class="header-title">{title}</p><canvas id="J_firework_canvas" aria-hidden="true"></canvas></div>
     <main id="main" role="main"><slot /></main>
     <div class="search-panel" id="J_search_panel" hidden><div class="search-dialog" role="dialog" aria-modal="true" aria-label="搜索文章"><div class="search-box"><input id="J_search_input" type="search" placeholder="搜索标题或摘要" autocomplete="off" /><button type="button" id="J_search_close" aria-label="关闭搜索">Close</button></div><div class="search-results" id="J_search_results"></div></div></div>
-    <footer class="site-footer"><p>© {new Date().getFullYear()} Sakura. Something for nothing.</p></footer>
+    <footer class="site-footer"><p>© <span class="date-text">{new Date().getFullYear()}</span> Sakura. Something for nothing.</p></footer>
     <script is:inline src="/Blog/assets/js/site.js"></script>
   </body>
 </html>

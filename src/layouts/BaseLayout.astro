@@ -2,6 +2,7 @@
 import { site } from '../config/site';
 import HomepageHeader from '../components/HomepageHeader.astro';
 import '../styles/global.css';
+import '../styles/dates.css';
 
 interface Props {
   title?: string;
@@ -25,6 +26,7 @@ const {
     <link rel="icon" href="/assets/img/style.png" type="image/png" />
     <title>{title}</title>
     <link rel="stylesheet" href="/assets/css/jinkai.css" />
+    <link rel="preload" href="/assets/fonts/outfit/outfit-latin-500.woff2" as="font" type="font/woff2" crossorigin />
     <script is:inline src="/assets/js/theme.js"></script>
   </head>
 

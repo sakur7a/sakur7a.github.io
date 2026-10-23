@@ -126,14 +126,18 @@ test("post body paragraphs use the same font size", async ({ page }) => {
 
 test("post toc sits to the right of the article body on wide screens", async ({ page, isMobile }) => {
   test.skip(isMobile, "mobile keeps the toc above the article for narrow screens");
-  await page.setViewportSize({ width: 1600, height: 1000 });
-  await page.goto(ML_POST);
+  for (const width of [1408, 1440, 1600]) {
+    await page.setViewportSize({ width, height: 1000 });
+    await page.goto(ML_POST);
 
-  const tocBox = await page.locator(".post-toc").boundingBox();
-  const contentBox = await page.locator("#post-content").boundingBox();
-  expect(tocBox).not.toBeNull();
-  expect(contentBox).not.toBeNull();
-  expect(tocBox.x).toBeGreaterThan(contentBox.x);
+    const tocBox = await page.locator(".post-toc").boundingBox();
+    const contentBox = await page.locator("#post-content").boundingBox();
+    expect(tocBox).not.toBeNull();
+    expect(contentBox).not.toBeNull();
+    expect(tocBox.x).toBeGreaterThanOrEqual(contentBox.x + contentBox.width);
+    expect(tocBox.x + tocBox.width).toBeLessThanOrEqual(width - 16);
+    expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(width);
+  }
 });
 
 test("ML post renders markdown tables", async ({ page }) => {

@@ -156,7 +156,7 @@
     results.innerHTML = items.map(function (item) {
       return '<a class="search-result" href="' + item.url + '">' +
         "<strong>" + escapeHtml(item.title) + "</strong>" +
-        "<span>【" + escapeHtml(item.date) + "】" + escapeHtml(item.summary) + "</span>" +
+        '<span><time class="date-text" datetime="' + escapeHtml(item.date) + '">【' + escapeHtml(item.date) + "】</time>" + escapeHtml(item.summary) + "</span>" +
         "</a>";
     }).join("");
   }

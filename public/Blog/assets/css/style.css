@@ -418,6 +418,10 @@ body#post-index {
   font-variant-numeric: tabular-nums;
 }
 
+.post-list .entry-content > .date-text {
+  color: var(--strong-soft);
+}
+
 .entry-content .page-info {
   margin: 0 0 34px;
   color: var(--muted);
@@ -580,7 +584,7 @@ body#post-index {
     position: absolute;
     top: -4px;
     left: calc(100% + 24px);
-    width: 260px;
+    width: min(260px, calc((100vw - 900px) / 2 - 40px));
     height: 100%;
     min-height: 32px;
     border-left: 0;
