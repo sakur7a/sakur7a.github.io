@@ -221,10 +221,10 @@ html.dark-mode .position { color: var(--link); }
   padding: 28px 0;
   border-bottom: 1px solid var(--divider);
 }
-.education-logo { display: flex; align-items: center; justify-content: center; width: 212px; max-width: 100%; }
+.education-logo { display: flex; align-items: center; justify-content: center; grid-row: 1; width: 212px; max-width: 100%; }
 .education-logo img { display: block; width: 100%; height: auto; object-fit: contain; }
 html.dark-mode .education-logo { padding: 8px; border-radius: 4px; background: #fff; }
-.education-details { min-width: 0; }
+.education-details { grid-row: 3; min-width: 0; }
 .education-details a { color: var(--link-hover); }
 html.dark-mode .education-details a { color: var(--link); }
 .education-details a:hover { text-decoration: underline; text-underline-offset: 3px; }
@@ -232,11 +232,11 @@ html.dark-mode .education-details a { color: var(--link); }
 .education-details p { margin: 0; font-size: 14px; line-height: 1.65; }
 .education-details .education-school { margin-bottom: 5px; }
 .education-degree, .education-meta { color: var(--muted); }
-.education-meta { display: grid; gap: 7px; justify-self: end; align-self: start; padding-top: 3px; text-align: right; font-size: 14px; line-height: 1.65; }
+.education-meta { display: grid; grid-row: 2; gap: 7px; justify-self: end; align-self: start; padding-top: 3px; text-align: right; font-size: 14px; line-height: 1.65; }
 .education-meta p { margin: 0; }
 .education-period { white-space: nowrap; }
 .education-location { white-space: nowrap; }
-@container education (min-width: 590px) {
+@container education (min-width: 460px) {
   .education-entry { grid-template-columns: 212px minmax(0, 1fr); gap: 16px 28px; padding-block: 32px; }
   .education-logo { grid-column: 1; grid-row: 1; }
   .education-details { grid-column: 1 / -1; grid-row: 2; }
