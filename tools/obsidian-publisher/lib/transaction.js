@@ -2,8 +2,8 @@ import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
 import { execFileSync } from 'node:child_process';
-import { PAGES_DIRECTORY, POSTS_DIRECTORY, SOURCES_DIRECTORY } from '../../src/config/content.js';
-import { ASSETS, ASTRO_CONTENT_CONFIG, inside, removeTree } from './repository.js';
+import { PAGES_DIRECTORY, POSTS_DIRECTORY } from '../../../src/config/content.js';
+import { ASSETS, ASTRO_CONTENT_CONFIG, SOURCES_DIRECTORY, inside, removeTree } from './repository.js';
 
 const publishDirectories = [POSTS_DIRECTORY, SOURCES_DIRECTORY, PAGES_DIRECTORY, `${ASSETS}/images`]
   .map(directory => directory + '/');

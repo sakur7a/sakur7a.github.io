@@ -4,15 +4,15 @@ import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
 import sharp from 'sharp';
-import { ASSETS, removeTree } from '../scripts/lib/repository.js';
-import { listPosts } from '../scripts/lib/posts.js';
-import { readDocument, writeDocument } from '../scripts/lib/markdown.js';
-import { transformDraft } from '../scripts/lib/publish-draft.js';
-import { replaceCover } from '../scripts/replace-cover.js';
-import { deletePost } from '../scripts/manage-post.js';
-import { createPage, setHeaderImage, deletePage, removePage, pushPages } from '../scripts/manage-pages.js';
-import { runPublisher } from '../scripts/obsidian-publish.js';
-import { transact, git } from '../scripts/lib/transaction.js';
+import { ASSETS, removeTree } from '../lib/repository.js';
+import { listPosts } from '../lib/posts.js';
+import { readDocument, writeDocument } from '../lib/markdown.js';
+import { transformDraft } from '../lib/publish-draft.js';
+import { replaceCover } from '../replace-cover.js';
+import { deletePost } from '../manage-post.js';
+import { createPage, setHeaderImage, deletePage, removePage, pushPages } from '../manage-pages.js';
+import { runPublisher } from '../obsidian-publish.js';
+import { transact, git } from '../lib/transaction.js';
 
 function temporary(t) {
   const root = fs.mkdtempSync(path.join(os.tmpdir(), 'sakura-test-'));
@@ -226,14 +226,20 @@ test('deleting a local page draft updates the manager without publishing unrelat
   assert.equal(fs.readFileSync(path.join(root, 'private-untracked.md'), 'utf8'), 'DO NOT PUBLISH');
 });
 
-test('all migrated posts retain explicit original sources', () => {
-  const posts = listPosts();
-  assert.equal(posts.length, 7);
-  assert.equal(new Set(posts.map(post => post.data.source_file)).size, posts.length);
-  for (const post of posts) {
-    assert.ok(post.data.source_file, post.postPath);
-    assert.ok(post.sourcePath, post.postPath);
-  }
+test('manual posts are listed without a Vault snapshot and cannot be overwritten by a matching draft', async t => {
+  const root = temporary(t);
+  const post = path.join(root, '_posts/manual.md');
+  const draft = path.join(root, 'Manual.md');
+  const metadata = { title: 'Manual', date: '2026-10-07', slug: 'manual' };
+  writeDocument(post, metadata, 'hand-written article');
+  writeDocument(draft, metadata, 'other article');
+
+  const [manual] = listPosts(root);
+  assert.equal(manual.sourcePath, '');
+  assert.equal(manual.relativeUrl, '/Blog/2026-10-07/manual.html');
+  const before = fs.readFileSync(post);
+  await assert.rejects(transformDraft(root, draft), /different post/);
+  assert.deepEqual(fs.readFileSync(post), before);
 });
 
 test('republishing a stale vault original keeps the currently published cover and crop', async t => {

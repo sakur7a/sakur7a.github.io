@@ -6,13 +6,12 @@ import path from 'node:path';
 import vm from 'node:vm';
 import sharp from 'sharp';
 import { createRequire } from 'node:module';
-import { fileURLToPath } from 'node:url';
 import { parse } from 'yaml';
-import { git } from '../scripts/lib/transaction.js';
-import { removeTree, ASSETS } from '../scripts/lib/repository.js';
-import { readDocument, writeDocument } from '../scripts/lib/markdown.js';
+import { git } from '../lib/transaction.js';
+import { removeTree, ASSETS, ROOT as project } from '../lib/repository.js';
+import { readDocument, writeDocument } from '../lib/markdown.js';
 const require = createRequire(import.meta.url);
-const source = fs.readFileSync('obsidian/.obsidian/plugins/sakura-blog-publisher/main.js', 'utf8');
+const source = fs.readFileSync(new URL('../plugin/main.js', import.meta.url), 'utf8');
 
 function loadPlugin(settings = { blogRoot: 'X:/nonexistent-test-root' }) {
   const commands = [];
@@ -209,8 +208,9 @@ function publisherFixture(t, unified = true) {
   const root = path.join(directory, 'development');
   const remote = path.join(directory, 'remote.git');
   const vault = path.join(directory, 'writing-vault');
-  const project = fileURLToPath(new URL('../', import.meta.url));
-  const modules = path.join(root, 'node_modules');
+  const publisher = path.join(project, 'tools/obsidian-publisher');
+  const fixturePublisher = path.join(root, 'tools/obsidian-publisher');
+  const modules = path.join(fixturePublisher, 'node_modules');
   t.after(() => {
     assert.ok(path.resolve(directory).startsWith(path.resolve(os.tmpdir()) + path.sep));
     if (fs.existsSync(modules)) fs.unlinkSync(modules);
@@ -221,6 +221,10 @@ function publisherFixture(t, unified = true) {
   fs.writeFileSync(path.join(root, 'package.json'), '{"type":"module"}');
   fs.writeFileSync(path.join(root, '.gitignore'), 'node_modules/\n.publisher-cache/\n.obsidian-cover-upload/\n');
   fs.cpSync(path.join(project, 'scripts'), path.join(root, 'scripts'), { recursive: true });
+  fs.cpSync(publisher, fixturePublisher, {
+    recursive: true,
+    filter: entry => !['node_modules', 'tests'].includes(path.basename(entry)),
+  });
   fs.mkdirSync(path.join(root, 'src'));
   fs.cpSync(path.join(project, 'src/config'), path.join(root, 'src/config'), { recursive: true });
   if (unified) fs.writeFileSync(path.join(root, 'src/content.config.ts'), '// unified site\n');
@@ -237,7 +241,7 @@ function publisherFixture(t, unified = true) {
   fs.writeFileSync(path.join(root, 'src/content.config.ts'), '// local development\n');
   fs.writeFileSync(path.join(root, 'private-development.md'), 'DO NOT PUBLISH');
   git(root, ['add', 'private-development.md']);
-  fs.symlinkSync(path.join(project, 'node_modules'), modules, 'junction');
+  fs.symlinkSync(path.join(publisher, 'node_modules'), modules, 'junction');
   const runtime = loadPlugin({ blogRoot: root });
   runtime.plugin.injectStyles = () => {};
   runtime.plugin.app = { vault: {

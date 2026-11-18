@@ -1,11 +1,12 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { BLOG_ASSETS, SITE_ORIGIN } from '../../src/config/site.js';
+import { BLOG_ASSETS } from '../../../src/config/site.js';
 
-export const ROOT = fileURLToPath(new URL('../../', import.meta.url));
+export const ROOT = fileURLToPath(new URL('../../../', import.meta.url));
 export const ASSETS = `public${BLOG_ASSETS}`;
 export const ASTRO_CONTENT_CONFIG = 'src/content.config.ts';
+export const SOURCES_DIRECTORY = 'obsidian/Published';
 
 // unlink/rmdir also handle CJK paths on the installed Windows Node runtime.
 export function removeTree(file) {
@@ -21,10 +22,4 @@ export function inside(root, relative, prefix = '') {
   const normalized = path.relative(root, full).replaceAll('\\', '/');
   if (normalized.startsWith('../') || normalized === '..' || (prefix && !normalized.startsWith(prefix))) throw new Error(`Path escapes permitted directory: ${relative}`);
   return full;
-}
-
-export function publicFile(root, url) {
-  const parsed = new URL(url, SITE_ORIGIN);
-  if (parsed.origin !== SITE_ORIGIN) throw new Error('Expected a local site asset.');
-  return inside(root, `public${decodeURIComponent(parsed.pathname)}`, 'public/');
 }

@@ -6,9 +6,6 @@ test-results/
 playwright-report/
 .publisher-cache/
 .obsidian-cover-upload/
-obsidian/.obsidian/*
-!obsidian/.obsidian/plugins/
-obsidian/.obsidian/plugins/*
-!obsidian/.obsidian/plugins/sakura-blog-publisher/
+obsidian/.obsidian/
 obsidian/Drafts/
 screenshots/

@@ -17,6 +17,19 @@ export const blogPaths = {
 };
 
 export const postPermalinkPattern = new RegExp(String.raw`^${BLOG_ROOT}\d{4}-\d{2}-\d{2}/[^/]+\.html$`);
+export const postSlugPattern = /^[\p{L}\p{N}]+(?:-[\p{L}\p{N}]+)*$/u;
+
+const blogDateFormatter = new Intl.DateTimeFormat('sv-SE', {
+  timeZone: SITE_TIME_ZONE,
+  year: 'numeric',
+  month: '2-digit',
+  day: '2-digit',
+});
+
+/** @param {string | Date} value */
+export function blogDateLabel(value) {
+  return blogDateFormatter.format(new Date(value));
+}
 
 /**
  * @param {string} date

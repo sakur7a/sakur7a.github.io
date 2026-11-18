@@ -2,7 +2,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import crypto from 'node:crypto';
 import sharp from 'sharp';
-import { BLOG_ASSETS, BLOG_PREFIX } from '../../src/config/site.js';
+import { BLOG_ASSETS, BLOG_PREFIX } from '../../../src/config/site.js';
 
 function assetName(reference) {
   const normalized = reference.replaceAll('\\', '/');

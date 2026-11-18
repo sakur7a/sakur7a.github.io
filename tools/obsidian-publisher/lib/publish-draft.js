@@ -1,24 +1,29 @@
 import fs from 'node:fs';
 import path from 'node:path';
-import { POSTS_DIRECTORY, SOURCES_DIRECTORY } from '../../src/config/content.js';
-import { BLOG_ASSETS, BLOG_PREFIX, postPermalink } from '../../src/config/site.js';
+import { POSTS_DIRECTORY } from '../../../src/config/content.js';
+import { BLOG_ASSETS, BLOG_PREFIX, postPermalink } from '../../../src/config/site.js';
 import { copyImage, rewriteImages } from './images.js';
 import { assertPublic, readDocument, writeDocument } from './markdown.js';
 import { listPosts, localDate, nowStamp, safeSlug, slugFor } from './posts.js';
-import { ASSETS, inside } from './repository.js';
+import { ASSETS, SOURCES_DIRECTORY, inside } from './repository.js';
 
 export async function transformDraft(root, draft, options = {}) {
   const input = readDocument(draft);
   assertPublic(input.data);
   const sourceName = path.basename(draft);
   const title = input.data.title || path.basename(draft, '.md');
-  const existing = listPosts(root).find(post => post.data.source_file === sourceName || (!post.data.source_file && post.title === title));
+  const sourcePath = `${SOURCES_DIRECTORY}/${sourceName}`;
+  const posts = listPosts(root);
+  const existing = posts.find(post => post.data.source_file === sourceName)
+    || posts.find(post => !post.data.source_file && post.title === title && post.sourcePath === sourcePath);
   const date = existing?.dateValue || options.date || input.data.date || nowStamp();
   const day = existing?.date || localDate(date);
   const slug = safeSlug(options.slug || input.data.slug || existing?.slug || slugFor(title));
   const basename = `${day}-${slug}`;
   const postPath = `${POSTS_DIRECTORY}/${basename}.md`;
-  if (fs.existsSync(path.join(root, postPath)) && existing?.postPath !== postPath) {
+  const permalink = postPermalink(day, slug);
+  if ((existing?.postPath !== postPath && fs.existsSync(path.join(root, postPath)))
+    || posts.some(post => post !== existing && post.relativeUrl === permalink)) {
     throw new Error('A different post already uses this publication date and slug.');
   }
   const publicAssetDir = `${BLOG_ASSETS}/images/posts/${basename}`;
@@ -33,7 +38,7 @@ export async function transformDraft(root, draft, options = {}) {
     categories: input.data.categories || existing?.data.categories || ['随笔'],
     source_file: sourceName,
     visibility: 'public',
-    permalink: postPermalink(day, slug),
+    permalink,
   };
   if (!data.summary) data.summary = input.body.replace(/!\[\[[^\]]*\]\]|!\[[^\]]*\]\([^)]*\)/g, '').split(/\r?\n/).find(line => line.trim())?.replace(/^[#>* ]+/, '').slice(0, 80) || title;
   if (existing?.cover) data.cover = existing.cover;
@@ -56,7 +61,6 @@ export async function transformDraft(root, draft, options = {}) {
     assetDir,
     publicAssetDir,
   });
-  const sourcePath = `${SOURCES_DIRECTORY}/${sourceName}`;
   writeDocument(inside(root, postPath, `${POSTS_DIRECTORY}/`), data, body);
   writeDocument(inside(root, sourcePath, `${SOURCES_DIRECTORY}/`), data, input.body);
   const paths = [postPath, sourcePath, assetPath];

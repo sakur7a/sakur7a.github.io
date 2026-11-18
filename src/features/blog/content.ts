@@ -27,8 +27,10 @@ export async function getPublishedEntries() {
 
 export async function getEntryRoutes() {
   const { posts, pages } = await getPublishedEntries();
-  return [...posts, ...pages].map(({ entry, url }) => ({
-    params: { path: url.slice(BLOG_ROOT.length, -'.html'.length) },
-    props: { entry },
-  }));
+  const seen = new Set<string>();
+  return [...posts, ...pages].map(({ entry, url }) => {
+    if (seen.has(url)) throw new Error(`Duplicate blog permalink: ${url}`);
+    seen.add(url);
+    return { params: { path: url.slice(BLOG_ROOT.length, -'.html'.length) }, props: { entry } };
+  });
 }

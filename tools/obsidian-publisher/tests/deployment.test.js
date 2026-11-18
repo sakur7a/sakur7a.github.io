@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { runStatus } from '../scripts/deployment-status.js';
+import { runStatus } from '../deployment-status.js';
 const commit = 'a'.repeat(40);
 const run = { head_sha: commit, head_branch: 'main', event: 'push', html_url: 'https://github.com/example/site/actions/runs/1' };
 test('submission, build, deployment success and failure have distinct states', () => {

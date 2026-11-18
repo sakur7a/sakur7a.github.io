@@ -1,0 +1,15 @@
+{
+  "name": "sakura-obsidian-publisher",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=24"
+  },
+  "scripts": {
+    "test": "node --test"
+  },
+  "dependencies": {
+    "sharp": "0.35.5",
+    "yaml": "2.9.1"
+  }
+}

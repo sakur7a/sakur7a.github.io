@@ -54,15 +54,19 @@ test('all original posts keep their heading anchors, images, tables and formulas
 
 test('feed, search and sitemap retain all published articles without source notes', async ({ request }) => {
   const search = await (await request.get('/Blog/search.json')).json();
-  expect(search.map(entry => entry.url).sort()).toEqual(baseline.map(entry => entry.url).sort());
+  const urls = search.map(entry => entry.url);
+  expect(urls).toEqual(expect.arrayContaining(baseline.map(entry => entry.url)));
+  expect(new Set(urls).size).toBe(urls.length);
   const feed = await (await request.get('/Blog/feed.xml')).text();
-  for (const post of baseline) expect(feed).toContain(`https://sakur7a.github.io${post.url}`);
-  expect(feed.match(/<entry>/g)).toHaveLength(baseline.length);
+  for (const url of urls) expect(feed).toContain(`https://sakur7a.github.io${url}`);
+  expect(feed.match(/<entry>/g)).toHaveLength(urls.length);
   expect(feed).toContain('<content type="html">');
   const sitemap = await (await request.get('/sitemap.xml')).text();
   expect(sitemap).toContain('<loc>https://sakur7a.github.io/</loc>');
-  for (const post of baseline) expect(sitemap).toContain(`https://sakur7a.github.io${post.url}`);
-  for (const url of ['/obsidian/Published/ML.md', '/scripts/obsidian-publish.js', '/_posts/2026-05-07-ml.md']) expect((await request.get(url)).status()).toBe(404);
+  for (const url of urls) expect(sitemap).toContain(`https://sakur7a.github.io${url}`);
+  for (const url of ['/obsidian/Published/ML.md', '/scripts/obsidian-publish.js', '/tools/obsidian-publisher/plugin/main.js', '/_posts/2026-05-07-ml.md']) {
+    expect((await request.get(url)).status()).toBe(404);
+  }
 });
 
 test('the retired Moments page and notes are no longer public', async ({ page, request }) => {

@@ -1,6 +1,7 @@
 import { test, expect } from "@playwright/test";
 
 const ML_POST = "2026-05-07/ml.html";
+const DECOMPOSITION_RESULT = '.search-result[href$="2026-07-15/decomposition.html"]';
 
 test("home page shows the current blog shell and posts", async ({ page }) => {
   await page.goto("./");
@@ -50,7 +51,7 @@ test("search finds a current post", async ({ page }) => {
   await page.getByRole("button", { name: "搜索文章" }).click();
   await page.getByPlaceholder("搜索标题或摘要").fill("图层分解");
 
-  await expect(page.locator(".search-result").filter({ hasText: "图层分解" })).toBeVisible();
+  await expect(page.locator(DECOMPOSITION_RESULT)).toBeVisible();
 });
 
 test("search preserves a query entered while the index is loading", async ({ page }) => {
@@ -69,7 +70,7 @@ test("search preserves a query entered while the index is loading", async ({ pag
     releaseIndex();
   }
   const results = page.locator(".search-result");
-  await expect(results.filter({ hasText: "图层分解" })).toBeVisible();
+  await expect(page.locator(DECOMPOSITION_RESULT)).toBeVisible();
   await expect(results.filter({ hasNotText: "图层分解" })).toHaveCount(0);
   await page.keyboard.press("Escape");
   await expect(page.getByRole("dialog")).toBeHidden();
