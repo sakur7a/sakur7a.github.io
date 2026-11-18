@@ -26,9 +26,13 @@ Sharp uses the patched 0.35 release line. The transitive KaTeX dependency is ove
 - `content/pages/`: editable standalone blog pages. Archive and the blog index are Astro pages.
 - `public/Blog/assets/`: existing blog image and vendor URLs. `public/assets/` contains homepage assets and the shared self-hosted Chinese font.
 - `obsidian/Published/`: original source snapshots for republishing; never part of `dist/`.
-- `src/layouts/`: separate homepage and blog layouts. Both use the same saved theme preference. The homepage is English-only, including for visitors with an old saved Chinese language preference.
+- `src/pages/` defines the public routes. The homepage and blog each own their layout, components, styles, and browser code under `src/features/`.
+- `src/features/homepage/profile.ts` contains profile and education details. The homepage body and its sections start in `src/pages/index.astro`.
+- `src/features/blog/content.ts` reads Astro collections and resolves content routes. `endpoints.ts` generates the Atom feed, search index, and both sitemaps. Blog Markdown rendering and historical heading anchors also live in this feature.
+- `src/shared/` provides the HTML document, theme controls, and dates. The initial theme script loads in the head on both sections. Astro bundles the feature scripts and ordered stylesheets.
+- `src/config/` holds the site origin, date time zone, URL conventions, and content directories shared by Astro and the publishing scripts.
 
-The homepage has a fixed header with About/Publications navigation and a theme toggle. Desktop uses a profile/content grid; mobile stacks the profile above the content with a collapsible navigation menu. The four profile links remain GitHub, Home, Blog and Email. Profile text is in `src/config/site.ts`, homepage content in `src/pages/index.astro`, and homepage styles in `src/styles/global.css`.
+The homepage has a fixed header with About, Education, and Publications navigation. On narrow screens, the profile stacks above the content and the navigation collapses into a menu.
 
 Published dates use Asia/Shanghai. Republishing preserves the original date and cover. Unknown front-matter fields survive content conversion. GitHub Pages output keeps the nested blog index and published `.html` article URLs. The migration baseline checks the retained article URLs, heading IDs, images, mathematical expressions and tables. One old Jekyll parsing artifact—a norm expression rendered as an extra table—is intentionally rendered as math.
 
@@ -37,6 +41,8 @@ Published dates use Asia/Shanghai. Republishing preserves the original date and 
 The plugin is version 0.7.2, under `obsidian/.obsidian/plugins/sakura-blog-publisher/`. It keeps `select-post-to-publish` and `manage-content`, so existing Hearth cards keep their command IDs. The writing vault remains where it is. The manager opens the article list; its Status tab includes publishing connection, repository and deployment actions.
 
 Publishing uses an isolated worktree based on current `origin/main`. Only post/page content, its images and source snapshots can be committed; staged or uncommitted development files stay untouched. The publisher retries once when another content update advances remote main. Image conversion and metadata handling use Node.js; Ruby, Jekyll and PowerShell are not required.
+
+The CLI entry points live in `scripts/`. In `scripts/lib/`, `publish-draft.js` converts a draft, `markdown.js` handles front matter, `images.js` prepares attachments, `posts.js` reads the published catalog, and `transaction.js` applies content operations in the isolated worktree.
 
 ```powershell
 npm run post:publish -- "C:\path\to\vault\article.md" --vault-root "C:\path\to\vault"

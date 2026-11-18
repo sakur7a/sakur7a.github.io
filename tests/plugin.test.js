@@ -9,7 +9,8 @@ import { createRequire } from 'node:module';
 import { fileURLToPath } from 'node:url';
 import { parse } from 'yaml';
 import { git } from '../scripts/lib/transaction.js';
-import { readDocument, writeDocument, removeTree, ASSETS } from '../scripts/lib/content.js';
+import { removeTree, ASSETS } from '../scripts/lib/repository.js';
+import { readDocument, writeDocument } from '../scripts/lib/markdown.js';
 const require = createRequire(import.meta.url);
 const source = fs.readFileSync('obsidian/.obsidian/plugins/sakura-blog-publisher/main.js', 'utf8');
 
@@ -221,6 +222,7 @@ function publisherFixture(t, unified = true) {
   fs.writeFileSync(path.join(root, '.gitignore'), 'node_modules/\n.publisher-cache/\n.obsidian-cover-upload/\n');
   fs.cpSync(path.join(project, 'scripts'), path.join(root, 'scripts'), { recursive: true });
   fs.mkdirSync(path.join(root, 'src'));
+  fs.cpSync(path.join(project, 'src/config'), path.join(root, 'src/config'), { recursive: true });
   if (unified) fs.writeFileSync(path.join(root, 'src/content.config.ts'), '// unified site\n');
   writeDocument(path.join(root, 'content/pages/about.md'), { title: 'About' }, 'About\n');
   git(root, ['init', '-b', 'main']);

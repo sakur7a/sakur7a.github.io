@@ -1,0 +1,37 @@
+---
+import { SITE_ORIGIN } from '../config/site.js';
+
+interface Props {
+  lang: 'en' | 'zh-CN';
+  title: string;
+  description: string;
+  canonicalPath?: string;
+  bodyId?: string;
+}
+
+const {
+  lang,
+  title,
+  description,
+  canonicalPath = Astro.url.pathname,
+  bodyId,
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang={lang}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={new URL(canonicalPath, SITE_ORIGIN).href} />
+    <slot name="metadata" />
+    <script is:inline src="/assets/js/theme.js"></script>
+    <link rel="stylesheet" href="/assets/css/jinkai.css" />
+    <link rel="preload" href="/assets/fonts/outfit/outfit-latin-500.woff2" as="font" type="font/woff2" crossorigin />
+  </head>
+  <body id={bodyId}>
+    <slot />
+  </body>
+</html>

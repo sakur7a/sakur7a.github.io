@@ -1,9 +1,13 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { ROOT, inside, readDocument, writeDocument, slugFor, assertPublic, ASSETS } from './lib/content.js';
+import { PAGES_DIRECTORY } from '../src/config/content.js';
+import { BLOG_ASSETS, pagePermalink } from '../src/config/site.js';
+import { ROOT, inside, ASSETS } from './lib/repository.js';
+import { slugFor } from './lib/posts.js';
+import { readDocument, writeDocument, assertPublic } from './lib/markdown.js';
 import { transact, git, report } from './lib/transaction.js';
-const directory = 'content/pages/';
+const directory = PAGES_DIRECTORY + '/';
 function pageFile(root, relative) {
   const file = inside(root, relative, directory);
   if (!file.endsWith('.md')) throw new Error('Only Markdown pages may be managed.');
@@ -12,7 +16,13 @@ function pageFile(root, relative) {
 export function listPages(root = ROOT) {
   return fs.readdirSync(path.join(root, directory)).filter(file => file.endsWith('.md')).map(file => {
     const { data } = readDocument(path.join(root, directory, file));
-    return { title: data.title, path: directory + file, headerImage: data.header_image || data.cover || '', coverPosition: data.header_position || data.cover_position || '', url: `/Blog/${file.replace(/\.md$/, '.html')}` };
+    return {
+      title: data.title,
+      path: directory + file,
+      headerImage: data.header_image || data.cover || '',
+      coverPosition: data.header_position || data.cover_position || '',
+      url: pagePermalink(file.slice(0, -'.md'.length)),
+    };
   });
 }
 export function createPage(root, title) {
@@ -25,7 +35,9 @@ export function createPage(root, title) {
   return { title, path: relative };
 }
 export function setHeaderImage(root, relative, image, position) {
-  if (!/^(?:https?:\/\/|\/Blog\/assets\/)/.test(image)) throw new Error('Expected an HTTP image URL or /Blog/assets/ path.');
+  if (!/^https?:\/\//.test(image) && !image?.startsWith(BLOG_ASSETS + '/')) {
+    throw new Error(`Expected an HTTP image URL or ${BLOG_ASSETS}/ path.`);
+  }
   const file = pageFile(root, relative);
   const { data, body } = readDocument(file);
   assertPublic(data);

@@ -2,7 +2,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import os from 'node:os';
 import crypto from 'node:crypto';
-import { ROOT } from './lib/content.js';
+import { ROOT } from './lib/repository.js';
 const args = process.argv.slice(2);
 const target = args.includes('--target') ? path.resolve(args[args.indexOf('--target') + 1]) : path.join(os.homedir(), 'Documents/Obsidian Vault/.obsidian/plugins/sakura-blog-publisher');
 const source = path.join(ROOT, 'obsidian/.obsidian/plugins/sakura-blog-publisher');

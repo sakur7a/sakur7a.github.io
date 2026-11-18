@@ -53,6 +53,28 @@ test("search finds a current post", async ({ page }) => {
   await expect(page.locator(".search-result").filter({ hasText: "图层分解" })).toBeVisible();
 });
 
+test("search preserves a query entered while the index is loading", async ({ page }) => {
+  let releaseIndex;
+  const indexGate = new Promise(resolve => { releaseIndex = resolve; });
+  await page.route("**/Blog/search.json", async route => {
+    await indexGate;
+    await route.continue();
+  });
+
+  await page.goto("./");
+  try {
+    await page.keyboard.press("/");
+    await page.getByPlaceholder("搜索标题或摘要").fill("图层分解");
+  } finally {
+    releaseIndex();
+  }
+  const results = page.locator(".search-result");
+  await expect(results.filter({ hasText: "图层分解" })).toBeVisible();
+  await expect(results.filter({ hasNotText: "图层分解" })).toHaveCount(0);
+  await page.keyboard.press("Escape");
+  await expect(page.getByRole("dialog")).toBeHidden();
+});
+
 test("archive groups current posts by writing categories", async ({ page }) => {
   await page.goto("archive.html");
 

@@ -1,15 +1,15 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { ROOT } from './lib/content.js';
+import { ROOT, ASTRO_CONTENT_CONFIG } from './lib/repository.js';
 import { git, actionsUrl } from './lib/transaction.js';
 
 export function publisherStatus(root = ROOT) {
   if (Number(process.versions.node.split('.')[0]) < 24) throw new Error('发布需要 Node.js 24 或更新版本。');
-  if (!fs.existsSync(path.join(root, 'src/content.config.ts'))) throw new Error('请把发布目录设置为统一 Astro 工程。');
+  if (!fs.existsSync(path.join(root, ASTRO_CONTENT_CONFIG))) throw new Error('请把发布目录设置为统一 Astro 工程。');
   git(root, ['fetch', 'origin', 'main']);
   const commit = git(root, ['rev-parse', 'origin/main']);
-  const ready = Boolean(git(root, ['ls-tree', '--name-only', 'origin/main', '--', 'src/content.config.ts']));
+  const ready = Boolean(git(root, ['ls-tree', '--name-only', 'origin/main', '--', ASTRO_CONTENT_CONFIG]));
   return {
     ready,
     state: ready ? 'ready' : 'migration-pending',

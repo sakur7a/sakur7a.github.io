@@ -1,6 +1,8 @@
 import fs from 'node:fs';
 import path from 'node:path';
-import { ROOT, SITE, listPosts, publicFile } from './lib/content.js';
+import { SITE_ORIGIN as SITE } from '../src/config/site.js';
+import { ROOT, publicFile } from './lib/repository.js';
+import { listPosts } from './lib/posts.js';
 const output = path.join(ROOT, 'dist');
 // Keep previously published font URLs while maintaining one font source directory.
 fs.cpSync(path.join(output, 'assets/fonts/jinkai'), path.join(output, 'Blog/assets/fonts/jinkai'), { recursive: true });

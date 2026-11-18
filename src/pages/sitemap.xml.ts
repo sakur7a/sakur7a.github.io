@@ -1,2 +1,3 @@
-import { sitemap } from '../lib/sitemap';
-export const GET = () => sitemap();
+import { sitemapResponse } from '../features/blog/endpoints';
+
+export const GET = () => sitemapResponse(true);

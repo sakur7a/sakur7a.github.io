@@ -1,6 +1,8 @@
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { ROOT, readDocument, assertPublic, transformDraft } from './lib/content.js';
+import { ROOT } from './lib/repository.js';
+import { readDocument, assertPublic } from './lib/markdown.js';
+import { transformDraft } from './lib/publish-draft.js';
 import { transact, report } from './lib/transaction.js';
 
 export function parseArgs(argv) {

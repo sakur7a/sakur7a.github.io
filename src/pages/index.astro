@@ -1,10 +1,10 @@
 ---
-import BaseLayout from '../layouts/BaseLayout.astro';
-import ProfileSidebar from '../components/ProfileSidebar.astro';
-import Education from '../components/Education.astro';
+import HomepageLayout from '../features/homepage/HomepageLayout.astro';
+import ProfileSidebar from '../features/homepage/components/ProfileSidebar.astro';
+import Education from '../features/homepage/components/Education.astro';
 ---
 
-<BaseLayout>
+<HomepageLayout>
   <ProfileSidebar slot="sidebar" />
 
   <section class="about-section" id="about" aria-labelledby="about-heading">
@@ -20,4 +20,4 @@ import Education from '../components/Education.astro';
       <p>Working hard on it, wish me luck.</p>
     </div>
   </section>
-</BaseLayout>
+</HomepageLayout>

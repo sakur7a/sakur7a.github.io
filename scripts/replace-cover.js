@@ -1,21 +1,25 @@
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { ROOT, inside, readDocument, writeDocument, copyImage, ASSETS, assertPublic } from './lib/content.js';
+import { POSTS_DIRECTORY, SOURCES_DIRECTORY } from '../src/config/content.js';
+import { BLOG_ASSETS } from '../src/config/site.js';
+import { ROOT, inside, ASSETS } from './lib/repository.js';
+import { copyImage } from './lib/images.js';
+import { readDocument, writeDocument, assertPublic } from './lib/markdown.js';
 import { transact, report } from './lib/transaction.js';
 export async function replaceCover(root, postPath, coverPath, options = {}) {
-  const file = inside(root, postPath, '_posts/');
+  const file = inside(root, postPath, POSTS_DIRECTORY + '/');
   const { data, body } = readDocument(file);
   assertPublic(data);
   const basename = path.basename(file, '.md');
   const assetPath = `${ASSETS}/images/posts/${basename}`;
   const filename = await copyImage(coverPath, inside(root, assetPath, `${ASSETS}/images/posts/`), `cover${path.extname(coverPath).toLowerCase()}`);
-  data.cover = `/Blog/assets/images/posts/${basename}/${filename}`;
+  data.cover = `${BLOG_ASSETS}/images/posts/${basename}/${filename}`;
   data.cover_position = options.coverPosition || data.cover_position || '50% 50%';
   writeDocument(file, data, body);
   const paths = [postPath, assetPath];
   if (data.source_file && path.basename(data.source_file) === data.source_file) {
-    const sourcePath = `obsidian/Published/${data.source_file}`;
-    const source = inside(root, sourcePath, 'obsidian/Published/');
+    const sourcePath = `${SOURCES_DIRECTORY}/${data.source_file}`;
+    const source = inside(root, sourcePath, SOURCES_DIRECTORY + '/');
     try { const original = readDocument(source); writeDocument(source, { ...original.data, cover: data.cover, cover_position: data.cover_position }, original.body); paths.push(sourcePath); }
     catch (error) { if (error.code !== 'ENOENT') throw error; }
   }

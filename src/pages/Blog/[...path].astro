@@ -1,16 +1,28 @@
 ---
-import { getCollection, render } from 'astro:content';
-import BlogLayout from '../../layouts/BlogLayout.astro';
-import { dateLabel, isoDate } from '../../lib/blog';
-export async function getStaticPaths() {
-  const posts = await getCollection('posts');
-  const pages = await getCollection('pages');
-  return [...posts.map(entry => ({ params: { path: entry.data.permalink.slice('/Blog/'.length).replace(/\.html$/, '') }, props: { entry, isPost: true } })), ...pages.map(entry => ({ params: { path: entry.id }, props: { entry, isPost: false } }))];
-}
-const { entry, isPost } = Astro.props;
+import { render } from 'astro:content';
+import type { InferGetStaticPropsType } from 'astro';
+import BlogLayout from '../../features/blog/BlogLayout.astro';
+import BlogPage from '../../features/blog/components/BlogPage.astro';
+import PostArticle from '../../features/blog/components/PostArticle.astro';
+import { getEntryRoutes } from '../../features/blog/content';
+
+export const getStaticPaths = getEntryRoutes;
+type Props = InferGetStaticPropsType<typeof getStaticPaths>;
+
+const { entry } = Astro.props;
 const { Content } = await render(entry);
 const data = entry.data;
+const post = entry.collection === 'posts' ? entry.data : undefined;
 ---
-<BlogLayout title={data.title} summary={data.summary} image={data.cover || data.header_image} position={data.cover_position || data.header_position} bodyId={isPost ? 'post' : 'page'} homeActive={isPost} date={isPost ? data.date : undefined}>
-  {isPost ? <div class="post-shell"><article class="hentry"><div class="entry-content" id="post-content"><h1 class="post-title entry-title">{data.title}</h1>{data.cover && <div class="post-cover" style={`background-image: url('${data.cover}'); background-position: ${data.cover_position || '50% 50%'};`}></div>}<div class="page-info"><span>{data.categories.join(' / ')}</span><time class="date-text" datetime={isoDate(data.date)}>{dateLabel(data.date)}</time></div><Content /></div></article><aside class="post-toc" aria-labelledby="post-toc-title" hidden><div class="post-toc-inner"><h2 id="post-toc-title">文章目录</h2><nav id="post-toc-nav" aria-label="文章目录"></nav></div></aside></div> : <article class="hentry"><div class="entry-content"><h1 class="post-title">{data.title}</h1><Content /></div></article>}
+
+<BlogLayout
+  title={data.title}
+  summary={data.summary}
+  image={data.cover || data.header_image}
+  position={data.cover_position || data.header_position}
+  bodyId={post ? 'post' : 'page'}
+  homeActive={Boolean(post)}
+  date={post?.date}
+>
+  {post ? <PostArticle post={post}><Content /></PostArticle> : <BlogPage title={data.title}><Content /></BlogPage>}
 </BlogLayout>

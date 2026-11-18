@@ -1,0 +1,65 @@
+@media (max-width: 1100px) and (min-width: 901px) {
+  .wrapper { grid-template-columns: 280px minmax(0, 1fr); gap: 40px; padding-inline: 32px; }
+}
+@media (max-width: 900px) {
+  :root { --header-height: 76px; }
+  .header-inner { min-height: 76px; padding: 0 24px; gap: 16px; }
+  .site-name { font-size: 23px; }
+  .site-navigation {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    display: none;
+    padding: 12px 24px 20px;
+    border-top: 1px solid var(--divider);
+    background: var(--background);
+    box-shadow: var(--header-shadow);
+  }
+  .site-navigation.is-open { display: flex; flex-direction: column; align-items: stretch; gap: 4px; }
+  .site-navigation a { padding: 10px 14px; font-size: 15px; }
+  .header-controls .menu-toggle-btn { display: inline-flex; border-color: transparent; }
+  .menu-toggle-btn svg { width: 23px; height: 23px; }
+  .wrapper { grid-template-columns: minmax(0, 1fr); gap: 60px; max-width: 760px; padding: 42px 24px 72px; }
+  .avatar { width: 280px; height: 280px; }
+  .affiliation { max-width: 360px; margin-inline: auto; }
+  .social-icons { margin: 20px 0 24px; gap: 16px; }
+  .research-interests { max-width: 600px; margin-inline: auto; padding: 22px 24px; }
+  .research-interests li strong { display: inline; margin-right: 8px; }
+  .content section + section { margin-top: 34px; }
+}
+@media (max-width: 480px) {
+  :root { --header-height: 72px; }
+  .header-inner { min-height: 72px; padding-inline: 20px; gap: 8px; }
+  .site-name { font-size: 20px; }
+  .header-controls { gap: 5px; }
+  .header-controls button { height: 38px; }
+  .icon-button { width: 38px; }
+  .wrapper { gap: 48px; padding: 34px 20px 64px; }
+  .avatar { width: 244px; height: 244px; margin-bottom: 22px; }
+  .profile h1 { font-size: 29px; }
+  .research-interests { padding: 19px 20px; }
+  .research-interests li strong { display: block; }
+  h2 { font-size: 26px; margin-bottom: 18px; }
+  .publication-note { padding: 20px; }
+  .education-details .education-school { font-size: 13.5px; }
+}
+@media (max-width: 360px) {
+  .header-inner { padding-inline: 16px; }
+  .site-name { font-size: 18px; }
+  .icon-button { width: 34px; }
+  .wrapper { padding-inline: 18px; }
+  .avatar { width: 232px; height: 232px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { transition: none !important; }
+}
+@media print {
+  .site-header, .skip-link, .social-tooltip { display: none; }
+  .wrapper { display: block; max-width: none; padding: 0; }
+  .profile { margin-bottom: 32px; }
+  .avatar { width: 120px; height: 120px; box-shadow: none; }
+  .research-interests { margin-top: 20px; }
+  body { padding-top: 0; background: white; color: #444; font-size: 12pt; }
+}

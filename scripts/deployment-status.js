@@ -1,6 +1,6 @@
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { ROOT } from './lib/content.js';
+import { ROOT } from './lib/repository.js';
 import { actionsUrl } from './lib/transaction.js';
 export function runStatus(runs, commit) {
   const run = runs.find(run => run.head_sha === commit && run.head_branch === 'main' && run.event !== 'pull_request');

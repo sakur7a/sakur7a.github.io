@@ -84,17 +84,12 @@ test('the retired Moments page and notes are no longer public', async ({ page, r
 });
 
 test('article images open in the existing lightbox', async ({ page }) => {
-  // Observe the library lifecycle without changing its behavior or adding production test hooks.
-  await page.route('**/Blog/assets/js/site.js', async route => {
-    const response = await route.fetch();
-    const body = (await response.text()).replace('lightbox.init();', "lightbox.on('openingAnimationEnd', () => { window.lightboxReady = true; }); lightbox.init();");
-    await route.fulfill({ response, body });
-  });
   await page.goto('/Blog/2026-07-16/freely.html');
   await page.waitForFunction(() => typeof PhotoSwipeLightbox !== 'undefined');
   await page.locator('#post-content img').first().click();
   await expect(page.locator('.pswp')).toBeVisible();
-  await page.waitForFunction(() => window.lightboxReady === true);
+  // PhotoSwipe reveals its neighboring slides when the opening animation ends.
+  await expect(page.locator('.pswp__item').first()).toHaveCSS('display', 'block');
   await page.keyboard.press('Escape');
   await expect(page.locator('.pswp')).not.toBeVisible();
 });

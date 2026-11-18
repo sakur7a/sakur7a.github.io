@@ -2,7 +2,11 @@ import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
 import { execFileSync } from 'node:child_process';
-import { inside, removeTree } from './content.js';
+import { PAGES_DIRECTORY, POSTS_DIRECTORY, SOURCES_DIRECTORY } from '../../src/config/content.js';
+import { ASSETS, ASTRO_CONTENT_CONFIG, inside, removeTree } from './repository.js';
+
+const publishDirectories = [POSTS_DIRECTORY, SOURCES_DIRECTORY, PAGES_DIRECTORY, `${ASSETS}/images`]
+  .map(directory => directory + '/');
 
 export const git = (root, args) => execFileSync('git', ['-c', 'core.quotePath=false', ...args], { cwd: root, encoding: 'utf8', windowsHide: true, stdio: ['ignore', 'pipe', 'pipe'] }).trim();
 export function actionsUrl(root) {
@@ -11,7 +15,7 @@ export function actionsUrl(root) {
   return match ? `https://github.com/${match[1]}/actions/workflows/pages.yml` : '';
 }
 export function assertUnified(root) {
-  if (!fs.existsSync(path.join(root, 'src/content.config.ts'))) throw new Error('The unified site is not on origin/main yet. Deploy the migration before enabling publishing.');
+  if (!fs.existsSync(path.join(root, ASTRO_CONTENT_CONFIG))) throw new Error('The unified site is not on origin/main yet. Deploy the migration before enabling publishing.');
 }
 export async function transact(root, operation, options = {}) {
   for (let attempt = 0; attempt < 2; attempt++) {
@@ -24,8 +28,9 @@ export async function transact(root, operation, options = {}) {
       const result = await operation(worktree);
       const paths = [...new Set(result.paths)];
       for (const relative of paths) {
-        inside(worktree, relative);
-        if (!/^(?:_posts\/|obsidian\/Published\/|content\/pages\/|public\/Blog\/assets\/images\/)/.test(relative)) throw new Error(`Unexpected publish path: ${relative}`);
+        const directory = publishDirectories.find(prefix => relative.startsWith(prefix));
+        if (!directory) throw new Error(`Unexpected publish path: ${relative}`);
+        inside(worktree, relative, directory);
       }
       const selected = paths.filter(relative => fs.existsSync(path.join(worktree, relative)) || git(worktree, ['ls-files', '--', relative]));
       if (!selected.length) return { ...result, pushed: false };

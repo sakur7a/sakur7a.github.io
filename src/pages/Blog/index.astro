@@ -1,10 +1,21 @@
 ---
-import BlogLayout from '../../layouts/BlogLayout.astro';
-import { getPosts, dateLabel, isoDate } from '../../lib/blog';
+import BlogLayout from '../../features/blog/BlogLayout.astro';
+import PostDate from '../../features/blog/components/PostDate.astro';
+import { blog } from '../../features/blog/config';
+import { getPosts } from '../../features/blog/content';
+
 const posts = (await getPosts()).filter(post => !post.data.categories.includes('moments'));
 ---
-<BlogLayout title="Be yourself and keep writing." image="/Blog/assets/images/site/home-hero.png" position="50% 10%" bodyId="post-index" homeActive>
+
+<BlogLayout title="Be yourself and keep writing." {...blog.heroes.index} bodyId="post-index" homeActive>
   <section class="post-list" aria-label="最新文章">
-    {posts.map(post => <a href={post.data.permalink} rel="bookmark" title={post.data.title} class="header-href"><article class="hentry"><h2 class="entry-title">{post.data.title}</h2><div class="entry-content"><time class="date-text" datetime={isoDate(post.data.date)}>【{dateLabel(post.data.date)}】</time>{post.data.summary}</div></article></a>)}
+    {posts.map(({ data }) => (
+      <a href={data.permalink} rel="bookmark" title={data.title} class="header-href">
+        <article class="hentry">
+          <h2 class="entry-title">{data.title}</h2>
+          <div class="entry-content"><PostDate date={data.date} bracketed />{data.summary}</div>
+        </article>
+      </a>
+    ))}
   </section>
 </BlogLayout>

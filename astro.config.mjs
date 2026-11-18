@@ -2,10 +2,11 @@ import { defineConfig } from 'astro/config';
 import { unified } from '@astrojs/markdown-remark';
 import remarkMath from 'remark-math';
 import rehypeRaw from 'rehype-raw';
-import { mathHandlers, rehypeCompatibility } from './scripts/markdown-compat.js';
+import { SITE_ORIGIN } from './src/config/site.js';
+import { mathHandlers, rehypeCompatibility } from './src/features/blog/markdown.js';
 
 export default defineConfig({
-  site: 'https://sakur7a.github.io',
+  site: SITE_ORIGIN,
   output: 'static',
   build: { format: 'preserve' },
   trailingSlash: 'ignore',

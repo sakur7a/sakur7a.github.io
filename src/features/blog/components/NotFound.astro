@@ -1,0 +1,19 @@
+---
+import { BLOG_ROOT } from '../../../config/site.js';
+import BlogLayout from '../BlogLayout.astro';
+
+interface Props {
+  withinBlog?: boolean;
+}
+
+const { withinBlog = false } = Astro.props;
+---
+
+<BlogLayout title="404">
+  <article class="hentry">
+    <div class="entry-content">
+      <h1>页面不存在</h1>
+      <p>{withinBlog ? <a href={BLOG_ROOT}>返回博客</a> : <><a href="/">主页</a> · <a href={BLOG_ROOT}>博客</a></>}</p>
+    </div>
+  </article>
+</BlogLayout>

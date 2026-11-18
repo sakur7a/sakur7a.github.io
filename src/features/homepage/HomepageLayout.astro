@@ -1,0 +1,35 @@
+---
+import SiteDocument from '../../shared/SiteDocument.astro';
+import HomepageHeader from './components/HomepageHeader.astro';
+import { site } from './profile';
+import './styles/index.css';
+import '../../shared/dates.css';
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const { title = site.title, description = site.description } = Astro.props;
+---
+
+<SiteDocument lang="en" title={title} description={description}>
+  <Fragment slot="metadata">
+    <meta name="author" content={site.title} />
+    <link rel="icon" href="/assets/img/style.png" type="image/png" />
+  </Fragment>
+
+  <a class="skip-link" href="#main-content">Skip to content</a>
+  <HomepageHeader />
+  <div class="wrapper">
+    <slot name="sidebar" />
+    <main class="content" id="main-content" tabindex="-1">
+      <slot />
+    </main>
+  </div>
+
+  <script>
+    import { mountHomepage } from './client';
+    mountHomepage();
+  </script>
+</SiteDocument>

@@ -1,0 +1,112 @@
+.site-footer {
+  width: min(var(--max-width), calc(100% - 32px));
+  margin: 0 auto;
+  padding: 28px 0 42px;
+  border-top: 1px solid var(--line);
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.search-panel {
+  position: fixed;
+  inset: 0;
+  z-index: 20;
+  padding: 80px 16px 24px;
+  background: rgba(31, 41, 51, 0.62);
+  backdrop-filter: blur(8px);
+}
+
+.search-dialog {
+  width: min(680px, 100%);
+  max-height: calc(100vh - 120px);
+  margin: 0 auto;
+  overflow: hidden;
+  background: var(--panel);
+  border-radius: 8px;
+  box-shadow: 0 24px 60px rgba(15, 23, 42, 0.24);
+}
+
+.search-box {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 12px;
+  padding: 16px;
+  border-bottom: 1px solid var(--line);
+}
+
+.search-box input {
+  width: 100%;
+  min-width: 0;
+  border: 0;
+  outline: 0;
+  color: var(--text);
+  font-size: 17px;
+}
+
+.search-box button {
+  border: 0;
+  background: transparent;
+  color: var(--muted);
+  font-size: 17px;
+  cursor: pointer;
+}
+
+.search-results {
+  max-height: calc(100vh - 190px);
+  overflow: auto;
+  padding: 8px 16px 16px;
+}
+
+.search-result {
+  display: block;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.search-result strong {
+  display: block;
+  margin-bottom: 4px;
+  color: var(--text);
+  font-size: 22px;
+  line-height: 1.35;
+}
+
+.search-result span {
+  color: var(--muted);
+  font-size: 17px;
+  line-height: 1.65;
+}
+
+.search-empty {
+  margin: 22px 0;
+  color: var(--muted);
+  text-align: center;
+}
+
+/* PhotoSwipe customization */
+.entry-content img {
+  cursor: zoom-in;
+}
+
+.pswp--minimal .pswp__top-bar,
+.pswp--minimal .pswp__button--close,
+.pswp--minimal .pswp__button--zoom,
+.pswp--minimal .pswp__button--arrow--prev,
+.pswp--minimal .pswp__button--arrow--next,
+.pswp--minimal .pswp__counter,
+.pswp--minimal .pswp__preloader {
+  display: none !important;
+}
+
+.pswp-caption {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 16px 24px;
+  background: linear-gradient(transparent, rgba(0, 0, 0, 0.6));
+  color: #fff;
+  font-size: 14px;
+  line-height: 1.5;
+  text-align: center;
+}
