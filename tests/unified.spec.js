@@ -65,6 +65,24 @@ test('feed, search and sitemap retain all published articles without source note
   for (const url of ['/obsidian/Published/ML.md', '/scripts/obsidian-publish.js', '/_posts/2026-05-07-ml.md']) expect((await request.get(url)).status()).toBe(404);
 });
 
+test('the retired Moments page and notes are no longer public', async ({ page, request }) => {
+  const retired = [
+    '/Blog/moments.html',
+    '/Blog/2026-06-12/2026-6-12.html',
+    '/Blog/2026-06-22/2026-6-22.html',
+    '/Blog/2026-06-22/2026-6-23.html',
+    '/Blog/2026-06-26/2026-6-26.html',
+    '/Blog/2026-06-30/2026630.html',
+  ];
+  await page.goto('/Blog/');
+  await expect(page.getByRole('link', { name: 'Moments', exact: true })).toHaveCount(0);
+  for (const url of retired) expect((await request.get(url)).status(), url).toBe(404);
+  for (const path of ['/sitemap.xml', '/Blog/sitemap.xml']) {
+    const sitemap = await (await request.get(path)).text();
+    for (const url of retired) expect(sitemap).not.toContain(url);
+  }
+});
+
 test('article images open in the existing lightbox', async ({ page }) => {
   // Observe the library lifecycle without changing its behavior or adding production test hooks.
   await page.route('**/Blog/assets/js/site.js', async route => {

@@ -225,8 +225,8 @@ test('deleting a local page draft updates the manager without publishing unrelat
 
 test('all migrated posts retain explicit original sources', () => {
   const posts = listPosts();
-  assert.equal(posts.length, 12);
-  assert.equal(new Set(posts.map(post => post.data.source_file)).size, 12);
+  assert.equal(posts.length, 7);
+  assert.equal(new Set(posts.map(post => post.data.source_file)).size, posts.length);
   for (const post of posts) {
     assert.ok(post.data.source_file, post.postPath);
     assert.ok(post.sourcePath, post.postPath);

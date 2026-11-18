@@ -565,7 +565,7 @@
 
 /* PhotoSwipe lightbox for all content images */
 (function () {
-  var zoomImgs = document.querySelectorAll(".entry-content img, .moment-body img");
+  var zoomImgs = document.querySelectorAll(".entry-content img");
   if (!zoomImgs.length) return;
 
   var vendorBase = (function () {
@@ -597,7 +597,7 @@
   loadScript(vendorBase + "photoswipe.umd.min.js", function () {
     loadScript(vendorBase + "photoswipe-lightbox.umd.min.js", function () {
       var lightbox = new PhotoSwipeLightbox({
-        gallery: ".entry-content, .moment-body",
+        gallery: ".entry-content",
         children: "img",
         pswpModule: PhotoSwipe,
         bgOpacity: 0.92,

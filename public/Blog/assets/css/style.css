@@ -1318,73 +1318,8 @@ html[data-theme="dark"] .callout-quote {
   text-align: center;
 }
 
-/* Moments page */
-.moments-list {
-  display: grid;
-  gap: 14px;
-  margin-top: 8px;
-}
-
-.moment-card {
-  position: relative;
-  background: var(--panel);
-  border-radius: 8px;
-  padding: 18px 22px 36px;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
-  transition: box-shadow 0.2s ease;
-}
-
-.moment-card:hover {
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
-}
-
-.moment-body {
-  color: var(--text);
-  font-size: 15px;
-  line-height: 1.7;
-}
-
-.moment-body p {
-  margin: 0 0 0.8em;
-}
-
-.moment-body p:last-child {
-  margin-bottom: 0;
-}
-
-.moment-body img {
-  display: inline-block;
-  max-width: 200px;
-  max-height: 200px;
-  border-radius: 6px;
-  margin: 4px 8px 4px 0;
-  cursor: pointer;
-  transition: opacity 0.15s ease;
-}
-
-.moment-body img:hover {
-  opacity: 0.85;
-}
-
-.moment-date {
-  position: absolute;
-  right: 22px;
-  bottom: 14px;
-  color: var(--muted);
-  font-size: 13px;
-  font-variant-numeric: tabular-nums;
-}
-
-.moments-empty {
-  color: var(--muted);
-  font-size: 16px;
-  text-align: center;
-  padding: 40px 0;
-}
-
 /* PhotoSwipe customization */
-.entry-content img,
-.moment-body img {
+.entry-content img {
   cursor: zoom-in;
 }
 
@@ -1409,24 +1344,6 @@ html[data-theme="dark"] .callout-quote {
   font-size: 14px;
   line-height: 1.5;
   text-align: center;
-}
-
-@media (min-width: 768px) {
-  .moment-card {
-    padding: 22px 28px 38px;
-  }
-
-  .moment-body img {
-    max-width: 280px;
-    max-height: 280px;
-  }
-}
-
-@media (min-width: 1000px) {
-  .moments-list {
-    max-width: 700px;
-    margin: 8px auto 0;
-  }
 }
 
 @media (max-width: 640px) {

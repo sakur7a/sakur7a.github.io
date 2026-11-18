@@ -23,14 +23,14 @@ Sharp uses the patched 0.35 release line. The transitive KaTeX dependency is ove
 ## Content and assets
 
 - `_posts/`: public blog Markdown. Existing `permalink` values retain `/Blog/YYYY-MM-DD/slug.html`; the loader supports the existing front matter.
-- `content/pages/`: editable standalone blog pages. Archive, Moments and the blog index are Astro pages.
+- `content/pages/`: editable standalone blog pages. Archive and the blog index are Astro pages.
 - `public/Blog/assets/`: existing blog image and vendor URLs. `public/assets/` contains homepage assets and the shared self-hosted Chinese font.
 - `obsidian/Published/`: original source snapshots for republishing; never part of `dist/`.
 - `src/layouts/`: separate homepage and blog layouts. Both use the same saved theme preference. The homepage is English-only, including for visitors with an old saved Chinese language preference.
 
 The homepage has a fixed header with About/Publications navigation and a theme toggle. Desktop uses a profile/content grid; mobile stacks the profile above the content with a collapsible navigation menu. The four profile links remain GitHub, Home, Blog and Email. Profile text is in `src/config/site.ts`, homepage content in `src/pages/index.astro`, and homepage styles in `src/styles/global.css`.
 
-Published dates use Asia/Shanghai. Republishing preserves the original date and cover. Unknown front-matter fields survive content conversion. GitHub Pages output keeps the nested blog index and all original `.html` article URLs. The migration baseline checks 12 article URLs, heading IDs, images, mathematical expressions and tables. One old Jekyll parsing artifact—a norm expression rendered as an extra table—is intentionally rendered as math.
+Published dates use Asia/Shanghai. Republishing preserves the original date and cover. Unknown front-matter fields survive content conversion. GitHub Pages output keeps the nested blog index and published `.html` article URLs. The migration baseline checks the retained article URLs, heading IDs, images, mathematical expressions and tables. One old Jekyll parsing artifact—a norm expression rendered as an extra table—is intentionally rendered as math.
 
 ## Obsidian publishing and management
 
@@ -49,7 +49,7 @@ The remote listing uses an ignored `.publisher-cache/` for source files; it does
 
 “Submitted” means the content commit was pushed. “Deployed” means the matching main workflow completed successfully. The plugin provides both a status check for its latest submission and the Actions link; a failed status request does not change content or deployment.
 
-The plugin checks remote `main` before changing a Vault note. Until the unified content schema is present there, publishing stops with a migration-pending message. Old saved `D:\MyBlog` settings migrate to `D:\MyHomepage\sakur7a.github.io`; unrelated settings remain intact. A failed submission keeps the editor and selected cover available for retry. Publishing reads the current note body, checks private front matter including UTF-8 BOMs, and article/page deletions retain the matching submission SHA for deployment checks. Legacy notes recover their published slugs, and untitled Moments derive distinct slugs from their note names. All 12 migrated articles explicitly map to their original source snapshots.
+The plugin checks remote `main` before changing a Vault note. Until the unified content schema is present there, publishing stops with a migration-pending message. Old saved `D:\MyBlog` settings migrate to `D:\MyHomepage\sakur7a.github.io`; unrelated settings remain intact. A failed submission keeps the editor and selected cover available for retry. Publishing reads the current note body, checks private front matter including UTF-8 BOMs, and article/page deletions retain the matching submission SHA for deployment checks. Legacy notes recover their published slugs. Published articles explicitly map to their original source snapshots.
 
 ## Repository history and production cutover
 

@@ -3,7 +3,7 @@ import { blog } from '../lib/blog';
 import '../styles/dates.css';
 const { title = blog.description, summary = blog.description, image, position = '50% 50%', bodyId = 'page', homeActive = false, date } = Astro.props;
 const canonical = new URL(Astro.url.pathname === '/Blog' ? '/Blog/' : Astro.url.pathname, blog.site).href;
-const menu = [['Archive', '/Blog/archive.html'], ['Moments', '/Blog/moments.html'], ['About', '/Blog/about.html'], ['GitHub', 'https://github.com/sakur7a']];
+const menu = [['Archive', '/Blog/archive.html'], ['About', '/Blog/about.html'], ['GitHub', 'https://github.com/sakur7a']];
 ---
 <!doctype html>
 <html lang="zh-CN">
