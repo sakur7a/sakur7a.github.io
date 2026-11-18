@@ -219,7 +219,7 @@ function publisherFixture(t, unified = true) {
   fs.mkdirSync(root);
   fs.mkdirSync(vault);
   fs.writeFileSync(path.join(root, 'package.json'), '{"type":"module"}');
-  fs.writeFileSync(path.join(root, '.gitignore'), 'node_modules/\n.publisher-cache/\n.obsidian-cover-upload/\n');
+  fs.writeFileSync(path.join(root, '.gitignore'), 'node_modules\n.publisher-cache/\n.obsidian-cover-upload/\n');
   fs.cpSync(path.join(project, 'scripts'), path.join(root, 'scripts'), { recursive: true });
   fs.cpSync(publisher, fixturePublisher, {
     recursive: true,
