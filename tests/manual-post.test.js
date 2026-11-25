@@ -75,7 +75,7 @@ test('a handwritten Markdown post builds in a site-only checkout', t => {
   assert.match(codeBlocks.c, /<span style="[^"]*">return<\/span>/);
   const plain = codeBlocks.text ?? codeBlocks.plaintext;
   assert.match(plain, />Tmax = 0111\.\.\.1111</);
-  for (const file of ['Blog/index.html', 'Blog/archive.html', 'Blog/search.json', 'Blog/feed.xml', 'Blog/sitemap.xml', 'sitemap.xml']) {
+  for (const file of ['Blog/index.html', 'Blog/archive/index.html', 'Blog/search.json', 'Blog/feed.xml', 'Blog/sitemap.xml', 'sitemap.xml']) {
     assert.ok(read(file).includes(url), file);
   }
 });

@@ -80,6 +80,8 @@ test('feed, search and sitemap retain all published articles without source note
   expect(feed).toContain('<content type="html">');
   const sitemap = await (await request.get('/sitemap.xml')).text();
   expect(sitemap).toContain('<loc>https://sakur7a.github.io/</loc>');
+  expect(sitemap).toContain('<loc>https://sakur7a.github.io/Blog/archive/</loc>');
+  expect(sitemap).toContain('<loc>https://sakur7a.github.io/Blog/about/</loc>');
   for (const url of urls) expect(sitemap).toContain(`<loc>https://sakur7a.github.io${url}</loc>`);
   for (const post of baseline) expect(sitemap).not.toContain(`<loc>https://sakur7a.github.io${post.url}</loc>`);
   for (const url of ['/obsidian/Published/ML.md', '/scripts/obsidian-publish.js', '/tools/obsidian-publisher/plugin/main.js', '/_posts/2026-05-07-ml.md']) {

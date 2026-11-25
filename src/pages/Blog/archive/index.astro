@@ -1,13 +1,14 @@
 ---
-import BlogLayout from '../../features/blog/BlogLayout.astro';
-import PostDate from '../../features/blog/components/PostDate.astro';
-import { getArchiveGroups, getPosts } from '../../features/blog/content';
+import { blogPaths } from '../../../config/site.js';
+import BlogLayout from '../../../features/blog/BlogLayout.astro';
+import PostDate from '../../../features/blog/components/PostDate.astro';
+import { getArchiveGroups, getPosts } from '../../../features/blog/content';
 
 const posts = await getPosts();
 const groups = getArchiveGroups(posts);
 ---
 
-<BlogLayout title="归档">
+<BlogLayout title="归档" canonicalPath={blogPaths.archive}>
   <header class="article-heading archive-heading">
     <h1>文章归档</h1>
     <p>{posts.length} 篇文章</p>

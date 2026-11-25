@@ -13,7 +13,7 @@ const path = Astro.url.pathname;
 <header class:list={['blog-header', { 'blog-header-home': home }]}>
   {home ? (
     <div class="blog-identity">
-      <h1 class="blog-wordmark">{blog.title} Blog</h1>
+      <h1 class="blog-wordmark">{blog.title}</h1>
     </div>
   ) : <a class="blog-wordmark" href={BLOG_ROOT}>{blog.title}</a>}
   <nav class="blog-nav" lang="en" aria-label="Blog navigation">

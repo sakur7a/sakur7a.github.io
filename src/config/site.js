@@ -10,11 +10,11 @@ export const BLOG_ROOT = `${BLOG_PREFIX}/`;
 export const BLOG_ASSETS = `${BLOG_ROOT}assets`;
 
 export const blogPaths = {
-  archive: `${BLOG_ROOT}archive.html`,
-  about: `${BLOG_ROOT}about.html`,
+  archive: pagePermalink('archive'),
+  about: pagePermalink('about'),
   feed: `${BLOG_ROOT}feed.xml`,
   search: `${BLOG_ROOT}search.json`,
-  searchPage: `${BLOG_ROOT}search.html`,
+  searchPage: pagePermalink('search'),
 };
 
 export const postPermalinkPattern = new RegExp(String.raw`^${BLOG_ROOT}\d{4}-\d{2}-\d{2}/[^/?#\\]+(?:\.html|/)$`);
@@ -52,5 +52,5 @@ export function legacyPostPermalink(permalink) {
 
 /** @param {string} id */
 export function pagePermalink(id) {
-  return `${BLOG_ROOT}${id}.html`;
+  return `${BLOG_ROOT}${id}/`;
 }

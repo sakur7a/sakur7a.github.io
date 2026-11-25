@@ -4,15 +4,20 @@ const ML_POST = "2026-05-07/ml/";
 const DATA_LAB_POST = "2026-06-29/data-lab/";
 const DECOMPOSITION_TITLE = "图层分解：1. 从 qwen-image-layered 开始";
 
-test("home page shows all articles in publication order", async ({ page }) => {
+test("home page shows all articles in publication order", async ({ page, request }) => {
   await page.goto("./");
 
   const navigation = page.getByRole("navigation", { name: "Blog navigation" });
-  await expect(navigation.getByRole("link", { name: "Archive" })).toBeVisible();
-  await expect(navigation.getByRole("link", { name: "About" })).toHaveAttribute("href", "/Blog/about.html");
+  await expect(navigation.getByRole("link", { name: "Archive" })).toHaveAttribute("href", "/Blog/archive/");
+  await expect(navigation.getByRole("link", { name: "About" })).toHaveAttribute("href", "/Blog/about/");
+  await expect(navigation.getByRole("link", { name: "Search" })).toHaveAttribute("href", "/Blog/search/");
   await expect(navigation.getByRole("link", { name: "GitHub" })).toHaveAttribute("href", "https://github.com/sakur7a");
   await expect(navigation.getByRole("link", { name: "RSS" })).toHaveAttribute("href", "/Blog/feed.xml");
-  await expect(page.getByRole("heading", { name: "Sakura Blog", level: 1 })).toBeVisible();
+  await expect(page).toHaveTitle("Sakura");
+  await expect(page.getByRole("heading", { name: "Sakura", level: 1, exact: true })).toBeVisible();
+  const favicon = "/Blog/assets/images/site/favicon.png";
+  await expect(page.locator('link[rel="icon"]')).toHaveAttribute("href", favicon);
+  await expect(await request.get(favicon)).toBeOK();
   await expect(page.getByText("记录技术、生活和一些长期有效的小想法", { exact: true })).toHaveCount(0);
   const list = page.getByRole("region", { name: "文章列表" });
   await expect(list.getByRole("heading").first()).toHaveText("两年前的自己");
@@ -47,7 +52,8 @@ test("a current post starts with the article while its cover remains in link pre
 });
 
 test("about page displays text with its configured image available to link previews", async ({ page }) => {
-  await page.goto("about.html");
+  await page.goto("about.html", { waitUntil: "commit" });
+  await expect(page).toHaveURL(/\/Blog\/about\/$/);
 
   await expect(page.getByRole("heading", { name: "About", level: 1 })).toBeVisible();
   await expect(page.locator(".post-cover")).toHaveCount(0);
@@ -68,10 +74,12 @@ test("search finds a current post", async ({ page }) => {
 });
 
 test("search results are linkable and open the original article", async ({ page }) => {
-  await page.goto("search.html");
+  await page.goto("search.html?q=Data+Lab", { waitUntil: "commit" });
+  await expect(page).toHaveURL(/\/Blog\/search\/\?q=Data\+Lab$/);
+  await expect(page.getByRole("searchbox")).toHaveValue("Data Lab");
   await page.getByRole("searchbox").fill("图层分解");
   await page.getByRole("button", { name: "搜索", exact: true }).click();
-  await expect(page).toHaveURL(/search\.html\?q=/);
+  await expect(page).toHaveURL(/\/Blog\/search\/\?q=/);
   await page.reload();
   await expect(page.getByRole("searchbox")).toHaveValue("图层分解");
   const result = page.getByRole("link", { name: DECOMPOSITION_TITLE });
@@ -82,7 +90,8 @@ test("search results are linkable and open the original article", async ({ page 
 
 test("archive groups every published post and links to the categories", async ({ page, request }) => {
   const searchIndex = await (await request.get("search.json")).json();
-  await page.goto("archive.html");
+  await page.goto("archive.html?from=old#essays", { waitUntil: "commit" });
+  await expect(page).toHaveURL(/\/Blog\/archive\/\?from=old#essays$/);
 
   await expect(page.locator("#essays")).toContainText("随便写写");
   await expect(page.locator("#study")).toContainText("ML");

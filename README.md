@@ -1,6 +1,6 @@
 # Sakura personal site
 
-One Astro project for Jinzheng Wang's academic homepage (`/`) and Sakura Blog (`/Blog/`), deployed together to GitHub Pages.
+One Astro project for Jinzheng Wang's academic homepage (`/`) and the Sakura blog (`/Blog/`), deployed together to GitHub Pages.
 
 ## Development
 
@@ -35,7 +35,7 @@ The homepage has a fixed header with About, Education, and Publications navigati
 
 The blog ships a static reading column, a native collapsible table of contents, and a local search page. Inter and Noto Serif SC are served locally for body text and headings respectively. The body stack includes native Chinese sans-serif fonts. Blog visitors start in dark mode and can switch themes. Cover metadata supplies images for link previews.
 
-Published dates use Asia/Shanghai. Article links use `/Blog/YYYY-MM-DD/slug/`. The GitHub Pages build also emits static redirects for the previous `.html` addresses. Browser redirects preserve query strings and heading fragments. Atom entries keep their existing IDs and link to the directory-style addresses. The migration baseline checks retained heading IDs, images, mathematical expressions and tables. One old Jekyll parsing artifact—a norm expression rendered as an extra table—is intentionally rendered as math.
+Published dates use Asia/Shanghai. Article links use `/Blog/YYYY-MM-DD/slug/`. Archive, About, and Search also have directory-style addresses. The GitHub Pages build emits static redirects for the previous `.html` addresses. Browser redirects preserve query strings and heading fragments. Atom entries keep their existing IDs and link to the directory-style addresses. The migration baseline checks retained heading IDs, images, mathematical expressions and tables. One old Jekyll parsing artifact—a norm expression rendered as an extra table—is intentionally rendered as math.
 
 ## Write a post by hand
 

@@ -1,5 +1,5 @@
 ---
-import { BLOG_PREFIX, BLOG_ROOT, SITE_ORIGIN, blogPaths, siteOwner } from '../../config/site.js';
+import { BLOG_ASSETS, BLOG_PREFIX, BLOG_ROOT, SITE_ORIGIN, blogPaths, siteOwner } from '../../config/site.js';
 import SiteDocument from '../../shared/SiteDocument.astro';
 import { isoDate, type SiteDate } from '../../shared/dates';
 import { blog } from './config';
@@ -26,11 +26,12 @@ const {
   canonicalPath = Astro.url.pathname === BLOG_PREFIX ? BLOG_ROOT : Astro.url.pathname,
 } = Astro.props;
 const home = canonicalPath === BLOG_ROOT;
-const pageTitle = home ? `${blog.title} Blog` : `${title} | ${blog.title}`;
+const pageTitle = home ? blog.title : `${title} | ${blog.title}`;
 ---
 
 <SiteDocument lang="zh-CN" title={pageTitle} description={summary} canonicalPath={canonicalPath} defaultTheme="dark">
   <Fragment slot="metadata">
+    <link rel="icon" href={`${BLOG_ASSETS}/images/site/favicon.png`} type="image/png" sizes="64x64" />
     <meta property="og:title" content={home ? pageTitle : title} />
     <meta property="og:description" content={summary} />
     <meta property="og:url" content={new URL(canonicalPath, SITE_ORIGIN).href} />

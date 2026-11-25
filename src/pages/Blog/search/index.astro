@@ -1,13 +1,13 @@
 ---
-import { blogPaths } from '../../config/site.js';
-import BlogLayout from '../../features/blog/BlogLayout.astro';
-import PostList from '../../features/blog/components/PostList.astro';
-import { getPosts } from '../../features/blog/content';
+import { blogPaths } from '../../../config/site.js';
+import BlogLayout from '../../../features/blog/BlogLayout.astro';
+import PostList from '../../../features/blog/components/PostList.astro';
+import { getPosts } from '../../../features/blog/content';
 
 const posts = await getPosts();
 ---
 
-<BlogLayout title="搜索" noindex>
+<BlogLayout title="搜索" canonicalPath={blogPaths.searchPage} noindex>
   <header class="article-heading"><h1>搜索文章</h1></header>
   <form class="search-form" id="blog-search" role="search" action={blogPaths.searchPage} hidden>
     <label class="visually-hidden" for="search-query">搜索标题或摘要</label>
@@ -19,6 +19,6 @@ const posts = await getPosts();
 </BlogLayout>
 
 <script>
-  import { mountSearch } from '../../features/blog/client/search';
+  import { mountSearch } from '../../../features/blog/client/search';
   mountSearch();
 </script>

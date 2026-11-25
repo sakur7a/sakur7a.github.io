@@ -40,7 +40,7 @@ function feedEntry({ data, rendered }: CollectionEntry<'posts'>) {
   ].join('');
 }
 
-export function legacyPostRedirect(permalink: string) {
+export function legacyBlogRedirect(permalink: string) {
   const destination = new URL(permalink, SITE_ORIGIN);
   const path = escapeXml(destination.pathname);
   const canonical = escapeXml(destination.href);
@@ -48,12 +48,12 @@ export function legacyPostRedirect(permalink: string) {
 <html lang="zh-CN">
 <head>
   <meta charset="utf-8">
-  <title>文章地址已更新</title>
+  <title>页面地址已更新</title>
   <link rel="canonical" href="${canonical}">
   <noscript><meta http-equiv="refresh" content="0; url=${path}"></noscript>
 </head>
 <body>
-  <p><a href="${path}" id="new-address">打开文章</a></p>
+  <p><a href="${path}" id="new-address">打开页面</a></p>
   <script>
     const destination = new URL(document.getElementById('new-address').href);
     destination.search = location.search;
