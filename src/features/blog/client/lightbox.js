@@ -1,7 +1,7 @@
 import { BLOG_ASSETS } from "../../../config/site.js";
 
 export function mountImageLightbox() {
-  var zoomImgs = document.querySelectorAll(".entry-content img");
+  var zoomImgs = document.querySelectorAll("#post-content img");
   if (!zoomImgs.length) return;
 
   const vendorBase = `${BLOG_ASSETS}/vendor/photoswipe/`;
@@ -25,12 +25,11 @@ export function mountImageLightbox() {
   loadScript(vendorBase + "photoswipe.umd.min.js", function () {
     loadScript(vendorBase + "photoswipe-lightbox.umd.min.js", function () {
       var lightbox = new window.PhotoSwipeLightbox({
-        gallery: ".entry-content",
+        gallery: "#post-content",
         children: "img",
         pswpModule: window.PhotoSwipe,
         bgOpacity: 0.92,
-        padding: { top: 20, bottom: 20, left: 20, right: 20 },
-        mainClass: "pswp--minimal"
+        padding: { top: 44, bottom: 24, left: 16, right: 16 }
       });
 
       lightbox.addFilter("domItemData", function (itemData, element) {

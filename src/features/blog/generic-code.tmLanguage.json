@@ -1,0 +1,37 @@
+{
+  "name": "generic-code",
+  "scopeName": "source.generic-code",
+  "patterns": [
+    {
+      "name": "comment.block.generic-code",
+      "begin": "/\\*",
+      "end": "\\*/"
+    },
+    {
+      "name": "comment.line.generic-code",
+      "match": "(?<!:)//.*$|^[\\t ]*#.*$"
+    },
+    {
+      "name": "string.quoted.generic-code",
+      "match": "\"(?:\\\\.|[^\"\\\\])*\"|'(?:\\\\.|[^'\\\\])*'"
+    },
+    {
+      "name": "constant.numeric.generic-code",
+      "match": "(?<![\\p{L}\\p{N}_])(?:0[xX][0-9a-fA-F]+|0[bB][01]+|0[oO][0-7]+|[01]+(?:\\.\\.\\.[01]+)+|\\d+(?:\\.\\d+)?(?:[eE][+-]?\\d+)?)(?![\\p{L}\\p{N}_])"
+    },
+    {
+      "match": "^[\\t ]*(if|else|elif|switch|case|for|while|break|continue|return|yield|try|catch|except|finally|throw|raise|import|from|export|def|function|class|const|let|var|async|await)\\b",
+      "captures": {
+        "1": { "name": "keyword.control.generic-code" }
+      }
+    },
+    {
+      "name": "constant.language.generic-code",
+      "match": "\\b(?:true|false|null|undefined|True|False|None)\\b"
+    },
+    {
+      "name": "keyword.operator.generic-code",
+      "match": "=>|->|<<|>>|==|!=|<=|>=|&&|\\|\\||[-=+*/%~!&|^<>]"
+    }
+  ]
+}

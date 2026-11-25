@@ -2,7 +2,7 @@ import { defineCollection } from 'astro:content';
 import { glob } from 'astro/loaders';
 import { z } from 'astro/zod';
 import { PAGES_DIRECTORY, POSTS_DIRECTORY } from './config/content.js';
-import { blogDateLabel, postPermalink, postPermalinkPattern, postSlugPattern } from './config/site.js';
+import { blogDateLabel, canonicalPostPermalink, postPermalink, postPermalinkPattern, postSlugPattern } from './config/site.js';
 
 const metadata = z.looseObject({
   title: z.string(),
@@ -29,7 +29,7 @@ const posts = defineCollection({
   }).transform(data => ({
     ...data,
     title: data.title || data.slug.replace(/-/g, ' '),
-    permalink: data.permalink || postPermalink(blogDateLabel(data.date), data.slug),
+    permalink: data.permalink ? canonicalPostPermalink(data.permalink) : postPermalink(blogDateLabel(data.date), data.slug),
   })),
 });
 const pages = defineCollection({ loader: glob({ base: `./${PAGES_DIRECTORY}`, pattern: '*.md' }), schema: metadata });

@@ -1,0 +1,22 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import PostMeta from './PostMeta.astro';
+
+interface Props {
+  posts: CollectionEntry<'posts'>[];
+}
+
+const { posts } = Astro.props;
+---
+
+{posts.length ? (
+  <section class="post-list" aria-label="文章列表">
+    {posts.map(({ data }) => (
+      <article class="post-list-item">
+        <h2><a href={data.permalink} rel="bookmark">{data.title}</a></h2>
+        {data.summary && <p class="post-excerpt">{data.summary}</p>}
+        <PostMeta date={data.date} categories={data.categories} />
+      </article>
+    ))}
+  </section>
+) : <p class="empty-state">暂时还没有文章。</p>}

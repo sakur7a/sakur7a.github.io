@@ -518,8 +518,17 @@ unsigned float_i2f(int x) {
  */
 ```
 
-对于规格化浮点数：$f = (-1)^s \times (1.frac)_2 \times 2^E$，其中：E = exp - 127$$$(1.frac)_2 = \frac{2^{23} + frac}{2^{23}}$$所以：
-$$|f| = (2^{23} + frac) \times 2^{E - 23}$$
+对于规格化浮点数：$f = (-1)^s \times (1.frac)_2 \times 2^E$，其中：E = exp - 127
+
+$$
+(1.frac)_2 = \frac{2^{23} + frac}{2^{23}}
+$$
+
+所以：
+
+$$
+|f| = (2^{23} + frac) \times 2^{E - 23}
+$$
 
 ```
 int float_f2i(unsigned uf) {

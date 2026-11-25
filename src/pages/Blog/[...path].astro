@@ -3,26 +3,21 @@ import { render } from 'astro:content';
 import type { InferGetStaticPropsType } from 'astro';
 import BlogLayout from '../../features/blog/BlogLayout.astro';
 import BlogPage from '../../features/blog/components/BlogPage.astro';
-import PostArticle from '../../features/blog/components/PostArticle.astro';
-import { getEntryRoutes } from '../../features/blog/content';
+import { getPageRoutes } from '../../features/blog/content';
+import 'katex/dist/katex.min.css';
 
-export const getStaticPaths = getEntryRoutes;
+export const getStaticPaths = getPageRoutes;
 type Props = InferGetStaticPropsType<typeof getStaticPaths>;
 
 const { entry } = Astro.props;
 const { Content } = await render(entry);
 const data = entry.data;
-const post = entry.collection === 'posts' ? entry.data : undefined;
 ---
 
 <BlogLayout
   title={data.title}
   summary={data.summary}
   image={data.cover || data.header_image}
-  position={data.cover_position || data.header_position}
-  bodyId={post ? 'post' : 'page'}
-  homeActive={Boolean(post)}
-  date={post?.date}
 >
-  {post ? <PostArticle post={post}><Content /></PostArticle> : <BlogPage title={data.title}><Content /></BlogPage>}
+  <BlogPage title={data.title}><Content /></BlogPage>
 </BlogLayout>

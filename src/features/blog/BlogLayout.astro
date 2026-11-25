@@ -1,57 +1,55 @@
 ---
-import { BLOG_PREFIX, BLOG_ROOT, SITE_ORIGIN, blogPaths } from '../../config/site.js';
+import { BLOG_PREFIX, BLOG_ROOT, SITE_ORIGIN, blogPaths, siteOwner } from '../../config/site.js';
 import SiteDocument from '../../shared/SiteDocument.astro';
 import { isoDate, type SiteDate } from '../../shared/dates';
 import { blog } from './config';
 import BlogNavigation from './components/BlogNavigation.astro';
-import SearchPanel from './components/SearchPanel.astro';
+import '@fontsource-variable/inter';
+import '@fontsource/noto-serif-sc/700.css';
 import './styles/index.css';
-import '../../shared/dates.css';
 
 interface Props {
   title?: string;
   summary?: string;
   image?: string;
-  position?: string;
-  bodyId?: 'page' | 'post' | 'post-index';
-  homeActive?: boolean;
   date?: SiteDate;
+  noindex?: boolean;
+  canonicalPath?: string;
 }
 
 const {
-  title = blog.description,
+  title = blog.title,
   summary = blog.description,
   image,
-  position = '50% 50%',
-  bodyId = 'page',
-  homeActive = false,
   date,
+  noindex = false,
+  canonicalPath = Astro.url.pathname === BLOG_PREFIX ? BLOG_ROOT : Astro.url.pathname,
 } = Astro.props;
-const pageTitle = title === blog.description ? blog.title : `${title} | ${blog.title}`;
-const canonicalPath = Astro.url.pathname === BLOG_PREFIX ? BLOG_ROOT : Astro.url.pathname;
-const heroStyle = image && `background-image: url('${image}'); background-position: ${position};`;
+const home = canonicalPath === BLOG_ROOT;
+const pageTitle = home ? `${blog.title} Blog` : `${title} | ${blog.title}`;
 ---
 
-<SiteDocument lang="zh-CN" title={pageTitle} description={summary} canonicalPath={canonicalPath} bodyId={bodyId}>
+<SiteDocument lang="zh-CN" title={pageTitle} description={summary} canonicalPath={canonicalPath} defaultTheme="dark">
   <Fragment slot="metadata">
-    <meta property="og:title" content={title} />
+    <meta property="og:title" content={home ? pageTitle : title} />
     <meta property="og:description" content={summary} />
     <meta property="og:url" content={new URL(canonicalPath, SITE_ORIGIN).href} />
     <meta property="og:type" content={date ? 'article' : 'website'} />
     {image && <meta property="og:image" content={new URL(image, SITE_ORIGIN).href} />}
     {date && <meta property="article:published_time" content={isoDate(date)} />}
+    {noindex && <meta name="robots" content="noindex" />}
     <link rel="alternate" type="application/atom+xml" title={blog.title} href={blogPaths.feed} />
   </Fragment>
 
-  <BlogNavigation homeActive={homeActive} />
-  <div class:list={['entry-header', { 'has-image': image }]} style={heroStyle}>
-    <p class="header-title">{title}</p>
-    <canvas id="J_firework_canvas" aria-hidden="true"></canvas>
-  </div>
-  <main id="main" role="main"><slot /></main>
-  <SearchPanel />
+  <a class="skip-link" href="#main">跳转到内容</a>
+  <BlogNavigation home={home} />
+  <main class="blog-main" id="main" tabindex="-1"><slot /></main>
   <footer class="site-footer">
-    <p>© <span class="date-text">{new Date().getFullYear()}</span> {blog.title}. Something for nothing.</p>
+    <p>© {new Date().getFullYear()} {blog.title}</p>
+    <div class="footer-links">
+      <a href="/">个人主页</a>
+      <a href={siteOwner.github}>GitHub</a>
+    </div>
   </footer>
 
   <script>

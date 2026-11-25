@@ -1,40 +1,30 @@
 ---
 import BlogLayout from '../../features/blog/BlogLayout.astro';
-import BlogPage from '../../features/blog/components/BlogPage.astro';
 import PostDate from '../../features/blog/components/PostDate.astro';
-import { blog } from '../../features/blog/config';
-import { getArchiveGroups } from '../../features/blog/content';
+import { getArchiveGroups, getPosts } from '../../features/blog/content';
 
-const groups = await getArchiveGroups();
+const posts = await getPosts();
+const groups = getArchiveGroups(posts);
 ---
 
-<BlogLayout title="Archive" {...blog.heroes.archive}>
-  <BlogPage title="Archive">
-    <nav class="archive-tabs" aria-label="文章分类">
-      {groups.map(group => <a href={`#${group.slug}`}><span>{group.name}</span><em>{group.posts.length}</em></a>)}
+<BlogLayout title="归档">
+  <header class="article-heading archive-heading">
+    <h1>文章归档</h1>
+    <p>{posts.length} 篇文章</p>
+  </header>
+  {groups.length ? (
+    <nav class="archive-nav" aria-label="文章分类">
+      {groups.map(({ slug, name, posts }) => <a href={`#${slug}`}>{name} <span>{posts.length} 篇</span></a>)}
     </nav>
-    <div class="archive-groups">
-      {groups.map(({ slug, name, description, posts }) => (
-        <section class="archive-group" id={slug} aria-labelledby={`${slug}-title`}>
-          <header class="archive-group-header">
-            <div>
-              <h2 id={`${slug}-title`}>{name}</h2>
-              <p>{description}</p>
-            </div>
-            <span>{posts.length} 篇</span>
-          </header>
-          {posts.length ? (
-            <div class="archive-list" aria-label={`${name}文章`}>
-              {posts.map(({ data }) => (
-                <a class="archive-row" href={data.permalink}>
-                  <PostDate date={data.date} />
-                  <span><strong>{data.title}</strong>{data.summary && <small>{data.summary}</small>}</span>
-                </a>
-              ))}
-            </div>
-          ) : <p class="archive-empty">这一类还在等第一篇文章。</p>}
-        </section>
-      ))}
-    </div>
-  </BlogPage>
+  ) : <p class="empty-state">暂时还没有文章。</p>}
+  {groups.map(({ slug, name, posts }) => (
+    <section class="archive-group" id={slug} aria-labelledby={`${slug}-title`}>
+      <h2 id={`${slug}-title`}>{name}</h2>
+      <ul class="archive-list">
+        {posts.map(({ data }) => (
+          <li><PostDate date={data.date} /><a href={data.permalink}>{data.title}</a></li>
+        ))}
+      </ul>
+    </section>
+  ))}
 </BlogLayout>

@@ -8,7 +8,14 @@ http.createServer((request, response) => {
   try {
     const url = new URL(request.url, 'http://localhost');
     let file = outputFile(url.pathname);
-    if (fs.existsSync(file) && fs.statSync(file).isDirectory()) file = path.join(file, 'index.html');
+    if (fs.existsSync(file) && fs.statSync(file).isDirectory()) {
+      file = path.join(file, 'index.html');
+      if (!url.pathname.endsWith('/') && fs.existsSync(file)) {
+        response.writeHead(308, { Location: url.pathname + '/' + url.search });
+        response.end();
+        return;
+      }
+    }
     if (!fs.existsSync(file) && !path.extname(file) && fs.existsSync(file + '.html')) file += '.html';
     if (!fs.existsSync(file)) { response.writeHead(404); response.end('Not found'); return; }
     response.writeHead(200, { 'Content-Type': types[path.extname(file)] || 'application/octet-stream' });

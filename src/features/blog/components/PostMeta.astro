@@ -1,0 +1,25 @@
+---
+import { blogPaths } from '../../../config/site.js';
+import type { SiteDate } from '../../../shared/dates';
+import { blog } from '../config';
+import PostDate from './PostDate.astro';
+
+interface Props {
+  date: SiteDate;
+  categories: string[];
+}
+
+const { date, categories } = Astro.props;
+---
+
+<div class="post-meta">
+  <PostDate date={date} />
+  {categories.length > 0 && (
+    <ul class="post-categories" aria-label="文章分类">
+      {categories.map(name => {
+        const category = blog.categories.find(item => item.name === name);
+        return <li>{category ? <a href={`${blogPaths.archive}#${category.slug}`}>{name}</a> : name}</li>;
+      })}
+    </ul>
+  )}
+</div>

@@ -1,51 +1,28 @@
-import { copyText } from "./clipboard.js";
+import { createCopyButton } from './clipboard.js';
+
+const unlabeledLanguages = new Set(['generic-code', 'plaintext', 'text', 'txt']);
 
 export function mountCodeCopy() {
-  var highlights = document.querySelectorAll(".highlighter-rouge > div.highlight");
-  if (!highlights.length) return;
+  for (const block of document.querySelectorAll('#post-content .highlighter-rouge > .highlight')) {
+    const pre = block.querySelector('pre');
+    const code = pre?.querySelector('code');
+    if (!code || block.querySelector('.highlight-header')) continue;
 
-  highlights.forEach(function (highlight) {
-    if (highlight.querySelector(".highlight-header")) return;
-
-    var code = highlight.querySelector("code");
-    var language = "";
-
-    if (code) {
-      language = code.getAttribute("data-lang") || "";
-      if (!language && code.className) {
-        var match = code.className.match(/language-([a-z0-9_+.-]+)/i);
-        language = match ? match[1] : "";
-      }
+    const language = code.dataset.lang || pre.dataset.language;
+    const header = document.createElement('div');
+    header.className = 'highlight-header';
+    if (language && !unlabeledLanguages.has(language)) {
+      const label = document.createElement('span');
+      label.className = 'highlight-lang';
+      label.textContent = language;
+      header.append(label);
     }
 
-    var header = document.createElement("div");
-    header.className = "highlight-header";
-    header.innerHTML =
-      '<div class="highlight-dots">' +
-      '<span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span>' +
-      "</div>" +
-      '<span class="highlight-lang"></span>' +
-      '<span class="copy-btn">Copy</span>';
-    header.querySelector(".highlight-lang").textContent = language;
-    highlight.insertBefore(header, highlight.firstChild);
-
-    var copyBtn = header.querySelector(".copy-btn");
-    copyBtn.addEventListener("click", function () {
-      var pre = highlight.querySelector("pre");
-      if (!pre) return;
-      copyText(pre.innerText).then(function () {
-        copyBtn.textContent = "✓ Copied";
-        copyBtn.style.color = "#27c93f";
-        setTimeout(function () {
-          copyBtn.textContent = "Copy";
-          copyBtn.style.color = "";
-        }, 2000);
-      }).catch(function () {
-        copyBtn.textContent = "✗ Failed";
-        setTimeout(function () {
-          copyBtn.textContent = "Copy";
-        }, 2000);
-      });
-    });
-  });
+    header.append(createCopyButton({
+      className: 'copy-btn',
+      label: '复制代码',
+      text: code.textContent,
+    }));
+    block.prepend(header);
+  }
 }

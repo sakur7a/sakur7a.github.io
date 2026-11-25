@@ -21,7 +21,7 @@ export async function transformDraft(root, draft, options = {}) {
   const slug = safeSlug(options.slug || input.data.slug || existing?.slug || slugFor(title));
   const basename = `${day}-${slug}`;
   const postPath = `${POSTS_DIRECTORY}/${basename}.md`;
-  const permalink = postPermalink(day, slug);
+  const permalink = existing?.slug === slug ? existing.relativeUrl : postPermalink(day, slug);
   if ((existing?.postPath !== postPath && fs.existsSync(path.join(root, postPath)))
     || posts.some(post => post !== existing && post.relativeUrl === permalink)) {
     throw new Error('A different post already uses this publication date and slug.');

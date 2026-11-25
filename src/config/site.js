@@ -14,9 +14,10 @@ export const blogPaths = {
   about: `${BLOG_ROOT}about.html`,
   feed: `${BLOG_ROOT}feed.xml`,
   search: `${BLOG_ROOT}search.json`,
+  searchPage: `${BLOG_ROOT}search.html`,
 };
 
-export const postPermalinkPattern = new RegExp(String.raw`^${BLOG_ROOT}\d{4}-\d{2}-\d{2}/[^/]+\.html$`);
+export const postPermalinkPattern = new RegExp(String.raw`^${BLOG_ROOT}\d{4}-\d{2}-\d{2}/[^/?#\\]+(?:\.html|/)$`);
 export const postSlugPattern = /^[\p{L}\p{N}]+(?:-[\p{L}\p{N}]+)*$/u;
 
 const blogDateFormatter = new Intl.DateTimeFormat('sv-SE', {
@@ -36,7 +37,17 @@ export function blogDateLabel(value) {
  * @param {string} slug
  */
 export function postPermalink(date, slug) {
-  return `${BLOG_ROOT}${date}/${slug}.html`;
+  return `${BLOG_ROOT}${date}/${slug}/`;
+}
+
+/** @param {string} permalink */
+export function canonicalPostPermalink(permalink) {
+  return permalink.replace(/\.html$/, '/');
+}
+
+/** @param {string} permalink */
+export function legacyPostPermalink(permalink) {
+  return permalink.replace(/\/$/, '.html');
 }
 
 /** @param {string} id */

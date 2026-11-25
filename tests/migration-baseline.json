@@ -1080,7 +1080,7 @@
       "\n2^n \\equiv 0 \\pmod{2^n}\n",
       "\nx + (\\mathord{\\sim}x + 1) \\equiv 0 \\pmod{2^n}\n",
       "\n-x = \\mathord{\\sim}x + 1\n",
-      "\n$(1.frac)_2 = \\frac{2^{23} + frac}{2^{23}}\n",
+      "\n(1.frac)_2 = \\frac{2^{23} + frac}{2^{23}}\n",
       "\n|f| = (2^{23} + frac) \\times 2^{E - 23}\n"
     ],
     "tables": 1

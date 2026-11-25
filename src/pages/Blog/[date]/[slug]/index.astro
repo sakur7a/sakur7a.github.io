@@ -1,0 +1,25 @@
+---
+import { render } from 'astro:content';
+import type { InferGetStaticPropsType } from 'astro';
+import BlogLayout from '../../../../features/blog/BlogLayout.astro';
+import PostArticle from '../../../../features/blog/components/PostArticle.astro';
+import { getPostRoutes } from '../../../../features/blog/content';
+import 'katex/dist/katex.min.css';
+
+export const getStaticPaths = getPostRoutes;
+type Props = InferGetStaticPropsType<typeof getStaticPaths>;
+
+const { entry } = Astro.props;
+const { Content, headings } = await render(entry);
+const post = entry.data;
+---
+
+<BlogLayout
+  title={post.title}
+  summary={post.summary}
+  image={post.cover || post.header_image}
+  date={post.date}
+  canonicalPath={post.permalink}
+>
+  <PostArticle post={post} headings={headings}><Content /></PostArticle>
+</BlogLayout>

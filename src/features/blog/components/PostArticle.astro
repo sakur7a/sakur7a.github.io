@@ -1,31 +1,55 @@
 ---
 import type { CollectionEntry } from 'astro:content';
-import PostDate from './PostDate.astro';
+import type { MarkdownHeading } from 'astro';
+import { BLOG_ROOT } from '../../../config/site.js';
+import PostMeta from './PostMeta.astro';
+import { renderFormula } from '../math-markup.js';
 
 interface Props {
   post: CollectionEntry<'posts'>['data'];
+  headings: MarkdownHeading[];
 }
 
-const { post } = Astro.props;
-const coverStyle = post.cover && `background-image: url('${post.cover}'); background-position: ${post.cover_position || '50% 50%'};`;
+const { post, headings } = Astro.props;
+const outline = headings.filter(heading => heading.depth <= 4 && heading.slug);
+const topLevel = Math.min(...outline.map(heading => heading.depth));
 ---
 
-<div class="post-shell">
-  <article class="hentry">
-    <div class="entry-content" id="post-content">
-      <h1 class="post-title entry-title">{post.title}</h1>
-      {post.cover && <div class="post-cover" style={coverStyle}></div>}
-      <div class="page-info">
-        <span>{post.categories.join(' / ')}</span>
-        <PostDate date={post.date} />
-      </div>
-      <slot />
-    </div>
-  </article>
-  <aside class="post-toc" aria-labelledby="post-toc-title" hidden>
-    <div class="post-toc-inner">
-      <h2 id="post-toc-title">文章目录</h2>
-      <nav id="post-toc-nav" aria-label="文章目录"></nav>
-    </div>
-  </aside>
-</div>
+<article class="post-shell">
+  <header class="article-heading">
+    <h1>{post.title}</h1>
+    {post.summary && <p class="post-summary">{post.summary}</p>}
+    <PostMeta date={post.date} categories={post.categories} />
+  </header>
+  {outline.length > 0 && (
+    <aside class="post-toc" aria-labelledby="post-toc-title">
+      <details>
+        <summary id="post-toc-title">文章目录</summary>
+        <nav aria-label="文章目录">
+          <ul>
+            {outline.map(({ slug, depth, text }) => (
+              <li style={{ '--toc-depth': depth - topLevel }}>
+                <a href={`#${encodeURIComponent(slug)}`}>{text.split(/\\\((.*?)\\\)/g).map((part, index) =>
+                  index % 2 ? <span class="math-inline" set:html={renderFormula(part)} /> : part
+                )}</a>
+              </li>
+            ))}
+          </ul>
+        </nav>
+      </details>
+    </aside>
+  )}
+  <div class="prose" id="post-content"><slot /></div>
+  <footer class="article-footer"><a href={BLOG_ROOT}>← 返回博客</a></footer>
+</article>
+
+<script>
+  import { mountCodeCopy } from '../client/code-copy.js';
+  import { mountImageLightbox } from '../client/lightbox.js';
+  import { mountMath } from '../client/math.js';
+  import { mountTableOfContents } from '../client/toc';
+  mountCodeCopy();
+  mountImageLightbox();
+  mountMath();
+  mountTableOfContents();
+</script>

@@ -1,0 +1,24 @@
+---
+import { blogPaths } from '../../config/site.js';
+import BlogLayout from '../../features/blog/BlogLayout.astro';
+import PostList from '../../features/blog/components/PostList.astro';
+import { getPosts } from '../../features/blog/content';
+
+const posts = await getPosts();
+---
+
+<BlogLayout title="搜索" noindex>
+  <header class="article-heading"><h1>搜索文章</h1></header>
+  <form class="search-form" id="blog-search" role="search" action={blogPaths.searchPage} hidden>
+    <label class="visually-hidden" for="search-query">搜索标题或摘要</label>
+    <input id="search-query" name="q" type="search" placeholder="搜索标题或摘要" autocomplete="off" />
+    <button type="submit">搜索</button>
+  </form>
+  <p class="search-status" id="search-status" role="status"></p>
+  <PostList posts={posts} />
+</BlogLayout>
+
+<script>
+  import { mountSearch } from '../../features/blog/client/search';
+  mountSearch();
+</script>

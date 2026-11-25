@@ -17,6 +17,8 @@ const { title = site.title, description = site.description } = Astro.props;
   <Fragment slot="metadata">
     <meta name="author" content={site.title} />
     <link rel="icon" href="/assets/img/style.png" type="image/png" />
+    <link rel="stylesheet" href="/assets/css/jinkai.css" />
+    <link rel="preload" href="/assets/fonts/outfit/outfit-latin-500.woff2" as="font" type="font/woff2" crossorigin />
   </Fragment>
 
   <a class="skip-link" href="#main-content">Skip to content</a>

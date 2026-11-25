@@ -2,7 +2,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import crypto from 'node:crypto';
 import { POSTS_DIRECTORY } from '../../../src/config/content.js';
-import { SITE_ORIGIN, SITE_TIME_ZONE, blogDateLabel, postPermalink, postSlugPattern } from '../../../src/config/site.js';
+import { SITE_ORIGIN, SITE_TIME_ZONE, blogDateLabel, canonicalPostPermalink, postPermalink, postSlugPattern } from '../../../src/config/site.js';
 import { readDocument } from './markdown.js';
 import { ASSETS, ROOT, SOURCES_DIRECTORY, inside } from './repository.js';
 
@@ -33,7 +33,7 @@ export function postInfo(root, filename) {
   const title = data.title || slug.replaceAll('-', ' ');
   const sourceName = data.source_file || `${title}.md`;
   const sourcePath = path.basename(sourceName) === sourceName && fs.existsSync(path.join(root, SOURCES_DIRECTORY, sourceName)) ? `${SOURCES_DIRECTORY}/${sourceName}` : '';
-  const relativeUrl = data.permalink || postPermalink(localDate(dateValue), slug);
+  const relativeUrl = data.permalink ? canonicalPostPermalink(data.permalink) : postPermalink(localDate(dateValue), slug);
   return {
     title,
     date,

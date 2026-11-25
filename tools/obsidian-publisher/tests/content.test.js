@@ -56,7 +56,7 @@ test('new publication converts nested Chinese images and preserves TeX and sourc
   const formula = '\\frac{x_i}{n} + \\text{中文}';
   writeDocument(draft, { title: '中文稿', date: '2026-06-12 00:30:00 +0800', slug: '2026-6-12', categories: ['学习'] }, `![[a/图.png]]\n\n![[b/图.png|200]]\n\n$$\n${formula}\n$$\n`);
   const result = await transformDraft(root, draft, { vaultRoot: vault });
-  assert.equal(result.permalink, '/Blog/2026-06-12/2026-6-12.html');
+  assert.equal(result.permalink, '/Blog/2026-06-12/2026-6-12/');
   const post = readDocument(path.join(root, result.postPath));
   assert.equal(post.data.slug, '2026-6-12');
   assert.ok(post.body.includes(formula));
@@ -76,11 +76,17 @@ test('republish keeps first date, existing cover, and existing compressed attach
   await image(path.join(root, 'vault/photo.png'));
   writeDocument(draft, { title: 'Original', date: '2026-05-06 20:00:00 +0800', slug: 'demo', categories: ['学习'] }, '![[photo.png]]\n');
   const first = await transformDraft(root, draft, { cover });
+  const firstPost = readDocument(path.join(root, first.postPath));
+  writeDocument(path.join(root, first.postPath), {
+    ...firstPost.data, permalink: '/Blog/2026-05-06/demo.html',
+  }, firstPost.body);
+  assert.equal(listPosts(root)[0].relativeUrl, '/Blog/2026-05-06/demo/');
   fs.rmSync(path.join(root, 'vault/photo.png'));
   writeDocument(draft, { title: 'Updated title', date: '2026-10-07 12:00:00 +0800', slug: 'demo' }, '![[photo.png]]\n');
   const second = await transformDraft(root, draft, { date: '2026-10-07 12:00:00 +0800' });
   const post = readDocument(path.join(root, second.postPath));
   assert.equal(first.postPath, second.postPath);
+  assert.equal(post.data.permalink, '/Blog/2026-05-06/demo/');
   assert.equal(post.data.date, '2026-05-06 20:00:00 +0800');
   assert.match(post.data.cover, /cover.webp$/);
   assert.match(post.body, /photo.webp/);
@@ -173,7 +179,7 @@ test('slug change replaces the original post and keeps its first publication dat
   const changed = await transformDraft(root, draft, { slug: 'new' });
   assert.equal(fs.existsSync(path.join(root, old.postPath)), false);
   assert.equal(listPosts(root).length, 1);
-  assert.equal(changed.permalink, '/Blog/2026-05-06/new.html');
+  assert.equal(changed.permalink, '/Blog/2026-05-06/new/');
 });
 
 test('a different source cannot overwrite an existing date and slug', async t => {
@@ -236,7 +242,7 @@ test('manual posts are listed without a Vault snapshot and cannot be overwritten
 
   const [manual] = listPosts(root);
   assert.equal(manual.sourcePath, '');
-  assert.equal(manual.relativeUrl, '/Blog/2026-10-07/manual.html');
+  assert.equal(manual.relativeUrl, '/Blog/2026-10-07/manual/');
   const before = fs.readFileSync(post);
   await assert.rejects(transformDraft(root, draft), /different post/);
   assert.deepEqual(fs.readFileSync(post), before);

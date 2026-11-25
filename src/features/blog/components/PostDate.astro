@@ -3,10 +3,9 @@ import { dateLabel, isoDate, type SiteDate } from '../../../shared/dates';
 
 interface Props {
   date: SiteDate;
-  bracketed?: boolean;
 }
 
-const { date, bracketed = false } = Astro.props;
-const label = dateLabel(date);
+const { date } = Astro.props;
 ---
-<time class="date-text" datetime={isoDate(date)}>{bracketed ? `【${label}】` : label}</time>
+
+<time datetime={isoDate(date)}>{dateLabel(date)}</time>

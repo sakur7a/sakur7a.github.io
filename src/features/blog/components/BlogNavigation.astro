@@ -3,36 +3,37 @@ import { BLOG_ROOT, blogPaths } from '../../../config/site.js';
 import { blog } from '../config';
 
 interface Props {
-  homeActive: boolean;
+  home: boolean;
 }
 
-const { homeActive } = Astro.props;
+const { home } = Astro.props;
+const path = Astro.url.pathname;
 ---
 
-<div class="header-menu" id="J_header">
-  <ul class="header-item-container">
-    <li class:list={['header-item-title', { active: homeActive }]}>
-      <a href={BLOG_ROOT} class="title">{blog.title}</a>
-    </li>
-    {blog.navigation.map(({ label, href, external }) => (
-      <li class:list={['header-item-left', { active: Astro.url.pathname === href }]}>
-        <a href={href} target={external ? '_blank' : undefined} rel={external ? 'noopener noreferrer' : undefined}>{label}</a>
-      </li>
+<header class:list={['blog-header', { 'blog-header-home': home }]}>
+  {home ? (
+    <div class="blog-identity">
+      <h1 class="blog-wordmark">{blog.title} Blog</h1>
+    </div>
+  ) : <a class="blog-wordmark" href={BLOG_ROOT}>{blog.title}</a>}
+  <nav class="blog-nav" lang="en" aria-label="Blog navigation">
+    {blog.navigation.map(({ label, href }) => (
+      <a href={href} aria-current={path === href ? 'page' : undefined}>{label}</a>
     ))}
-    <li class="header-item search-btn-container">
-      <button id="search-btn" class="search-btn" data-search-url={blogPaths.search} aria-label="搜索文章" title="搜索文章 (Press /)">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
-          <circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="2" />
-          <path d="M20 20L16 16" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
-        </svg>
-      </button>
-    </li>
-    <li class="header-item theme-toggle-container">
-      <button id="J_theme_toggle" class="theme-toggle-btn" aria-label="切换深色模式" title="切换深色模式">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" id="J_theme_icon">
-          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-        </svg>
-      </button>
-    </li>
-  </ul>
-</div>
+    <a class="search-link" href={blogPaths.searchPage} aria-label="Search" title="Search" aria-current={path === blogPaths.searchPage ? 'page' : undefined}>
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+        <circle cx="10.5" cy="10.5" r="6.5" />
+        <path d="m16 16 4 4" stroke-linecap="round" />
+      </svg>
+    </a>
+    <button id="J_theme_toggle" class="theme-toggle-btn" type="button" aria-label="Switch to light mode" hidden>
+      <svg class="theme-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true">
+        <circle cx="12" cy="12" r="4" />
+        <path d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1.5 1.5m11 11L19 19M5 19l1.5-1.5m11-11L19 5" />
+      </svg>
+      <svg class="theme-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round" aria-hidden="true">
+        <path d="M20.9 13a9 9 0 1 1-9.9-9.9 7 7 0 0 0 9.9 9.9Z" />
+      </svg>
+    </button>
+  </nav>
+</header>

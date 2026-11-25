@@ -7,12 +7,13 @@ export async function getPosts() {
   return posts.sort((a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime());
 }
 
-export async function getArchiveGroups() {
-  const posts = await getPosts();
-  return blog.categories.map(category => ({
+export function getArchiveGroups(posts: CollectionEntry<'posts'>[]) {
+  const groups = blog.categories.map(category => ({
     ...category,
     posts: posts.filter(post => post.data.categories.includes(category.name)),
   }));
+  const otherPosts = posts.filter(post => !blog.categories.some(category => post.data.categories.includes(category.name)));
+  return [...groups, { name: '其他', slug: 'other', posts: otherPosts }].filter(group => group.posts.length > 0);
 }
 
 export const getPages = () => getCollection('pages');
@@ -25,12 +26,18 @@ export async function getPublishedEntries() {
   };
 }
 
-export async function getEntryRoutes() {
-  const { posts, pages } = await getPublishedEntries();
+export async function getPostRoutes() {
+  const posts = await getPosts();
   const seen = new Set<string>();
-  return [...posts, ...pages].map(({ entry, url }) => {
+  return posts.map(entry => {
+    const url = entry.data.permalink;
     if (seen.has(url)) throw new Error(`Duplicate blog permalink: ${url}`);
     seen.add(url);
-    return { params: { path: url.slice(BLOG_ROOT.length, -'.html'.length) }, props: { entry } };
+    const [date, slug] = url.slice(BLOG_ROOT.length, -1).split('/');
+    return { params: { date, slug }, props: { entry } };
   });
+}
+
+export async function getPageRoutes() {
+  return (await getPages()).map(entry => ({ params: { path: entry.id }, props: { entry } }));
 }

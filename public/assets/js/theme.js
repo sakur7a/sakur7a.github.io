@@ -1,6 +1,15 @@
 (() => {
   const root = document.documentElement;
-  const stored = () => { try { return localStorage.getItem('sakura-theme') || (localStorage.getItem('dark-mode') === 'true' ? 'dark' : 'light'); } catch { return 'light'; } };
+  const defaultTheme = root.dataset.theme === 'dark' ? 'dark' : 'light';
+  const stored = () => {
+    try {
+      const theme = localStorage.getItem('sakura-theme');
+      if (theme === 'dark' || theme === 'light') return theme;
+      const legacy = localStorage.getItem('dark-mode');
+      if (legacy === 'true' || legacy === 'false') return legacy === 'true' ? 'dark' : 'light';
+    } catch {}
+    return defaultTheme;
+  };
   window.sakuraSetTheme = (theme, persist = true) => {
     root.dataset.theme = theme;
     root.classList.toggle('dark-mode', theme === 'dark');

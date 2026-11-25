@@ -1,21 +1,11 @@
 ---
 import BlogLayout from '../../features/blog/BlogLayout.astro';
-import PostDate from '../../features/blog/components/PostDate.astro';
-import { blog } from '../../features/blog/config';
+import PostList from '../../features/blog/components/PostList.astro';
 import { getPosts } from '../../features/blog/content';
 
 const posts = (await getPosts()).filter(post => !post.data.categories.includes('moments'));
 ---
 
-<BlogLayout title="Be yourself and keep writing." {...blog.heroes.index} bodyId="post-index" homeActive>
-  <section class="post-list" aria-label="最新文章">
-    {posts.map(({ data }) => (
-      <a href={data.permalink} rel="bookmark" title={data.title} class="header-href">
-        <article class="hentry">
-          <h2 class="entry-title">{data.title}</h2>
-          <div class="entry-content"><PostDate date={data.date} bracketed />{data.summary}</div>
-        </article>
-      </a>
-    ))}
-  </section>
+<BlogLayout>
+  <PostList posts={posts} />
 </BlogLayout>

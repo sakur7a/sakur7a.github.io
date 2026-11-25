@@ -1,5 +1,5 @@
 import type { CollectionEntry } from 'astro:content';
-import { BLOG_ROOT, SITE_ORIGIN, blogPaths } from '../../config/site.js';
+import { BLOG_ROOT, SITE_ORIGIN, blogPaths, legacyPostPermalink } from '../../config/site.js';
 import { dateLabel, isoDate } from '../../shared/dates';
 import { blog } from './config';
 import { getPosts, getPublishedEntries } from './content';
@@ -21,6 +21,8 @@ function xmlResponse(body: string, contentType: string) {
 
 function feedEntry({ data, rendered }: CollectionEntry<'posts'>) {
   const url = escapeXml(SITE_ORIGIN + data.permalink);
+  // Atom readers use the ID to recognize previously seen entries.
+  const id = escapeXml(SITE_ORIGIN + legacyPostPermalink(data.permalink));
   const date = isoDate(data.date);
   const html = (rendered?.html || '')
     .replaceAll(`src="${BLOG_ROOT}`, `src="${SITE_ORIGIN}${BLOG_ROOT}`)
@@ -29,13 +31,37 @@ function feedEntry({ data, rendered }: CollectionEntry<'posts'>) {
   return [
     '<entry>',
     `<title>${escapeXml(data.title)}</title>`,
-    `<link href="${url}"/><id>${url}</id>`,
+    `<link href="${url}"/><id>${id}</id>`,
     `<published>${date}</published><updated>${date}</updated>`,
     `<summary>${escapeXml(data.summary || '')}</summary>`,
     `<content type="html">${escapeXml(html)}</content>`,
     `<author><name>${escapeXml(blog.author)}</name></author>`,
     '</entry>',
   ].join('');
+}
+
+export function legacyPostRedirect(permalink: string) {
+  const destination = new URL(permalink, SITE_ORIGIN);
+  const path = escapeXml(destination.pathname);
+  const canonical = escapeXml(destination.href);
+  return new Response(`<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <title>文章地址已更新</title>
+  <link rel="canonical" href="${canonical}">
+  <noscript><meta http-equiv="refresh" content="0; url=${path}"></noscript>
+</head>
+<body>
+  <p><a href="${path}" id="new-address">打开文章</a></p>
+  <script>
+    const destination = new URL(document.getElementById('new-address').href);
+    destination.search = location.search;
+    destination.hash = location.hash;
+    location.replace(destination.href);
+  </script>
+</body>
+</html>`, { headers: { 'Content-Type': 'text/html; charset=utf-8' } });
 }
 
 export async function feedResponse() {
