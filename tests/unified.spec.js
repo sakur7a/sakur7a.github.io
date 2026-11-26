@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
 import baseline from './migration-baseline.json' with { type: 'json' };
-import { canonicalPostPermalink } from '../src/config/site.js';
+import { SITE_ORIGIN, canonicalPostPermalink } from '../src/config/site.js';
 
 test('homepage and blog share theme while homepage stays in English', async ({ page }) => {
   await page.addInitScript(() => localStorage.setItem('lang', 'zh'));
@@ -41,8 +41,8 @@ test('all original posts keep their heading anchors, images, tables and formulas
     const canonical = canonicalPostPermalink(post.url);
     await expect(page).toHaveURL(url => url.pathname === canonical);
     const content = page.locator('#post-content');
-    await expect(page.locator('link[rel="canonical"]')).toHaveAttribute('href', `https://sakur7a.github.io${canonical}`);
-    await expect(page.locator('meta[property="og:url"]')).toHaveAttribute('content', `https://sakur7a.github.io${canonical}`);
+    await expect(page.locator('link[rel="canonical"]')).toHaveAttribute('href', `${SITE_ORIGIN}${canonical}`);
+    await expect(page.locator('meta[property="og:url"]')).toHaveAttribute('content', `${SITE_ORIGIN}${canonical}`);
     const headings = await content.locator('h1[id],h2[id],h3[id],h4[id],h5[id],h6[id]').evaluateAll(nodes => nodes.map(node => ({ level: Number(node.tagName[1]), id: node.id })));
     const originalHeadings = post.headings.filter(({ id }) => id !== 'post-toc-title');
     expect(headings, post.url).toEqual(originalHeadings.map(({ level, id }) => ({ level, id })));
@@ -74,16 +74,16 @@ test('feed, search and sitemap retain all published articles without source note
   expect(urls.every(url => url.endsWith('/'))).toBe(true);
   expect(new Set(urls).size).toBe(urls.length);
   const feed = await (await request.get('/Blog/feed.xml')).text();
-  for (const url of urls) expect(feed).toContain(`<link href="https://sakur7a.github.io${url}"/>`);
+  for (const url of urls) expect(feed).toContain(`<link href="${SITE_ORIGIN}${url}"/>`);
   for (const post of baseline) expect(feed).toContain(`<id>https://sakur7a.github.io${post.url}</id>`);
   expect(feed.match(/<entry>/g)).toHaveLength(urls.length);
   expect(feed).toContain('<content type="html">');
   const sitemap = await (await request.get('/sitemap.xml')).text();
-  expect(sitemap).toContain('<loc>https://sakur7a.github.io/</loc>');
-  expect(sitemap).toContain('<loc>https://sakur7a.github.io/Blog/archive/</loc>');
-  expect(sitemap).toContain('<loc>https://sakur7a.github.io/Blog/about/</loc>');
-  for (const url of urls) expect(sitemap).toContain(`<loc>https://sakur7a.github.io${url}</loc>`);
-  for (const post of baseline) expect(sitemap).not.toContain(`<loc>https://sakur7a.github.io${post.url}</loc>`);
+  expect(sitemap).toContain(`<loc>${SITE_ORIGIN}/</loc>`);
+  expect(sitemap).toContain(`<loc>${SITE_ORIGIN}/Blog/archive/</loc>`);
+  expect(sitemap).toContain(`<loc>${SITE_ORIGIN}/Blog/about/</loc>`);
+  for (const url of urls) expect(sitemap).toContain(`<loc>${SITE_ORIGIN}${url}</loc>`);
+  for (const post of baseline) expect(sitemap).not.toContain(`<loc>${SITE_ORIGIN}${post.url}</loc>`);
   for (const url of ['/obsidian/Published/ML.md', '/scripts/obsidian-publish.js', '/tools/obsidian-publisher/plugin/main.js', '/_posts/2026-05-07-ml.md']) {
     expect((await request.get(url)).status()).toBe(404);
   }

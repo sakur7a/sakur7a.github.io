@@ -1,5 +1,5 @@
 import type { CollectionEntry } from 'astro:content';
-import { BLOG_ROOT, SITE_ORIGIN, blogPaths, legacyPostPermalink } from '../../config/site.js';
+import { BLOG_ROOT, LEGACY_FEED_ID_ORIGIN, SITE_ORIGIN, blogPaths, legacyPostPermalink } from '../../config/site.js';
 import { dateLabel, isoDate } from '../../shared/dates';
 import { blog } from './config';
 import { getPosts, getPublishedEntries } from './content';
@@ -22,7 +22,7 @@ function xmlResponse(body: string, contentType: string) {
 function feedEntry({ data, rendered }: CollectionEntry<'posts'>) {
   const url = escapeXml(SITE_ORIGIN + data.permalink);
   // Atom readers use the ID to recognize previously seen entries.
-  const id = escapeXml(SITE_ORIGIN + legacyPostPermalink(data.permalink));
+  const id = escapeXml(LEGACY_FEED_ID_ORIGIN + legacyPostPermalink(data.permalink));
   const date = isoDate(data.date);
   const html = (rendered?.html || '')
     .replaceAll(`src="${BLOG_ROOT}`, `src="${SITE_ORIGIN}${BLOG_ROOT}`)

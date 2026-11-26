@@ -1,4 +1,6 @@
-export const SITE_ORIGIN = 'https://sakur7a.github.io';
+export const SITE_ORIGIN = 'https://something4nothing.top';
+// Keep published Atom IDs stable across domain changes.
+export const LEGACY_FEED_ID_ORIGIN = 'https://sakur7a.github.io';
 export const SITE_TIME_ZONE = 'Asia/Shanghai';
 export const siteOwner = {
   name: 'Jinzheng Wang',
